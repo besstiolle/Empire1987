@@ -1,0 +1,21 @@
+body{
+  background-color: #000;
+  color:#FFF;
+  font-family: monospace;
+  font-size:1.41em;
+  white-space: pre-wrap;
+}
+
+#game{
+  max-width: 800px;
+  margin: auto;
+  padding:10px;
+  line-break: auto;
+  background-color: #111;
+  min-height: 505px;
+}
+
+h1{
+  font-family: Monospace;
+  white-space: pre;
+}
