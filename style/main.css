@@ -19,3 +19,13 @@ h1{
   font-family: Monospace;
   white-space: pre;
 }
+
+c{
+  text-align: center;
+  width: 100%;
+  display: inline-block;
+}
+invert{
+  background-color: #AAA;
+  color:#000;
+}
