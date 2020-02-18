@@ -15,3 +15,4 @@
 
 
 &#8617; ou 1=Achat de grain 2=Vente de grain 3=Vente de terres :
+{{? it.game.errors.includes("NOT_IMPLEMENTED") }}Fonction non implémentée 	&#x1F49D;{{?}}

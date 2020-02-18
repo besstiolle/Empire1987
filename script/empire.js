@@ -43,6 +43,7 @@ async function step1(){
 
   console.info("step1")
   refreshWithTemplate(tpl_step1);
+  game.purgeErrors();
   console.info("step1b")
   // thank you https://keycode.info/
   KEY_BINDER = keyboardBinder.bind(null, {
@@ -56,10 +57,14 @@ async function step1(){
 }
 
 function step1BuyMarket(){
-  console.info("buy market")
+  console.info("buy market");
+  game.addError(Errors.notImplemented());
+  step1()
 }
 function step1SellMarket(){
-  console.info("sell market")
+  console.info("sell market");
+  game.addError(Errors.notImplemented());
+  step1()
 }
 function step1SellLand(){
   console.info("sell land")
