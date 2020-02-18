@@ -8,7 +8,7 @@ class Market {
     this.addSales(1, "France", 10, 1);
     this.addSales(2, "Inde", 10, 1);
     this.addSales(1, "France", 20, 0.5);
-    console.info(this.sales);
+    //console.info(this.sales);
   }
 
   addSales(idUser, country, boisseaux, price){
