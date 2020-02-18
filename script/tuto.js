@@ -20,7 +20,6 @@ async function tuto2(){
   document.addEventListener('keydown', KEY_BINDER, false);
 }
 
-
 async function tuto3(){
   refreshWithTemplate(tpl_tuto3);
   KEY_BINDER = keyboardBinder.bind(null, {

@@ -20,13 +20,19 @@ h1{
   white-space: pre;
 }
 
-line, c {
+line, c, r {
   width: 100%;
   display: inline-block;
 }
+
 c{
   text-align: center;
 }
+
+r{
+  text-align: right;
+}
+
 invert{
   background-color: #AAA;
   color:#000;

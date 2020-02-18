@@ -9,5 +9,5 @@
    Si vous écrasez les hordes barbares et les armées bien entraînées des autres nations ainsi que leurs milices paysannes, peut-être obtiendrez-vous le prestigieux titre d'EMPREUR !
 
 
-   
-                                                                       &#8617;
+
+<r>&#8617;

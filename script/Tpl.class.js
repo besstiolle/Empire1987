@@ -25,11 +25,11 @@ class Tpl {
 
     if (res.status == 200) {
       this.data = await res.text()
-      console.info("loadTpl > " + (Date.now() - start) + "ms");
+      //console.info("loadTpl > " + (Date.now() - start) + "ms");
       return;
     }
 
-    console.info("loadTpl > " + (Date.now() - start) + "ms");
+    //console.info("loadTpl > " + (Date.now() - start) + "ms");
     throw new Error(res.status);
   }
 
@@ -37,14 +37,15 @@ class Tpl {
     const start = Date.now();
     this.data = this.data.replace(/(.)*\r\n/g, "<line>$&</line>");
     this.data = this.data.replace(/\<c\>(.)*\r\n/g, "<c>$&</c>");
+    this.data = this.data.replace(/\<r\>(.)*\r\n/g, "<r>$&</r>");
     this.doTData = doT.template(this.data)
-    console.info("processTpl > " + (Date.now() - start) + "ms");
+    //console.info("processTpl > " + (Date.now() - start) + "ms");
   }
 
   run(vars = {}){
     const start = Date.now();
     let tmp = this.doTData(vars);
-    console.info("run > " + (Date.now() - start) + "ms");
+    //console.info("run > " + (Date.now() - start) + "ms");
     return tmp;
   }
 
