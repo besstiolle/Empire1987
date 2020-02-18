@@ -5,6 +5,10 @@ let tpl_start = null;
 let tpl_tuto1 = null;
 let tpl_tuto2 = null;
 let tpl_tuto3 = null;
+let tpl_tuto4 = null;
+let tpl_tuto5 = null;
+let tpl_tuto6 = null;
+let tpl_tuto7 = null;
 let tpl_step1 = null;
 let tpl_step1_3 = null;
 let KEY_BINDER = null;
@@ -15,6 +19,10 @@ async function init(dot){
   tpl_tuto1 = await new Tpl("tuto1");
   tpl_tuto2 = await new Tpl("tuto2");
   tpl_tuto3 = await new Tpl("tuto3");
+  tpl_tuto4 = await new Tpl("tuto4");
+  tpl_tuto5 = await new Tpl("tuto5");
+  tpl_tuto6 = await new Tpl("tuto6");
+  tpl_tuto7 = await new Tpl("tuto7");
   tpl_step1 = await new Tpl("step1");
   tpl_step1_3 = await new Tpl("step1_3");
 

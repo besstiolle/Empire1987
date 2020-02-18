@@ -29,6 +29,42 @@ async function tuto3(){
   document.addEventListener('keydown', KEY_BINDER, false);
 }
 
-function tuto4(){
+async function tuto4(){
+  refreshWithTemplate(tpl_tuto4);
+  KEY_BINDER = keyboardBinder.bind(null, {
+    tuto5 : [13], // ↩
+    "default" : "return"
+  });
+  document.addEventListener('keydown', KEY_BINDER, false);
+}
+
+async function tuto5(){
+  refreshWithTemplate(tpl_tuto5);
+  KEY_BINDER = keyboardBinder.bind(null, {
+    tuto6 : [13], // ↩
+    "default" : "return"
+  });
+  document.addEventListener('keydown', KEY_BINDER, false);
+}
+
+async function tuto6(){
+  refreshWithTemplate(tpl_tuto6);
+  KEY_BINDER = keyboardBinder.bind(null, {
+    tuto7 : [13], // ↩
+    "default" : "return"
+  });
+  document.addEventListener('keydown', KEY_BINDER, false);
+}
+
+async function tuto7(){
+  refreshWithTemplate(tpl_tuto7);
+  KEY_BINDER = keyboardBinder.bind(null, {
+    tuto_end : [13], // ↩
+    "default" : "return"
+  });
+  document.addEventListener('keydown', KEY_BINDER, false);
+}
+
+function tuto_end(){
   startGame();
 }
