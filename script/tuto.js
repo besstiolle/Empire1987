@@ -3,8 +3,7 @@
 var bindTuto = null
 
 async function startTuto(){
-  let tpl = await loadTpl("tuto1");
-  $("game").innerHTML = processTpl(tpl);
+  refreshWithTemplate(tpl_tuto1);
   bindTuto = keyboardNext.bind(null, tuto2);
   document.addEventListener('keydown', bindTuto, false);
 }

@@ -3,18 +3,24 @@
 const regexINT = /^(48|49|50|51|52|53|54|55|56|57|13)$/ //0->9
 const regexYN = /^(79|89|78)*$/ //o|y|n
 let game = null
+let tpl_start = null
+let tpl_tuto1 = null
+let tpl_step1 = null
 
-var $ = function( id ) { return document.getElementById( id ); };
+async function init(dot){
 
-async function init(){
-  let tpl = await loadTpl("start");
-  $("game").innerHTML = processTpl(tpl);
+  tpl_start = await new Tpl("start");
+  tpl_tuto1 = await new Tpl("tuto1");
+  tpl_step1 = await new Tpl("step1");
+  home();
+}
+
+function home(){
+  refreshWithTemplate(tpl_start);
   document.addEventListener('keydown',keyboardOYN);
-
 }
 
 function keyboardOYN(event){
-
   if (event.defaultPrevented) {
     return; // Do nothing if the event was already processed
   }
@@ -46,14 +52,26 @@ function startGame(){
 }
 
 async function step1(){
-  let tpl = await loadTpl("step1");
-  tpl = hydrateTpl(tpl, {
-    "user.name": game.getUsers()[0].getName(),
-    "user.taxeA": game.getUsers()[0].getTaxeC()
-  })
-  tpl = processTpl(tpl);
+  refreshWithTemplate(tpl_step1,{
+    "user": game.getUsers()[0],
+    "users": game.getUsers(),
+    "game": game
+  });
+}
 
-  $("game").innerHTML = tpl;
+
+
+
+
+
+
+
+
+
+
+
+function refreshWithTemplate(template, args = {}){
+  document.getElementById("game").innerHTML = template.run(args);
 }
 /*
 function listenKeyboard(event){
