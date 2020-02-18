@@ -20,7 +20,7 @@ class Tpl {
   }
 
   async loadTpl(){
-    const start = Date.now();
+    //const start = Date.now();
     let res = await fetch('templates/' + this.template + ".tpl")
 
     if (res.status == 200) {
@@ -34,16 +34,17 @@ class Tpl {
   }
 
   processTpl(){
-    const start = Date.now();
-    this.data = this.data.replace(/(.)*\r\n/g, "<line>$&</line>");
-    this.data = this.data.replace(/\<c\>(.)*\r\n/g, "<c>$&</c>");
-    this.data = this.data.replace(/\<r\>(.)*\r\n/g, "<r>$&</r>");
+    //const start = Date.now();
+    this.data = this.data.replace(/^(.*)$/gm, "<line>$1</line>");
+    this.data = this.data.replace(/\<c\>(.*)$/gm, "<c>$1</c>");
+    this.data = this.data.replace(/\<r\>(.*)$/gm, "<r>$1</r>");
     this.doTData = doT.template(this.data)
+    //console.info("tpl : " + this.data);
     //console.info("processTpl > " + (Date.now() - start) + "ms");
   }
 
   run(vars = {}){
-    const start = Date.now();
+    //const start = Date.now();
     let tmp = this.doTData(vars);
     //console.info("run > " + (Date.now() - start) + "ms");
     return tmp;
