@@ -15,7 +15,7 @@ class Market {
     let sale = null;
     if(idUser in this.sales){
       sale = this.sales[idUser];
-      sale["price"] += (sale["price"] * sale["boisseaux"] + price * boisseaux) / (sale["boisseaux"] +  boisseaux)
+      sale["price"] = (sale["price"] * sale["boisseaux"] + price * boisseaux) / (sale["boisseaux"] +  boisseaux)
       sale["boisseaux"] += boisseaux
     } else {
       sale = {"idUser":idUser, "country": country, "boisseaux": boisseaux, "price": price};
