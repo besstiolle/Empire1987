@@ -1,11 +1,10 @@
 "use strict";
 
-const regexINT = /^(48|49|50|51|52|53|54|55|56|57|13)$/ //0->9
-const regexYN = /^(79|89|78)*$/ //o|y|n
-let game = null
-let tpl_start = null
-let tpl_tuto1 = null
-let tpl_step1 = null
+let game = null;
+let tpl_start = null;
+let tpl_tuto1 = null;
+let tpl_step1 = null;
+let KEY_BINDER = null;
 
 async function init(dot){
 
@@ -17,31 +16,13 @@ async function init(dot){
 
 function home(){
   refreshWithTemplate(tpl_start);
-  document.addEventListener('keydown',keyboardOYN);
-}
-
-function keyboardOYN(event){
-  if (event.defaultPrevented) {
-    return; // Do nothing if the event was already processed
-  }
-  let tuto = true;
-  switch (event.keyCode) {
-    case 79:
-    case 89:
-      break;
-    case 78:
-      tuto = false;
-      break;
-    default:
-      return;
-  }
-  document.removeEventListener('keydown',keyboardOYN);
-  if(tuto) {
-    startTuto();
-  } else {
-    startGame();
-  }
-
+  KEY_BINDER = keyboardBinder.bind(null, {
+    79 : startTuto, // o
+    89 : startTuto, // y
+    78 : startGame, // n
+    "default" : "return"
+  });
+  document.addEventListener('keydown', KEY_BINDER, false);
 }
 
 function startGame(){
@@ -58,16 +39,54 @@ async function step1(){
     "game": game,
     "sales": game.getSalesInArray()
   });
+
+  // thank you https://keycode.info/
+  KEY_BINDER = keyboardBinder.bind(null, {
+    97 : step1BuyMarket, // 1
+    49 : step1BuyMarket, // &
+    98 : step1SellMarket, // 2
+    50 : step1SellMarket, // é
+    99 : step1SellLand, // 3
+    51 : step1SellLand, // "
+    13 : step2, // ↩
+    //8 : xxx, // backspace
+    "default" : "return"
+  });
+  document.addEventListener('keydown', KEY_BINDER, false);
+}
+
+async function step1BuyMarket(){
+  console.info("buy market")
+}
+async function step1SellMarket(){
+  console.info("sell market")
+}
+async function step1SellLand(){
+  console.info("sell land")
+}
+async function step2(){
+  console.info("step2")
 }
 
 
+function keyboardBinder(vars, event){
+  if (event.defaultPrevented) {
+    return; // Do nothing if the event was already processed
+  }
+  for (let [key,value] of Object.entries(vars)) {
+    if(event.keyCode == key){
+      document.removeEventListener('keydown',KEY_BINDER);
+      value();
+    }
+  }
+  //Nothing found, let's check "default" action
+  if(vars["default"] === "return"){
+    return;
+  }
 
-
-
-
-
-
-
+  document.removeEventListener('keydown',KEY_BINDER);
+  vars["default"]()
+}
 
 
 

@@ -1,5 +1,7 @@
 "use strict";
 
+
+//Thank you https://olado.github.io/doT/index.html
 class Tpl {
   constructor(template){
     return (async () => {
