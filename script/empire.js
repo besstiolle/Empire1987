@@ -11,6 +11,9 @@ let tpl_tuto6 = null;
 let tpl_tuto7 = null;
 let tpl_step1 = null;
 let tpl_step1_3 = null;
+let tpl_step2 = null;
+let tpl_step3 = null;
+let tpl_step4 = null;
 let KEY_BINDER = null;
 
 async function init(dot){
@@ -25,6 +28,9 @@ async function init(dot){
   tpl_tuto7 = await new Tpl("tuto7");
   tpl_step1 = await new Tpl("step1");
   tpl_step1_3 = await new Tpl("step1_3");
+  tpl_step2 = await new Tpl("step2");
+  tpl_step3 = await new Tpl("step3");
+  tpl_step4 = await new Tpl("step4");
 
   //Initiate the game
   game = new Game();
@@ -108,22 +114,46 @@ function sellLand(){
   step1();
 }
 
-
+//Démographie
 function step2(){
   console.info("step2")
+  refreshWithTemplate(tpl_step2);
   game.resetTyping();
   KEY_BINDER = keyboardBinder.bind(null, {
-    startTyping : [96,97,98,99,100,101,102,103,104,105,47,48,49,50,51,52,53,54,55,56,57,8], // 0-9 + backspace
     step3 : [13], //↩
     "default" : "return",
   });
   document.addEventListener('keydown', KEY_BINDER, false);
 }
 
+//Investissement
 function step3(){
-  document.removeEventListener('keydown',KEY_BINDER);
   console.info("step3")
+  document.removeEventListener('keydown',KEY_BINDER);
+  refreshWithTemplate(tpl_step3);
+  KEY_BINDER = keyboardBinder.bind(null, {
+    step4 : [13], //↩
+    "default" : "return",
+  });
+  document.addEventListener('keydown', KEY_BINDER, false);
 }
+
+function step4(){
+  console.info("step4")
+  document.removeEventListener('keydown',KEY_BINDER);
+  refreshWithTemplate(tpl_step4);
+  KEY_BINDER = keyboardBinder.bind(null, {
+    step5 : [13], //↩
+    "default" : "return",
+  });
+  document.addEventListener('keydown', KEY_BINDER, false);
+}
+
+function step5(){
+  console.info("step5")
+  document.removeEventListener('keydown',KEY_BINDER);
+}
+
 
 function startTyping(key){
   game.startTyping(key)
