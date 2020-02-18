@@ -10,9 +10,8 @@
 
                      * * * Grain à vendre :
 <c><invert>Pays              Boisseaux          Prix</invert>
-                     Pas de grain à vendre...
-
-
+{{~ it.sales :sale:index }}<c>{{=index+1}} {{=sale.country.toString().padEnd(10," ")}}    {{=sale.boisseaux.toString().padStart(10," ")}}    {{=(Math.round(sale.price * 100)/100).toString().padStart(8," ")}}<br/>{{~}}
+                     {{? !it.sales.length }}Pas de grain à vendre...{{?}}
 
 
 &#8617; ou 1=Achat de grain 2=Vente de grain 3=Vente de terres :

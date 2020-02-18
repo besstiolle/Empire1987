@@ -55,7 +55,8 @@ async function step1(){
   refreshWithTemplate(tpl_step1,{
     "user": game.getUsers()[0],
     "users": game.getUsers(),
-    "game": game
+    "game": game,
+    "sales": game.getSalesInArray()
   });
 }
 
@@ -73,19 +74,3 @@ async function step1(){
 function refreshWithTemplate(template, args = {}){
   document.getElementById("game").innerHTML = template.run(args);
 }
-/*
-function listenKeyboard(event){
-
-  if (event.defaultPrevented) {
-    return; // Do nothing if the event was already processed
-  }
-
-  if(event.keyCode == 37) {
-        alert('Left was pressed');
-    }
-    else if(event.keyCode == 39) {
-        alert('Right was pressed');
-    }
-   console.info(event.keyCode + " " + String.fromCharCode(event.keyCode));
-}
-*/

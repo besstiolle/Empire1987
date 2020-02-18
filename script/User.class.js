@@ -17,7 +17,10 @@ class User {
     this.needPeople = 1000
     this.needOst = 1000
     this.money = 50
+  }
 
+  getId(){
+    return this.id;
   }
 
 }
