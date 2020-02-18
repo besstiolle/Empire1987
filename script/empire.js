@@ -3,6 +3,8 @@
 let game = null;
 let tpl_start = null;
 let tpl_tuto1 = null;
+let tpl_tuto2 = null;
+let tpl_tuto3 = null;
 let tpl_step1 = null;
 let KEY_BINDER = null;
 
@@ -10,6 +12,8 @@ async function init(dot){
 
   tpl_start = await new Tpl("start");
   tpl_tuto1 = await new Tpl("tuto1");
+  tpl_tuto2 = await new Tpl("tuto2");
+  tpl_tuto3 = await new Tpl("tuto3");
   tpl_step1 = await new Tpl("step1");
   home();
 }
