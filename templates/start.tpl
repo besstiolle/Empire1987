@@ -1,9 +1,9 @@
 
 
 
-<c>
-E M P I R E
 
-* &#8617; = Taper RC (retour chariot) pour continuer *
+<c>E M P I R E
 
-Règles ? (O/N)</c>
+<c>* &#8617; = Taper RC (retour chariot) pour continuer *
+
+<c>Règles ? (O/N)

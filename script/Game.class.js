@@ -6,7 +6,7 @@ class Game {
   reset(){
     this.users = [new User("1", "kevin")]
     this.year = 1
-    this.rats = 0
+    this.rats = 2
   }
 
   getUsers(){

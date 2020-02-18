@@ -20,10 +20,12 @@ h1{
   white-space: pre;
 }
 
-c{
-  text-align: center;
+line, c {
   width: 100%;
   display: inline-block;
+}
+c{
+  text-align: center;
 }
 invert{
   background-color: #AAA;
