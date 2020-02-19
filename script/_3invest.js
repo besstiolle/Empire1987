@@ -2,7 +2,7 @@
 
 //Investissement
 function step3(){
-  console.info("step3")
+  //console.info("step3")
   document.removeEventListener('keydown',KEY_BINDER);
   refreshWithTemplate(tpl_step3);
   KEY_BINDER = keyboardBinder.bind(null, {
@@ -17,7 +17,7 @@ function step3(){
 
 //Propose setting taxe A
 function step3setTaxeA(){
-  console.info("set Taxe A")
+  //console.info("set Taxe A")
   refreshWithTemplate(tpl_step3_a);
 
   game.resetTyping();
@@ -32,7 +32,7 @@ function step3setTaxeA(){
 
 // Do set Taxe A
 function step3DoSetTaxeA(){
-  console.info("do set taxe A")
+  //console.info("do set taxe A")
   game.purgeErrors();
   document.removeEventListener('keydown',KEY_BINDER);
   if(game.keyboardInput !== ""){
@@ -51,7 +51,7 @@ function step3DoSetTaxeA(){
 
 //Propose setting taxe B
 function step3setTaxeB(){
-  console.info("set Taxe B")
+  //console.info("set Taxe B")
   refreshWithTemplate(tpl_step3_b);
 
   game.resetTyping();
@@ -66,7 +66,7 @@ function step3setTaxeB(){
 
 // Do set Taxe B
 function step3DoSetTaxeB(){
-  console.info("do set taxe B")
+  //console.info("do set taxe B")
   game.purgeErrors();
   document.removeEventListener('keydown',KEY_BINDER);
   if(game.keyboardInput !== ""){
@@ -85,7 +85,7 @@ function step3DoSetTaxeB(){
 
 //Propose setting taxe C
 function step3setTaxeC(){
-  console.info("set Taxe C")
+  //console.info("set Taxe C")
   refreshWithTemplate(tpl_step3_c);
 
   game.resetTyping();
@@ -100,7 +100,7 @@ function step3setTaxeC(){
 
 // Do set Taxe C
 function step3DoSetTaxeC(){
-  console.info("do set taxe C")
+  //console.info("do set taxe C")
   game.purgeErrors();
   document.removeEventListener('keydown',KEY_BINDER);
   if(game.keyboardInput !== ""){
