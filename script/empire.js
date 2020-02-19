@@ -17,10 +17,12 @@ let tpl_step3_a = null;
 let tpl_step3_b = null;
 let tpl_step3_c = null;
 let tpl_step4 = null;
+let tpl_step4_a = null;
+let tpl_step4_b = null;
 let KEY_BINDER = null;
 
 const KEYBOARD_INT = [96,97,98,99,100,101,102,103,104,105,47,48,49,50,51,52,53,54,55,56,57] // 0-9
-const KEYBOARD_INT_TYPING = KEYBOARD_NUM.concat([8]) // 0-9 + backspace for typing
+const KEYBOARD_INT_TYPING = KEYBOARD_INT.concat([8]) // 0-9 + backspace for typing
 
 async function init(dot){
 
@@ -40,6 +42,8 @@ async function init(dot){
   tpl_step3_b = await new Tpl("step3_b");
   tpl_step3_c = await new Tpl("step3_c");
   tpl_step4 = await new Tpl("step4");
+  tpl_step4_a = await new Tpl("step4_a");
+  tpl_step4_b = await new Tpl("step4_b");
 
   //Initiate the game
   game = new Game();
@@ -76,7 +80,7 @@ function step2(){
 
 
 function step5(){
-  //console.info("step5")
+  console.info("step5")
   document.removeEventListener('keydown',KEY_BINDER);
 }
 
