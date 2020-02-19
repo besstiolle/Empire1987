@@ -13,8 +13,13 @@ let tpl_step1 = null;
 let tpl_step1_3 = null;
 let tpl_step2 = null;
 let tpl_step3 = null;
+let tpl_step3_a = null;
+let tpl_step3_b = null;
+let tpl_step3_c = null;
 let tpl_step4 = null;
 let KEY_BINDER = null;
+
+const KEYBOARD_NUM = [96,97,98,99,100,101,102,103,104,105,47,48,49,50,51,52,53,54,55,56,57,8] // 0-9 + backspace for typing
 
 async function init(dot){
 
@@ -30,6 +35,9 @@ async function init(dot){
   tpl_step1_3 = await new Tpl("step1_3");
   tpl_step2 = await new Tpl("step2");
   tpl_step3 = await new Tpl("step3");
+  tpl_step3_a = await new Tpl("step3_a");
+  tpl_step3_b = await new Tpl("step3_b");
+  tpl_step3_c = await new Tpl("step3_c");
   tpl_step4 = await new Tpl("step4");
 
   //Initiate the game
@@ -41,8 +49,8 @@ async function init(dot){
 function home(){
   refreshWithTemplate(tpl_start);
   KEY_BINDER = keyboardBinder.bind(null, {
-    startTuto : [79,80],
-    startGame : [78],
+    startTuto : [79,80], // o y
+    startGame : [78], // n
     "default" : "return"
   });
   document.addEventListener('keydown', KEY_BINDER, false);
@@ -80,21 +88,24 @@ function step1SellMarket(){
   game.addError(Errors.notImplemented());
   step1()
 }
+
+//Propose selling Land
 function step1SellLand(){
   console.info("sell land")
   refreshWithTemplate(tpl_step1_3);
 
   game.resetTyping();
   KEY_BINDER = keyboardBinder.bind(null, {
-    startTyping : [96,97,98,99,100,101,102,103,104,105,47,48,49,50,51,52,53,54,55,56,57,8], // 0-9 + backspace
-    sellLand : [13], //↩
+    startTyping : KEYBOARD_NUM, // 0-9 + backspace
+    step1DoSellLand : [13], //↩
     "default" : "return",
     "options" : {"typing":true, "template":tpl_step1_3}
   });
   document.addEventListener('keydown', KEY_BINDER, false);
 }
 
-function sellLand(){
+// Do selling land
+function step1DoSellLand(){
   console.info("go sell market")
   game.purgeErrors();
   document.removeEventListener('keydown',KEY_BINDER);
@@ -126,17 +137,6 @@ function step2(){
   document.addEventListener('keydown', KEY_BINDER, false);
 }
 
-//Investissement
-function step3(){
-  console.info("step3")
-  document.removeEventListener('keydown',KEY_BINDER);
-  refreshWithTemplate(tpl_step3);
-  KEY_BINDER = keyboardBinder.bind(null, {
-    step4 : [13], //↩
-    "default" : "return",
-  });
-  document.addEventListener('keydown', KEY_BINDER, false);
-}
 
 function step4(){
   console.info("step4")

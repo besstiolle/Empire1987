@@ -28,24 +28,17 @@ class User {
     this.palais = 0;
   }
 
-  getId(){
-    return this.id;
-  }
+  getId(){return this.id;}
+  getLand(){return this.land;}
+  getMoney(){return this.money;}
+  getTaxeA(){return this.taxeA;}
+  getTaxeB(){return this.taxeB;}
+  getTaxeC(){return this.taxeC;}
 
-  getLand(){
-    return this.land;
-  }
-
-  setLand(land){
-    this.land = land;
-  }
-
-  getMoney(){
-    return this.money;
-  }
-
-  setMoney(money){
-    this.money = money;
-  }
+  setLand(land){this.land = land;}
+  setMoney(money){this.money = money;}
+  setTaxeA(taxeA){this.taxeA = taxeA;}
+  setTaxeB(taxeB){this.taxeB = taxeB;}
+  setTaxeC(taxeC){this.taxeC = taxeC;}
 
 }

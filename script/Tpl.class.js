@@ -36,7 +36,7 @@ class Tpl {
   processTpl(){
     //const start = Date.now();
     this.doTData = doT.template(this.data)
-    console.info("tpl : " + this.data);
+    //console.info("tpl : " + this.data);
     //console.info("processTpl > " + (Date.now() - start) + "ms");
   }
 
