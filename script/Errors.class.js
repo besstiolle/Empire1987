@@ -1,3 +1,5 @@
+"use strict";
+
 const NOT_IMPLEMENTED = "NOT_IMPLEMENTED"
 
 //Land

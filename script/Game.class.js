@@ -1,3 +1,5 @@
+"use strict";
+
 class Game {
   constructor(){
     this.reset();
@@ -59,5 +61,5 @@ class Game {
     this.errors.push(error);
   }
 
-  
+
 }

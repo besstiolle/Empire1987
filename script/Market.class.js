@@ -1,3 +1,5 @@
+"use strict";
+
 class Market {
   constructor(){
     this.reset();
