@@ -20,6 +20,12 @@ class User {
     this.needOst = 160;
     this.money = 1000;
     this.land = 5000;
+
+    this.foires = 0;
+    this.moulins = 0;
+    this.fonderies = 0;
+    this.chantiers = 0;
+    this.palais = 0;
   }
 
   getId(){
