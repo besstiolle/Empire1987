@@ -22,7 +22,7 @@ function step3setTaxeA(){
 
   game.resetTyping();
   KEY_BINDER = keyboardBinder.bind(null, {
-    startTyping : KEYBOARD_NUM, // 0-9 + backspace
+    startTyping : KEYBOARD_INT_TYPING, // 0-9 + backspace
     step3DoSetTaxeA : [13], //↩
     "default" : "return",
     "options" : {"typing":true, "template":tpl_step3_a}
@@ -56,7 +56,7 @@ function step3setTaxeB(){
 
   game.resetTyping();
   KEY_BINDER = keyboardBinder.bind(null, {
-    startTyping : KEYBOARD_NUM, // 0-9 + backspace
+    startTyping : KEYBOARD_INT_TYPING, // 0-9 + backspace
     step3DoSetTaxeB : [13], //↩
     "default" : "return",
     "options" : {"typing":true, "template":tpl_step3_b}
@@ -90,7 +90,7 @@ function step3setTaxeC(){
 
   game.resetTyping();
   KEY_BINDER = keyboardBinder.bind(null, {
-    startTyping : KEYBOARD_NUM, // 0-9 + backspace
+    startTyping : KEYBOARD_INT_TYPING, // 0-9 + backspace
     step3DoSetTaxeC : [13], //↩
     "default" : "return",
     "options" : {"typing":true, "template":tpl_step3_c}

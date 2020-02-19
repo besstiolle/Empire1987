@@ -19,7 +19,8 @@ let tpl_step3_c = null;
 let tpl_step4 = null;
 let KEY_BINDER = null;
 
-const KEYBOARD_NUM = [96,97,98,99,100,101,102,103,104,105,47,48,49,50,51,52,53,54,55,56,57,8] // 0-9 + backspace for typing
+const KEYBOARD_INT = [96,97,98,99,100,101,102,103,104,105,47,48,49,50,51,52,53,54,55,56,57] // 0-9
+const KEYBOARD_INT_TYPING = KEYBOARD_NUM.concat([8]) // 0-9 + backspace for typing
 
 async function init(dot){
 
@@ -73,17 +74,6 @@ function step2(){
   document.addEventListener('keydown', KEY_BINDER, false);
 }
 
-
-function step4(){
-  //console.info("step4")
-  document.removeEventListener('keydown',KEY_BINDER);
-  refreshWithTemplate(tpl_step4);
-  KEY_BINDER = keyboardBinder.bind(null, {
-    step5 : [13], //↩
-    "default" : "return",
-  });
-  document.addEventListener('keydown', KEY_BINDER, false);
-}
 
 function step5(){
   //console.info("step5")

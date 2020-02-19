@@ -36,7 +36,7 @@ function step1SellLand(){
 
   game.resetTyping();
   KEY_BINDER = keyboardBinder.bind(null, {
-    startTyping : KEYBOARD_NUM, // 0-9 + backspace
+    startTyping : KEYBOARD_INT_TYPING, // 0-9 + backspace
     step1DoSellLand : [13], //↩
     "default" : "return",
     "options" : {"typing":true, "template":tpl_step1_3}
