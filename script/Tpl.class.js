@@ -35,11 +35,8 @@ class Tpl {
 
   processTpl(){
     //const start = Date.now();
-    this.data = this.data.replace(/^(.*)$/gm, "<line>$1</line>");
-    this.data = this.data.replace(/\<c\>(.*)$/gm, "<c>$1</c>");
-    this.data = this.data.replace(/\<r\>(.*)$/gm, "<r>$1</r>");
     this.doTData = doT.template(this.data)
-    //console.info("tpl : " + this.data);
+    console.info("tpl : " + this.data);
     //console.info("processTpl > " + (Date.now() - start) + "ms");
   }
 

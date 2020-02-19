@@ -20,7 +20,7 @@ h1{
   white-space: pre;
 }
 
-line, c, r {
+l, c, r {
   width: 100%;
   display: inline-block;
 }
