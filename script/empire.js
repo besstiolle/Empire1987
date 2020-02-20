@@ -86,4 +86,5 @@ function refreshWithTemplate(template){
     "sales": game.getSalesInArray(),
     "KB_BUFFER": KB_BUFFER
   });
+  game.purgeErrors();
 }

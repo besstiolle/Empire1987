@@ -28,7 +28,6 @@ function step3setTaxeA(){
 // Do set Taxe A
 function step3DoSetTaxeA(){
   //console.info("do set taxe A")
-  game.purgeErrors();
   let keyboard = KBreturn();
   if(keyboard !== ""){
     if(keyboard > 50){
@@ -57,7 +56,6 @@ function step3setTaxeB(){
 // Do set Taxe B
 function step3DoSetTaxeB(){
   //console.info("do set taxe B")
-  game.purgeErrors();
   let keyboard = KBreturn();
   if(keyboard !== ""){
     if(keyboard > 50){
@@ -85,7 +83,6 @@ function step3setTaxeC(){
 // Do set Taxe C
 function step3DoSetTaxeC(){
   //console.info("do set taxe C")
-  game.purgeErrors();
   //KBstop();
   let keyboard = KBreturn();
   if(keyboard !== ""){

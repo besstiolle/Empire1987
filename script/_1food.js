@@ -11,7 +11,6 @@ function step1(){
   });
 
   refreshWithTemplate(tpl_step1);
-  game.purgeErrors();
 }
 
 function step1BuyMarket(){
@@ -39,7 +38,6 @@ function step1SellLand(){
 // Do selling land
 function step1DoSellLand(){
   //console.info("go sell market")
-  game.purgeErrors();
   let keyboard = KBreturn();
   if(keyboard !== ""){
     let user = game.getCurrentUser();

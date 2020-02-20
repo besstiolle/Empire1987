@@ -15,7 +15,6 @@ function step4(){
 //Selection du nombre de soldat
 function step4choosingArmy(keyCode){
   //console.info("step4choosingArmy(" + keyCode + ")");
-  game.purgeErrors();
 
   //Test if opponent is available
   let opponents = {"97":1,"49":1,"98":2,"50":2,"99":3,"51":3,"100":4,"52":4,"101":5,"53":5,"102":6,"54":6,"103":7,"55":7}
@@ -56,7 +55,6 @@ function step4choosingArmy(keyCode){
 function step4fight(){
   //console.info("step4fight()");
   let keyboard = KBreturn();
-  game.purgeErrors();
   //Test if no input
   if(keyboard !== ""){
     let ost = parseInt(keyboard);
