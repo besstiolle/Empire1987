@@ -1,6 +1,7 @@
 "use strict";
 
 let game = null;
+let combat = null;
 let tpl_start = null;
 let tpl_tuto1 = null;
 let tpl_tuto2 = null;
@@ -47,6 +48,7 @@ async function init(dot){
 
   //Initiate the game
   game = new Game();
+  combat = new Combat();
 
   home();
 }
@@ -130,7 +132,7 @@ function keyboardBinder(vars, event){
 function refreshWithTemplate(template){
   //console.info("template" + template);
   document.getElementById("game").innerHTML = template.run({
-    "user": game.getUsers()[0],
+    "user": game.getCurrentUser(),
     "users": game.getUsers(),
     "game": game,
     "sales": game.getSalesInArray()

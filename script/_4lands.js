@@ -27,8 +27,7 @@ function step4choosingArmy(keyCode){
     //console.info("opposant pas entre 1 & 7");
     return step4();
   } else {
-    //TODO create context of fight
-    opponent = opponents[keyCode];
+    opponent = opponents[keyCode] -1; // minus 1 because Barbares are not real users
     //console.info("test on opposant #" + opponent);
     // opponent dead
     if(game.getUsers.length >= opponent){
@@ -37,13 +36,15 @@ function step4choosingArmy(keyCode){
     }
 
     //opponent = myself
-    if(game.getCurrentUser().getPosition() == opponent){
+    if(game.getCurrentUser().getId() == opponent){
       game.addError(Errors.fightMyself());
       //console.info("pas soi même");
       return step4();
     }
   }
   //console.info("fight opposant #" + opponent);
+  combat.initiateNewCombat(game.getCurrentUser().getId(), opponent);
+
   //else choose number of soldier
   refreshWithTemplate(tpl_step4_b);
   KEY_BINDER = keyboardBinder.bind(null, {
@@ -62,19 +63,17 @@ function step4fight(){
   document.removeEventListener('keydown',KEY_BINDER);
   game.purgeErrors();
   //Test if no input
-  if(game.keyboardInput === ""){
-    //console.info("aucune entrée");
-    return step4();
+  if(game.keyboardInput !== ""){
+    let ost = parseInt(game.keyboardInput);
+    //Test if we have enought ost men
+    if(game.getCurrentUser().getOst() < ost){
+      //console.info("pas assez d'ost");
+      game.addError(Errors.notEnoughtOst());
+    } else {
+      //console.info("fight !")
+      combat.execute(ost);
+    }
   }
-  //Test if we have enought ost men
-  if(game.getCurrentUser().getOst() < game.keyboardInput){
-    //console.info("pas assez d'ost");
-    game.addError(Errors.notEnoughtOst());
-    game.resetTyping();
-    return step4();
-  }
-  //else fight
-  //console.info("fight !")
-  //TODO
+  game.resetTyping();
   return step4();
 }
