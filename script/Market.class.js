@@ -6,45 +6,67 @@ class Market {
   }
 
   reset(){
-    this.sales = {};
-    this.addSales(1, "France", 10, 1);
-    this.addSales(2, "Inde", 10, 1);
-    this.addSales(1, "France", 20, 0.5);
+    this.sales = new Map();
+    this.addSales(1,"France", 10, 1);
+    this.addSales(3,"Inde", 10, 1);
+    this.addSales(1,"France", 20, 0.5);
+    this.offer = null
     //console.info(this.sales);
   }
 
   addSales(idUser, country, boisseaux, price){
-    let sale = null;
-    if(idUser in this.sales){
-      sale = this.sales[idUser];
-      sale["price"] = (sale["price"] * sale["boisseaux"] + price * boisseaux) / (sale["boisseaux"] +  boisseaux)
-      sale["boisseaux"] += boisseaux
+
+    let keyValue = this.getSaleOfUser(idUser);
+
+    if(keyValue === null){
+      this.sales.set(this.sales.size + 1,{"idUser":idUser, "country": country, "boisseaux": boisseaux, "price": price});
     } else {
-      sale = {"idUser":idUser, "country": country, "boisseaux": boisseaux, "price": price};
+      let sale = keyValue[1];
+      sale["price"] = (sale["price"] * sale["boisseaux"] + price * boisseaux) / (sale["boisseaux"] +  boisseaux);
+      sale["boisseaux"] += boisseaux;
+      this.sales.set(keyValue[0], sale);
     }
-    this.sales[idUser] = sale
+  }
+
+  getSales(){
+    return this.sales;
   }
 
   getSalesInArray(){
-    let array = [];
-    for (let [key, value] of Object.entries(this.sales)) {
-       array.push(value);
-    }
-    return array;
+    console.info("getSalesInArray()")
+    return this.sales.values();
   }
 
   getSaleOfUser(idUser){
-    if(idUser in this.sales){
-      return this.sales[idUser];
-    } else {
-      return {};
+    let sale = null;
+    let keyValue = null;
+    const iterator1 = this.sales.entries();
+    while(true){
+      keyValue = iterator1.next().value;
+      if(keyValue === undefined) {
+          keyValue = null;
+          break;
+      }
+      if(keyValue[0] == idUser){
+        sale = keyValue[1];
+        break;
+      }
     }
+    return keyValue;
   }
 
+  createOffer(userId, marketId){
+    this.offer = {"userId" : userId, "marketId": marketId};
+  }
+
+  getOffer(){
+    return this.offer;
+  }
+/*
   buy(seller,customer, boisseaux){
     this.sales[seller.getId()]["boisseaux"] -= boisseaux
     if(this.sales[seller.getId()]["boisseaux"] == 0){
       delete this.sales[seller.getId()];
     }
-  }
+  }*/
 }

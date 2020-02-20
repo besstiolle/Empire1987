@@ -34,6 +34,10 @@ class Game {
     return this.market.getSalesInArray();
   }
 
+  getMarket(){
+    return this.market;
+  }
+
   nextPayer(){
     this.currentPlayer = ((this.currentPlayer+1) % this.users.size);
   }

@@ -23,14 +23,97 @@ function step1(){
 
 function step1BuyMarket(){
   //console.info("buy market");
-  game.addError(Errors.notImplemented());
-  step1()
+  KBlisten({
+    KBstartTyping : KEYBOARD_INT, // 0-9
+    step1BuyMarketFrom : KEYBOARD_RETURN, //↩
+    "options" : {"typing":true, "templates":[tpl_step1_base, tpl_step1_1]}
+  });
+  refreshWithTemplates([tpl_step1_base, tpl_step1_1]);
 }
+
+function step1BuyMarketFrom(){
+  //console.info("step1BuyMarketFrom");
+  let marketId=KBreturn();
+  let market=game.getMarket();
+
+  //if empty
+  if( marketId === "") {
+    return step1();
+  }
+
+  //if vendor doesn't exist
+  if(!market.getSales().has(marketId)) {
+    return step1BuyMarket();
+  }
+
+  //If Myself
+  if(market.getSales().get(offer["marketId"])["idUser"] === game.getCurrentUser().getId){
+    game.addError(Errors.cantBuyMyself());
+    return step1BuyMarket();
+  }
+
+  market.createOffer(game.getCurrentUser().getId, marketId);
+
+  KBlisten({
+    KBstartTyping : KEYBOARD_INT_TYPING, // 0-9 + backspace
+    step1BuyMarketFromAndHowMuch : KEYBOARD_RETURN, //↩
+    "options" : {"typing":true, "templates":[tpl_step1_base, tpl_step1_1b]}
+  });
+  refreshWithTemplates([tpl_step1_base, tpl_step1_1b]);
+}
+
+function step1BuyMarketFromAndHowMuch(){
+  //console.info("step1BuyMarketFromAndHowMuch");
+  let quantity=KBreturn();
+  let offer = market.getOffer();
+  let sale = market.getSales().get(offer["marketId"]);
+
+  if(sale["boisseaux"] < quantity) {
+    game.addError(Errors.notEnoughtStockOnMarket());
+    return step1BuyMarket();
+  }
+
+  if(sale["price"] * quantity > game.getCurrentUser().getMoney()) {
+    game.addError(Errors.notEnoughtMoney());
+    return step1BuyMarket();
+  }
+
+  //TODO resolve offer
+
+  step1();
+}
+/*
+static notEnoughtStock(){return NOT_ENOUGHT_STOCK}
+static priceTooHight(){return PRICE_TOO_HIGH}*/
+
 function step1SellMarket(){
   //console.info("sell market");
-  game.addError(Errors.notImplemented());
-  step1()
+  KBlisten({
+    KBstartTyping : KEYBOARD_INT_TYPING, // 0-9 + backspace
+    step1SellMarketWithPrice : KEYBOARD_RETURN, //↩
+    "options" : {"typing":true, "templates":[tpl_step1_base, tpl_step1_2]}
+  });
+  refreshWithTemplates([tpl_step1_base, tpl_step1_2]);
 }
+
+function step1SellMarketWithPrice(){
+  //console.info("step1SellMarketWithPrice");
+  KBlisten({
+    KBstartTyping : KEYBOARD_INT_TYPING, // 0-9 + backspace
+    step1DoSellMarketWithPrice : KEYBOARD_RETURN, //↩
+    "options" : {"typing":true, "templates":[tpl_step1_base, tpl_step1_2b]}
+  });
+  refreshWithTemplates([tpl_step1_base, tpl_step1_2b]);
+}
+
+function step1DoSellMarketWithPrice(){
+  //console.info("step1DoSellMarketWithPrice");
+
+  step1();
+}
+
+
+
 
 //Propose selling Land
 function step1SellLand(){

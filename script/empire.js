@@ -15,6 +15,10 @@ let tpl_tuto6 = null;
 let tpl_tuto7 = null;
 let tpl_step1_base = null;
 let tpl_step1 = null;
+let tpl_step1_1 = null;
+let tpl_step1_1b = null;
+let tpl_step1_2 = null;
+let tpl_step1_2b = null;
 let tpl_step1_3 = null;
 let tpl_step2 = null;
 let tpl_step3_base = null;
@@ -105,7 +109,7 @@ function step5(){
 }
 
 function pause(nextCall){
-  setTimeout(function(){ nextCall(); }, 3000);
+  setTimeout(function(){ nextCall(); }, 300);
 }
 
 function refreshWithTemplates(templates){
@@ -129,14 +133,14 @@ async function loadTemplates(){
   [tpl_start,
     tpl_tuto1, tpl_tuto2, tpl_tuto3, tpl_tuto4, tpl_tuto5, tpl_tuto6, tpl_tuto7,
     tpl_start1, tpl_start1a, tpl_start1b,
-    tpl_step1_base, tpl_step1, tpl_step1_3,
+    tpl_step1_base, tpl_step1, tpl_step1_1, tpl_step1_1b, tpl_step1_2,  tpl_step1_2b, tpl_step1_3,
     tpl_step2,
     tpl_step3_base, tpl_step3, tpl_step3_a, tpl_step3_b, tpl_step3_c,
     tpl_step4_base, tpl_step4, tpl_step4_a, tpl_step4_b
   ] = await Promise.all([new Tpl("start"),
     new Tpl("tuto1"), new Tpl("tuto2"), new Tpl("tuto3"), new Tpl("tuto4"), new Tpl("tuto5"), new Tpl("tuto6"), new Tpl("tuto7"),
     new Tpl("start1"), new Tpl("start1a"), new Tpl("start1b"),
-    new Tpl("step1_base"), new Tpl("step1"), new Tpl("step1_3"),
+    new Tpl("step1_base"), new Tpl("step1"), new Tpl("step1_1"), new Tpl("step1_1b"), new Tpl("step1_2"), new Tpl("step1_2b"), new Tpl("step1_3"),
     new Tpl("step2"),
     new Tpl("step3_base"), new Tpl("step3"), new Tpl("step3_a"), new Tpl("step3_b"), new Tpl("step3_c"),
     new Tpl("step4_base"), new Tpl("step4"), new Tpl("step4_a"), new Tpl("step4_b"),
