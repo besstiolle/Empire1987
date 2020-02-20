@@ -51,5 +51,5 @@ function tuto7(){
 }
 
 function tuto_end(){
-  startGame();
+  askNumberOfPlayer();
 }

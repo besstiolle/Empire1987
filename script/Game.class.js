@@ -14,7 +14,7 @@ class Game {
     this.rats = this.rollDice(5,30);
     //this.keyboardInput = "";
     this.currentPlayer = 1;
-    this.landPrice = 10;
+    this.landPrice = 2;
     this.errors = [];
   }
 
@@ -24,6 +24,10 @@ class Game {
 
   getCurrentUser(){
     return this.users.get(this.currentPlayer);
+  }
+
+  updateUser(user){
+    this.users.set(user.getId(), user);
   }
 
   getSalesInArray(){

@@ -3,6 +3,8 @@
 let game = null;
 let combat = null;
 let tpl_start = null;
+let tpl_start1 = null;
+let tpl_start1a = null;
 let tpl_tuto1 = null;
 let tpl_tuto2 = null;
 let tpl_tuto3 = null;
@@ -34,16 +36,48 @@ async function init(dot){
   game = new Game();
   combat = new Combat();
 
-  home();
-}
-
-function home(){
   KBlisten({
     startTuto : KEYBOARD_OY, // o y
-    startGame : KEYBOARD_N, // n
+    askNumberOfPlayer : KEYBOARD_N, // n
   });
 
   refreshWithTemplates([tpl_start]);
+}
+
+function askNumberOfPlayer(){
+  //console.info("askNumberOfPlayer")
+  KBlisten({
+    askNameOfPlayer : KEYBOARD_ONE, //↩
+  });
+
+  refreshWithTemplates([tpl_start1]);
+}
+
+function askNameOfPlayer(){
+  //console.info("askNameOfPlayer")
+  KBlisten({
+    KBstartTyping : KEYBOARD_NAME_TYPING, //↩
+    savePlayer : KEYBOARD_RETURN, //↩
+    "options" : {"typing":true, "templates":[tpl_start1a]}
+  });
+
+  refreshWithTemplates([tpl_start1a]);
+}
+
+function savePlayer(){
+  //console.info("savePlayer")
+  let name = KBreturn();
+  if( name !== ""){
+    if(name === "J") {
+      name = "Jeanne d'Arc"
+    }
+  } else {
+    name = "Hugues";
+  }
+
+  let user = new User(1,name)
+  game.updateUser(user);
+  startGame();
 }
 
 function startGame(){
@@ -86,12 +120,14 @@ function refreshWithTemplates(templates){
 async function loadTemplates(){
   [tpl_start,
     tpl_tuto1, tpl_tuto2, tpl_tuto3, tpl_tuto4, tpl_tuto5, tpl_tuto6, tpl_tuto7,
+    tpl_start1, tpl_start1a,
     tpl_step1_base, tpl_step1, tpl_step1_3,
     tpl_step2,
     tpl_step3_base, tpl_step3, tpl_step3_a, tpl_step3_b, tpl_step3_c,
     tpl_step4_base, tpl_step4, tpl_step4_a, tpl_step4_b
   ] = await Promise.all([new Tpl("start"),
     new Tpl("tuto1"), new Tpl("tuto2"), new Tpl("tuto3"), new Tpl("tuto4"), new Tpl("tuto5"), new Tpl("tuto6"), new Tpl("tuto7"),
+    new Tpl("start1"), new Tpl("start1a"),
     new Tpl("step1_base"), new Tpl("step1"), new Tpl("step1_3"),
     new Tpl("step2"),
     new Tpl("step3_base"), new Tpl("step3"), new Tpl("step3_a"), new Tpl("step3_b"), new Tpl("step3_c"),
