@@ -29,6 +29,7 @@ class Tpl {
     }
 
     //console.info("loadTpl > " + (Date.now() - start) + "ms");
+    console.error("template not found : " + 'templates/' + this.template + ".tpl")
     throw new Error(res.status);
   }
 

@@ -26,28 +26,8 @@ let tpl_step4_b = null;
 
 
 async function init(dot){
-  //const start = Date.now();
-  tpl_start = await new Tpl("start");
-  tpl_tuto1 = await new Tpl("tuto1");
-  tpl_tuto2 = await new Tpl("tuto2");
-  tpl_tuto3 = await new Tpl("tuto3");
-  tpl_tuto4 = await new Tpl("tuto4");
-  tpl_tuto5 = await new Tpl("tuto5");
-  tpl_tuto6 = await new Tpl("tuto6");
-  tpl_tuto7 = await new Tpl("tuto7");
-  tpl_step1_base = await new Tpl("step1_base");
-  tpl_step1 = await new Tpl("step1");
-  tpl_step1_3 = await new Tpl("step1_3");
-  tpl_step2 = await new Tpl("step2");
-  tpl_step3_base = await new Tpl("step3_base");
-  tpl_step3 = await new Tpl("step3");
-  tpl_step3_a = await new Tpl("step3_a");
-  tpl_step3_b = await new Tpl("step3_b");
-  tpl_step3_c = await new Tpl("step3_c");
-  tpl_step4_base = await new Tpl("step4_base");
-  tpl_step4 = await new Tpl("step4");
-  tpl_step4_a = await new Tpl("step4_a");
-  tpl_step4_b = await new Tpl("step4_b");
+//const start = Date.now();
+  await loadTemplates()
   //console.info("load all tpl > " + (Date.now() - start) + "ms");
 
   //Initiate the game
@@ -101,4 +81,20 @@ function refreshWithTemplates(templates){
 
   document.getElementById("game").innerHTML = datas;
   game.purgeErrors();
+}
+
+async function loadTemplates(){
+  [tpl_start,
+    tpl_tuto1, tpl_tuto2, tpl_tuto3, tpl_tuto4, tpl_tuto5, tpl_tuto6, tpl_tuto7,
+    tpl_step1_base, tpl_step1, tpl_step1_3,
+    tpl_step2,
+    tpl_step3_base, tpl_step3, tpl_step3_a, tpl_step3_b, tpl_step3_c,
+    tpl_step4_base, tpl_step4, tpl_step4_a, tpl_step4_b
+  ] = await Promise.all([new Tpl("start"),
+    new Tpl("tuto1"), new Tpl("tuto2"), new Tpl("tuto3"), new Tpl("tuto4"), new Tpl("tuto5"), new Tpl("tuto6"), new Tpl("tuto7"),
+    new Tpl("step1_base"), new Tpl("step1"), new Tpl("step1_3"),
+    new Tpl("step2"),
+    new Tpl("step3_base"), new Tpl("step3"), new Tpl("step3_a"), new Tpl("step3_b"), new Tpl("step3_c"),
+    new Tpl("step4_base"), new Tpl("step4"), new Tpl("step4_a"), new Tpl("step4_b"),
+  ])
 }
