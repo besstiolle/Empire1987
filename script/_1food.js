@@ -43,8 +43,7 @@ function step1DoSellLand(){
     let user = game.getCurrentUser();
     if(user.getLand() < keyboard){
       game.addError(Errors.notEnoughtLand())
-      step1SellLand();
-      return;
+      return step1SellLand();
     } else {
       user.setLand(user.getLand() - keyboard);
       user.setMoney(user.getMoney() + game.getLandPrice() * keyboard);

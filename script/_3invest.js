@@ -32,8 +32,7 @@ function step3DoSetTaxeA(){
   if(keyboard !== ""){
     if(keyboard > 50){
       game.addError(Errors.taxeATooHigh())
-      step3setTaxeA();
-      return;
+      return step3setTaxeA();
     } else {
       game.getCurrentUser().setTaxeA(keyboard);
     }
@@ -60,8 +59,7 @@ function step3DoSetTaxeB(){
   if(keyboard !== ""){
     if(keyboard > 50){
       game.addError(Errors.taxeBTooHigh())
-      step3setTaxeB();
-      return;
+      return step3setTaxeB();
     } else {
       game.getCurrentUser().setTaxeB(keyboard);
     }
@@ -88,8 +86,7 @@ function step3DoSetTaxeC(){
   if(keyboard !== ""){
     if(keyboard > 50){
       game.addError(Errors.taxeCTooHigh())
-      step3setTaxeC();
-      return;
+      return step3setTaxeC();
     } else {
       game.getCurrentUser().setTaxeC(keyboard);
     }

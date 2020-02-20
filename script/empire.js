@@ -23,7 +23,7 @@ let tpl_step4_b = null;
 
 
 async function init(dot){
-
+  //const start = Date.now();
   tpl_start = await new Tpl("start");
   tpl_tuto1 = await new Tpl("tuto1");
   tpl_tuto2 = await new Tpl("tuto2");
@@ -42,6 +42,7 @@ async function init(dot){
   tpl_step4 = await new Tpl("step4");
   tpl_step4_a = await new Tpl("step4_a");
   tpl_step4_b = await new Tpl("step4_b");
+  //console.info("load all tpl > " + (Date.now() - start) + "ms");
 
   //Initiate the game
   game = new Game();
@@ -51,11 +52,12 @@ async function init(dot){
 }
 
 function home(){
-  refreshWithTemplate(tpl_start);
   KBlisten({
     startTuto : KEYBOARD_OY, // o y
     startGame : KEYBOARD_N, // n
   });
+
+  refreshWithTemplate(tpl_start);
 }
 
 function startGame(){
@@ -66,10 +68,11 @@ function startGame(){
 //Démographie
 function step2(){
   //console.info("step2")
-  refreshWithTemplate(tpl_step2);
   KBlisten({
     step3 : KEYBOARD_RETURN, //↩
   });
+  
+  refreshWithTemplate(tpl_step2);
 }
 
 function step5(){

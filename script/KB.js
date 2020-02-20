@@ -62,9 +62,6 @@ function KBkeyboardBinder(vars, event){
       template = vars["options"]["template"];
   }
 
-  /*if (event.defaultPrevented) {
-    return; // Do nothing if the event was already processed
-  }*/
   for (let [key,value] of Object.entries(vars)) {
     if(Array.isArray(value) && value.includes(event.keyCode)){
       if(!typing){
