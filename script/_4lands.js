@@ -4,20 +4,17 @@
 // Terres vassales, choix de l'adversaire
 function step4(){
   //console.info("step4")
-  document.removeEventListener('keydown',KEY_BINDER);
-  refreshWithTemplate(tpl_step4);
-  KEY_BINDER = keyboardBinder.bind(null, {
+  KBlisten({
     step4choosingArmy : KEYBOARD_INT, // o y
-    step5 : [13], //↩
-    "default" : "return"
+    step5 : KEYBOARD_RETURN, //↩
   });
-  document.addEventListener('keydown', KEY_BINDER, false);
+
+  refreshWithTemplate(tpl_step4);
 }
 
 //Selection du nombre de soldat
 function step4choosingArmy(keyCode){
   //console.info("step4choosingArmy(" + keyCode + ")");
-  document.removeEventListener('keydown',KEY_BINDER);
   game.purgeErrors();
 
   //Test if opponent is available
@@ -45,26 +42,24 @@ function step4choosingArmy(keyCode){
   //console.info("fight opposant #" + opponent);
   combat.initiateNewCombat(game.getCurrentUser().getId(), opponent);
 
-  //else choose number of soldier
-  refreshWithTemplate(tpl_step4_b);
-  KEY_BINDER = keyboardBinder.bind(null, {
-    startTyping : KEYBOARD_INT_TYPING, // 0-9 + backspace
-    step4fight : [13], //↩
-    "default" : "return",
+  KBlisten({
+    KBstartTyping : KEYBOARD_INT_TYPING, // 0-9 + backspace
+    step4fight : KEYBOARD_RETURN, //↩
     "options" : {"typing":true, "template":tpl_step4_b}
   });
-  document.addEventListener('keydown', KEY_BINDER, false);
+  //else choose number of soldier
+  refreshWithTemplate(tpl_step4_b);
 }
 
 
 //Selection du nombre de soldat
 function step4fight(){
   //console.info("step4fight()");
-  document.removeEventListener('keydown',KEY_BINDER);
+  let keyboard = KBreturn();
   game.purgeErrors();
   //Test if no input
-  if(game.keyboardInput !== ""){
-    let ost = parseInt(game.keyboardInput);
+  if(keyboard !== ""){
+    let ost = parseInt(keyboard);
     //Test if we have enought ost men
     if(game.getCurrentUser().getOst() < ost){
       //console.info("pas assez d'ost");
@@ -74,6 +69,5 @@ function step4fight(){
       combat.execute(ost);
     }
   }
-  game.resetTyping();
   return step4();
 }

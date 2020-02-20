@@ -1,66 +1,53 @@
 "use strict";
 
 function startTuto(){
-  refreshWithTemplate(tpl_tuto1);
-  KEY_BINDER = keyboardBinder.bind(null, {
-    tuto2 : [13], // ↩
-    "default" : "return"
+  KBlisten({
+    tuto2 : KEYBOARD_RETURN, // ↩
   });
-  document.addEventListener('keydown', KEY_BINDER, false);
+  refreshWithTemplate(tpl_tuto1);
+
 }
 
 function tuto2(){
-  refreshWithTemplate(tpl_tuto2);
-  KEY_BINDER = keyboardBinder.bind(null, {
-    tuto3 : [13], // ↩
-    "default" : "return"
+  KBlisten({
+    tuto3 : KEYBOARD_RETURN, // ↩
   });
-  document.addEventListener('keydown', KEY_BINDER, false);
+  refreshWithTemplate(tpl_tuto2);
 }
 
 function tuto3(){
-  refreshWithTemplate(tpl_tuto3);
-  KEY_BINDER = keyboardBinder.bind(null, {
-    tuto4 : [13], // ↩
-    "default" : "return"
+  KBlisten({
+    tuto4 : KEYBOARD_RETURN, // ↩
   });
-  document.addEventListener('keydown', KEY_BINDER, false);
+  refreshWithTemplate(tpl_tuto3);
 }
 
 function tuto4(){
-  refreshWithTemplate(tpl_tuto4);
-  KEY_BINDER = keyboardBinder.bind(null, {
-    tuto5 : [13], // ↩
-    "default" : "return"
+  KBlisten({
+    tuto5 : KEYBOARD_RETURN, // ↩
   });
-  document.addEventListener('keydown', KEY_BINDER, false);
+  refreshWithTemplate(tpl_tuto4);
 }
 
 function tuto5(){
-  refreshWithTemplate(tpl_tuto5);
-  KEY_BINDER = keyboardBinder.bind(null, {
-    tuto6 : [13], // ↩
-    "default" : "return"
+  KBlisten({
+    tuto6 : KEYBOARD_RETURN, // ↩
   });
-  document.addEventListener('keydown', KEY_BINDER, false);
+  refreshWithTemplate(tpl_tuto5);
 }
 
 function tuto6(){
-  refreshWithTemplate(tpl_tuto6);
-  KEY_BINDER = keyboardBinder.bind(null, {
-    tuto7 : [13], // ↩
-    "default" : "return"
+  KBlisten({
+    tuto7 : KEYBOARD_RETURN, // ↩
   });
-  document.addEventListener('keydown', KEY_BINDER, false);
+  refreshWithTemplate(tpl_tuto6);
 }
 
 function tuto7(){
-  refreshWithTemplate(tpl_tuto7);
-  KEY_BINDER = keyboardBinder.bind(null, {
-    tuto_end : [13], // ↩
-    "default" : "return"
+  KBlisten({
+    tuto_end : KEYBOARD_RETURN, // ↩
   });
-  document.addEventListener('keydown', KEY_BINDER, false);
+  refreshWithTemplate(tpl_tuto7);
 }
 
 function tuto_end(){

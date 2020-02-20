@@ -16,5 +16,5 @@
 <l> 6) Palais           {{=it.user.palais.toString().padStart(7)}}% terminé             5000</l>
 <l></l>
 <l></l>
-<l>Quelle valeur pour les impôts directs (50% max) ? {{=it.game.keyboardInput}}&#9617;</l>
+<l>Quelle valeur pour les impôts directs (50% max) ? {{=it.KB_BUFFER}}&#9617;</l>
 {{? it.game.errors.includes("TAXE_C_TOO_HIGH") }}<l>Vous ne pouvez dépasser les 50%.</l>{{?}}

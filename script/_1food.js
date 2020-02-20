@@ -2,20 +2,16 @@
 
 // Manage Market & food
 function step1(){
-
   //console.info("step1")
+  KBlisten({
+    step1BuyMarket : KEYBOARD_ONE, // 1
+    step1SellMarket : KEYBOARD_TWO, // 2
+    step1SellLand : KEYBOARD_THREE, // 3
+    step2 : KEYBOARD_RETURN, // ↩
+  });
+
   refreshWithTemplate(tpl_step1);
   game.purgeErrors();
-
-  // thank you https://keycode.info/
-  KEY_BINDER = keyboardBinder.bind(null, {
-    step1BuyMarket : [97,49], // 1
-    step1SellMarket : [98,50], // 2
-    step1SellLand : [99,51], // 3
-    step2 : [13], // ↩
-    "default" : "return"
-  });
-  document.addEventListener('keydown', KEY_BINDER, false);
 }
 
 function step1BuyMarket(){
@@ -32,35 +28,29 @@ function step1SellMarket(){
 //Propose selling Land
 function step1SellLand(){
   //console.info("sell land")
-  refreshWithTemplate(tpl_step1_3);
-
-  game.resetTyping();
-  KEY_BINDER = keyboardBinder.bind(null, {
-    startTyping : KEYBOARD_INT_TYPING, // 0-9 + backspace
-    step1DoSellLand : [13], //↩
-    "default" : "return",
+  KBlisten({
+    KBstartTyping : KEYBOARD_INT_TYPING, // 0-9 + backspace
+    step1DoSellLand : KEYBOARD_RETURN, //↩
     "options" : {"typing":true, "template":tpl_step1_3}
   });
-  document.addEventListener('keydown', KEY_BINDER, false);
+  refreshWithTemplate(tpl_step1_3);
 }
 
 // Do selling land
 function step1DoSellLand(){
   //console.info("go sell market")
   game.purgeErrors();
-  document.removeEventListener('keydown',KEY_BINDER);
-  if(game.keyboardInput !== ""){
+  let keyboard = KBreturn();
+  if(keyboard !== ""){
     let user = game.getCurrentUser();
-    if(user.getLand() < game.keyboardInput){
+    if(user.getLand() < keyboard){
       game.addError(Errors.notEnoughtLand())
-      game.resetTyping();
       step1SellLand();
       return;
     } else {
-      user.setLand(user.getLand() - game.keyboardInput);
-      user.setMoney(user.getMoney() + game.getLandPrice() * game.keyboardInput);
+      user.setLand(user.getLand() - keyboard);
+      user.setMoney(user.getMoney() + game.getLandPrice() * keyboard);
     }
   }
-  game.resetTyping();
   step1();
 }

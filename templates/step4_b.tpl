@@ -16,4 +16,4 @@
 <l></l>
 <l></l>
 <l></l>
-<l>          &#8617; ou Combien d'hommes {{=it.user.ost}}? {{=it.game.keyboardInput}}&#9617;</l>
+<l>          &#8617; ou Combien d'hommes {{=it.user.ost}}? {{=it.KB_BUFFER}}&#9617;</l>
