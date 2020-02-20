@@ -1,5 +1,13 @@
 "use strict";
 
+function step1Meteo(){
+  //console.info("step1Meteo")
+  //TODO Meteo
+
+  refreshWithTemplates([tpl_start1b]);
+  pause(step1);
+}
+
 // Manage Market & food
 function step1(){
   //console.info("step1")

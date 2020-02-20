@@ -5,6 +5,7 @@ let combat = null;
 let tpl_start = null;
 let tpl_start1 = null;
 let tpl_start1a = null;
+let tpl_start1b = null;
 let tpl_tuto1 = null;
 let tpl_tuto2 = null;
 let tpl_tuto3 = null;
@@ -82,12 +83,15 @@ function savePlayer(){
 
 function startGame(){
   //Start the phase
-  step1()
+  step1Meteo();
 }
 
 //Démographie
 function step2(){
   //console.info("step2")
+
+  //TODO Démographie;
+
   KBlisten({
     step3 : KEYBOARD_RETURN, //↩
   });
@@ -98,6 +102,10 @@ function step2(){
 function step5(){
   console.info("step5")
   KBstop();
+}
+
+function pause(nextCall){
+  setTimeout(function(){ nextCall(); }, 3000);
 }
 
 function refreshWithTemplates(templates){
@@ -120,14 +128,14 @@ function refreshWithTemplates(templates){
 async function loadTemplates(){
   [tpl_start,
     tpl_tuto1, tpl_tuto2, tpl_tuto3, tpl_tuto4, tpl_tuto5, tpl_tuto6, tpl_tuto7,
-    tpl_start1, tpl_start1a,
+    tpl_start1, tpl_start1a, tpl_start1b,
     tpl_step1_base, tpl_step1, tpl_step1_3,
     tpl_step2,
     tpl_step3_base, tpl_step3, tpl_step3_a, tpl_step3_b, tpl_step3_c,
     tpl_step4_base, tpl_step4, tpl_step4_a, tpl_step4_b
   ] = await Promise.all([new Tpl("start"),
     new Tpl("tuto1"), new Tpl("tuto2"), new Tpl("tuto3"), new Tpl("tuto4"), new Tpl("tuto5"), new Tpl("tuto6"), new Tpl("tuto7"),
-    new Tpl("start1"), new Tpl("start1a"),
+    new Tpl("start1"), new Tpl("start1a"), new Tpl("start1b"),
     new Tpl("step1_base"), new Tpl("step1"), new Tpl("step1_3"),
     new Tpl("step2"),
     new Tpl("step3_base"), new Tpl("step3"), new Tpl("step3_a"), new Tpl("step3_b"), new Tpl("step3_c"),
