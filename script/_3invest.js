@@ -10,7 +10,7 @@ function step3(){
     step4 : KEYBOARD_RETURN, //↩
   });
 
-  refreshWithTemplate(tpl_step3);
+  refreshWithTemplates([tpl_step3_base, tpl_step3]);
 }
 
 //Propose setting taxe A
@@ -19,10 +19,10 @@ function step3setTaxeA(){
   KBlisten({
     KBstartTyping : KEYBOARD_INT_TYPING, // 0-9 + backspace
     step3DoSetTaxeA : KEYBOARD_RETURN, //↩
-    "options" : {"typing":true, "template":tpl_step3_a}
+    "options" : {"typing":true, "templates":[tpl_step3_base, tpl_step3_a]}
   });
 
-  refreshWithTemplate(tpl_step3_a);
+  refreshWithTemplates([tpl_step3_base, tpl_step3_a]);
 }
 
 // Do set Taxe A
@@ -46,10 +46,10 @@ function step3setTaxeB(){
   KBlisten({
       KBstartTyping : KEYBOARD_INT_TYPING, // 0-9 + backspace
       step3DoSetTaxeB : KEYBOARD_RETURN, //↩
-      "options" : {"typing":true, "template":tpl_step3_b}
+      "options" : {"typing":true, "templates":[tpl_step3_base, tpl_step3_b]}
   });
 
-  refreshWithTemplate(tpl_step3_b);
+  refreshWithTemplates([tpl_step3_base, tpl_step3_b]);
 }
 
 // Do set Taxe B
@@ -72,10 +72,10 @@ function step3setTaxeC(){
   KBlisten({
       KBstartTyping : KEYBOARD_INT_TYPING, // 0-9 + backspace
       step3DoSetTaxeC : KEYBOARD_RETURN, //↩
-      "options" : {"typing":true, "template":tpl_step3_c}
+      "options" : {"typing":true, "templates":[tpl_step3_base, tpl_step3_c]}
   });
 
-  refreshWithTemplate(tpl_step3_c);
+  refreshWithTemplates([tpl_step3_base, tpl_step3_c]);
 }
 
 // Do set Taxe C

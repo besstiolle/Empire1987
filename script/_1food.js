@@ -10,7 +10,7 @@ function step1(){
     step2 : KEYBOARD_RETURN, // ↩
   });
 
-  refreshWithTemplate(tpl_step1);
+  refreshWithTemplates([tpl_step1_base, tpl_step1]);
 }
 
 function step1BuyMarket(){
@@ -30,9 +30,9 @@ function step1SellLand(){
   KBlisten({
     KBstartTyping : KEYBOARD_INT_TYPING, // 0-9 + backspace
     step1DoSellLand : KEYBOARD_RETURN, //↩
-    "options" : {"typing":true, "template":tpl_step1_3}
+    "options" : {"typing":true, "templates":[tpl_step1_base, tpl_step1_3]}
   });
-  refreshWithTemplate(tpl_step1_3);
+  refreshWithTemplates([tpl_step1_base, tpl_step1_3]);
 }
 
 // Do selling land

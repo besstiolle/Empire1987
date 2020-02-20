@@ -51,15 +51,15 @@ function KBkeyboardBinder(vars, event){
   }
   //Cumulative typing mode
   let typing=false;
-  let template=null;
+  let templates=null;
   let KB = vars["KB"];
 
   if("options" in vars &&
        "typing" in vars["options"] &&
-       "template" in vars["options"] &&
+       "templates" in vars["options"] &&
        vars["options"]["typing"] === true) {
       typing = true;
-      template = vars["options"]["template"];
+      templates = vars["options"]["templates"];
   }
 
   for (let [key,value] of Object.entries(vars)) {
@@ -68,8 +68,8 @@ function KBkeyboardBinder(vars, event){
         KBstop();
       }
       eval(key+"(event.keyCode)");
-      if(template !== null && event.keyCode !== 13){
-          refreshWithTemplate(template);
+      if(templates !== null && event.keyCode !== 13){
+          refreshWithTemplates(templates);
       }
     }
   }

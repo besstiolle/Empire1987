@@ -9,7 +9,7 @@ function step4(){
     step5 : KEYBOARD_RETURN, //↩
   });
 
-  refreshWithTemplate(tpl_step4);
+  refreshWithTemplates([tpl_step4_base, tpl_step4]);
 }
 
 //Selection du nombre de soldat
@@ -44,10 +44,10 @@ function step4choosingArmy(keyCode){
   KBlisten({
     KBstartTyping : KEYBOARD_INT_TYPING, // 0-9 + backspace
     step4fight : KEYBOARD_RETURN, //↩
-    "options" : {"typing":true, "template":tpl_step4_b}
+    "options" : {"typing":true, "templates":[tpl_step4_base, tpl_step4_b]}
   });
   //else choose number of soldier
-  refreshWithTemplate(tpl_step4_b);
+  refreshWithTemplates([tpl_step4_base, tpl_step4_b]);
 }
 
 
