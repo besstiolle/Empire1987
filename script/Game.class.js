@@ -12,7 +12,6 @@ class Game {
     this.market = new Market();
     this.year = 1;
     this.rats = this.rollDice(5,30);
-    //this.keyboardInput = "";
     this.currentPlayer = 1;
     this.landPrice = 2;
     this.errors = [];

@@ -120,7 +120,7 @@ function refreshWithTemplates(templates){
       "user": game.getCurrentUser(),
       "users": game.getUsers(),
       "game": game,
-      "sales": game.getSalesInArray(),
+      "sales": [...game.getSalesInArray()],
       "KB_BUFFER": KB_BUFFER
     });
   }
