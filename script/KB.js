@@ -40,22 +40,24 @@ function KBreturn(){
 }
 
 function KBstartTyping(key){
+  console.info("KBstartTyping(" + KB_BUFFER + ")");
   if(key == 8) {
     KB_BUFFER = KB_BUFFER.substring(0, KB_BUFFER.length - 1);
   } else {
-    KB_BUFFER += String.fromCharCode((96 <= key && key <= 105)? key-48 : key);
+    KB_BUFFER += eventKeyToJScode(key);
+    //console.info("Buffer = " + KB_BUFFER);
   }
 }
 
 function KBkeyboardBinder(vars, event){
 
+  //Avoid anything but F5
   if(event.keyCode !== 116){
     event.preventDefault();
   }
   //Cumulative typing mode
   let typing=false;
   let templates=null;
-  let KB = vars["KB"];
 
   if("options" in vars &&
        "typing" in vars["options"] &&
@@ -70,7 +72,12 @@ function KBkeyboardBinder(vars, event){
       if(!typing){
         KBstop();
       }
-      eval(key+"(event.keyCode)");
+      let jsCode = event.keyCode;
+      //console.info("eval("+key+"("+jsCode+"))")
+      if(key !== "KBstartTyping"){
+        jsCode = eventKeyToJScode(jsCode);
+      }
+      eval(key+"(jsCode)");
       if(templates !== null && event.keyCode !== 13){
           refreshWithTemplates(templates);
       }
@@ -83,5 +90,7 @@ function KBkeyboardBinder(vars, event){
   if(!typing){
     KBstop();
   }
-  vars["default"](event.keyCode)
+  vars["default"](eventKeyToJScode(event.keyCode));
 }
+
+function eventKeyToJScode(key){ return String.fromCharCode((96 <= key && key <= 105)? key-48 : key);}
