@@ -24,35 +24,38 @@ function step1(){
 function step1BuyMarket(){
   //console.info("buy market");
   KBlisten({
-    KBstartTyping : KEYBOARD_INT, // 0-9
-    step1BuyMarketFrom : KEYBOARD_RETURN, //↩
-    "options" : {"typing":true, "templates":[tpl_step1_base, tpl_step1_1]}
+    step1BuyMarketFrom : KEYBOARD_INT, // 0-9
+    step1 : KEYBOARD_RETURN, //↩
   });
   refreshWithTemplates([tpl_step1_base, tpl_step1_1]);
 }
 
-function step1BuyMarketFrom(){
-  //console.info("step1BuyMarketFrom");
-  let marketId=KBreturn();
+function step1BuyMarketFrom(from){
+  console.info("step1BuyMarketFrom " + from);
+  let marketId=parseInt(from);
   let market=game.getMarket();
 
   //if empty
   if( marketId === "") {
+    console.info("marketId empty");
     return step1();
   }
 
   //if vendor doesn't exist
   if(!market.getSales().has(marketId)) {
+    console.info("marketId " + marketId + " doest exist");
     return step1BuyMarket();
   }
 
   //If Myself
-  if(market.getSales().get(offer["marketId"])["idUser"] === game.getCurrentUser().getId){
+  if(market.getSales().get(marketId)["idUser"] === game.getCurrentUser().getId()){
     game.addError(Errors.cantBuyMyself());
+    console.info("myself");
+
     return step1BuyMarket();
   }
 
-  market.createOffer(game.getCurrentUser().getId, marketId);
+  market.createOffer(game.getCurrentUser().getId(), marketId);
 
   KBlisten({
     KBstartTyping : KEYBOARD_INT_TYPING, // 0-9 + backspace
@@ -64,21 +67,27 @@ function step1BuyMarketFrom(){
 
 function step1BuyMarketFromAndHowMuch(){
   //console.info("step1BuyMarketFromAndHowMuch");
-  let quantity=KBreturn();
+  let quantity=parseInt(KBreturn());
+  let market=game.getMarket();
+
   let offer = market.getOffer();
   let sale = market.getSales().get(offer["marketId"]);
 
+  if(isNaN(quantity)){
+    return step1();
+  }
+
   if(sale["boisseaux"] < quantity) {
     game.addError(Errors.notEnoughtStockOnMarket());
-    return step1BuyMarket();
+    return step1BuyMarketFrom(offer["marketId"]);
   }
 
   if(sale["price"] * quantity > game.getCurrentUser().getMoney()) {
     game.addError(Errors.notEnoughtMoney());
-    return step1BuyMarket();
+    return step1BuyMarketFrom(offer["marketId"]);
   }
 
-  //TODO resolve offer
+  game.resolveMarketOffer(quantity);
 
   step1();
 }

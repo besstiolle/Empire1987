@@ -63,4 +63,25 @@ class Game {
   }
 
 
+  resolveMarketOffer(quantity){
+    //console.info("resolveMarketOffer() " + quantity);
+    let sale = this.market.getSales().get(this.market.getOffer()["marketId"]);
+    let seller = this.users.get(sale['idUser']);
+    let buyer = this.getCurrentUser()
+
+    seller.addMoney(sale.price * quantity);
+    buyer.addMoney(-1 * (sale.price * quantity));
+    buyer.addSupply(quantity);
+    sale.boisseaux = sale.boisseaux - quantity;
+
+    if(sale.boisseaux == 0){
+      this.market.removeSale(this.market.getOffer()["marketId"]);
+    } else {
+      this.market.getSales().set(this.market.getOffer()["marketId"], sale);
+    }
+    this.users.set(seller.getId(), seller);
+    this.users.set(buyer.getId(), buyer);
+  }
+
+
 }

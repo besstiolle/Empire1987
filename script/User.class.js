@@ -46,6 +46,9 @@ class User {
   setTaxeB(taxeB){this.taxeB = taxeB;}
   setTaxeC(taxeC){this.taxeC = taxeC;}
   setOst(ost){this.ost = ost;}
+
+  addMoney(money){this.money += money;}
+  addSupply(supply){this.supply += supply;}
 //  setPosition(position){this.position = position;}
 
 }

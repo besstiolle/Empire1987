@@ -8,7 +8,8 @@ class Market {
   reset(){
     this.sales = new Map();
     this.addSales(1,"France", 10, 1);
-    this.addSales(3,"Inde", 10, 1);
+    this.addSales(2,"Suisse", 100, 0.01);
+    this.addSales(3,"Inde", 100, 50);
     this.addSales(1,"France", 20, 0.5);
     this.offer = null
     //console.info(this.sales);
@@ -33,7 +34,7 @@ class Market {
   }
 
   getSalesInArray(){
-    console.info("getSalesInArray()")
+    //console.info("getSalesInArray()")
     return this.sales.values();
   }
 
@@ -55,18 +56,15 @@ class Market {
     return keyValue;
   }
 
-  createOffer(userId, marketId){
-    this.offer = {"userId" : userId, "marketId": marketId};
+  createOffer(buyerId, marketId){
+    this.offer = {"buyerId" : buyerId, "marketId": marketId};
   }
 
   getOffer(){
     return this.offer;
   }
-/*
-  buy(seller,customer, boisseaux){
-    this.sales[seller.getId()]["boisseaux"] -= boisseaux
-    if(this.sales[seller.getId()]["boisseaux"] == 0){
-      delete this.sales[seller.getId()];
-    }
-  }*/
+
+  removeSale(marketId){
+    console.info("TODO removeSale(marketId)")
+  }
 }
