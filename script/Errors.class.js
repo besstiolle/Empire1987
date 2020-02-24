@@ -10,6 +10,10 @@ const NOT_ENOUGHT_MONEY = "NOT_ENOUGHT_MONEY"
 const NOT_ENOUGHT_STOCK_ON_MARKET = "NOT_ENOUGHT_STOCK_ON_MARKET"
 const NOT_ENOUGHT_LAND = "NOT_ENOUGHT_LAND"
 
+//Demographie
+//const NOT_ENOUGHT_STOCK = "NOT_ENOUGHT_STOCK"
+const AT_LAST_10_PERCENT = "AT_LAST_10_PERCENT"
+
 //Taxes
 const TAXE_A_TOO_HIGH = "TAXE_A_TOO_HIGH"
 const TAXE_B_TOO_HIGH = "TAXE_B_TOO_HIGH"
@@ -35,4 +39,5 @@ class Errors {
   static cantBuyMyself(){return CANT_BUY_MYSELF}
   static notEnoughtMoney(){return NOT_ENOUGHT_MONEY}
   static notEnoughtStockOnMarket(){return NOT_ENOUGHT_STOCK_ON_MARKET}
+  static atLast10Percent(){return AT_LAST_10_PERCENT}
 }

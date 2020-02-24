@@ -15,7 +15,7 @@ function step1(){
     step1BuyMarket : KEYBOARD_ONE, // 1
     step1SellMarket : KEYBOARD_TWO, // 2
     step1SellLand : KEYBOARD_THREE, // 3
-    step2 : KEYBOARD_RETURN, // ↩
+    step1GiveToOst : KEYBOARD_RETURN, // ↩
   });
 
   refreshWithTemplates([tpl_step1_base, tpl_step1]);
@@ -177,4 +177,69 @@ function step1DoSellLand(){
     }
   }
   step1();
+}
+
+function step1GiveToOst(){
+  KBlisten({
+    KBstartTyping : KEYBOARD_INT_TYPING, // 0-9 + backspace
+    step1DoGiveToOst : KEYBOARD_RETURN, //↩
+    "options" : {"typing":true, "templates":[tpl_step1_base, tpl_step1_4]}
+  });
+  refreshWithTemplates([tpl_step1_base, tpl_step1_4]);
+}
+
+function step1DoGiveToOst(){
+
+  let quantity=parseInt(KBreturn());
+  if(isNaN(quantity)){
+    quantity = 0;
+  }
+
+  if(quantity > game.getCurrentUser().getSupply()){
+      game.addError(Errors.notEnoughtStock())
+      return step1GiveToOst();
+  }
+
+  game.getCurrentUser().addSupply(-1 * quantity);
+  game.getCurrentUser().setSupplyOst(quantity);
+
+  return step1GiveToPeople();
+}
+
+function step1GiveToPeople(){
+
+  KBlisten({
+    KBstartTyping : KEYBOARD_INT_TYPING, // 0-9 + backspace
+    step1DoGiveToPeople : KEYBOARD_RETURN, //↩
+    "options" : {"typing":true, "templates":[tpl_step1_base, tpl_step1_5]}
+  });
+  refreshWithTemplates([tpl_step1_base, tpl_step1_5]);
+}
+
+function step1DoGiveToPeople(){
+
+  let quantity=parseInt(KBreturn());
+  if(isNaN(quantity)){
+    quantity = 0;
+  }
+
+
+  if(quantity > game.getCurrentUser().getSupply()){
+    console.info(Errors.notEnoughtStock());
+    game.addError(Errors.notEnoughtStock())
+    return step1GiveToPeople();
+  }
+
+  if(quantity < game.getCurrentUser().getNeedPeople() && quantity < (0.1 * game.getCurrentUser().getSupply())){
+    console.info(Errors.atLast10Percent());
+    game.addError(Errors.atLast10Percent())
+    return step1GiveToPeople();
+  }
+
+  game.getCurrentUser().addSupply(-1 * quantity);
+  game.getCurrentUser().setSupplyPeople(quantity);
+
+console.info(">" + game.getCurrentUser().getSupply());
+
+  return step2();
 }

@@ -18,8 +18,10 @@ class User {
     this.supply = 12842;
     this.people = 2026;
     this.needPeople = 10140;
+    this.supplyPeople = 0;
     this.ost=20;
     this.needOst = 160;
+    this.supplyOst = 0;
     this.money = 1000;
     this.land = 5000;
 
@@ -39,6 +41,7 @@ class User {
   getSupply(){return this.supply;}
   getOst(){return this.ost;}
   getCountry(){return this.country;}
+  getNeedPeople(){return this.needPeople;}
 
   setLand(land){this.land = land;}
   setMoney(money){this.money = money;}
@@ -46,6 +49,8 @@ class User {
   setTaxeB(taxeB){this.taxeB = taxeB;}
   setTaxeC(taxeC){this.taxeC = taxeC;}
   setOst(ost){this.ost = ost;}
+  setSupplyPeople(supplyPeople){this.supplyPeople = supplyPeople;}
+  setSupplyOst(supplyOst){this.supplyOst = supplyOst;}
 
   addMoney(money){this.money += money;}
   addSupply(supply){this.supply += supply;}
