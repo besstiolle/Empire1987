@@ -9,6 +9,8 @@ function step1MeteoAndRats(){
   game.getCurrentUser().addSupply( (-1 * (game.getCurrentUser().getSupply() * game.getRats() / 100)) + game.getCurrentUser().getHarvest())
 
   refreshWithTemplates([tpl_start1b]);
+  //Explicitly remove event listening
+  KBstop();
   pause(step1);
 }
 
