@@ -31,26 +31,26 @@ function step1BuyMarket(){
 }
 
 function step1BuyMarketFrom(from){
-  console.info("step1BuyMarketFrom " + from);
+  //console.info("step1BuyMarketFrom " + from);
   let marketId=parseInt(from);
   let market=game.getMarket();
 
   //if empty
   if( marketId === "") {
-    console.info("marketId empty");
+    //console.info("marketId empty");
     return step1();
   }
 
   //if vendor doesn't exist
   if(!market.getSales().has(marketId)) {
-    console.info("marketId " + marketId + " doest exist");
+    //console.info("marketId " + marketId + " doest exist");
     return step1BuyMarket();
   }
 
   //If Myself
   if(market.getSales().get(marketId)["idUser"] === game.getCurrentUser().getId()){
     game.addError(Errors.cantBuyMyself());
-    console.info("myself");
+    //console.info("myself");
 
     return step1BuyMarket();
   }

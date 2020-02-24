@@ -40,7 +40,7 @@ function KBreturn(){
 }
 
 function KBstartTyping(key){
-  console.info("KBstartTyping(" + KB_BUFFER + ")");
+  //console.info("KBstartTyping(" + KB_BUFFER + ")");
   if(key == 8) {
     KB_BUFFER = KB_BUFFER.substring(0, KB_BUFFER.length - 1);
   } else {
