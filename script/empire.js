@@ -89,7 +89,7 @@ function savePlayer(){
 
 function startGame(){
   //Start the phase
-  step1Meteo();
+  step1MeteoAndRats();
 }
 
 function step5(){
@@ -111,7 +111,7 @@ function refreshWithTemplates(templates, vars = {}){
     "sales": [...game.getSalesInArray()],
     "KB_BUFFER": KB_BUFFER
     }, vars)
-    
+
   for (const template of templates) {
     datas += template.run(vars);
   }

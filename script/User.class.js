@@ -72,6 +72,7 @@ class User {
   getCountry(){return this.country;}
   getPeople(){return this.people;}
   getNeedPeople(){return this.needPeople;}
+  getHarvest(){return this.harvest;}
 
   setTaxeA(taxeA){this.taxeA = taxeA;}
   setTaxeB(taxeB){this.taxeB = taxeB;}
@@ -79,6 +80,7 @@ class User {
   setOst(ost){this.ost = ost;}
   setSupplyPeople(supplyPeople){this.supplyPeople = supplyPeople;}
   setSupplyOst(supplyOst){this.supplyOst = supplyOst;}
+  setHarvest(harvest){this.harvest = harvest;}
 
   addMoney(money){this.money += money;}
   addSupply(supply){this.supply += supply;}

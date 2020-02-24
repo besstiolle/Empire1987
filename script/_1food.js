@@ -1,8 +1,12 @@
 "use strict";
 
-function step1Meteo(){
+function step1MeteoAndRats(){
   //console.info("step1Meteo")
-  //TODO Meteo
+  game.setMeteo(game.rollDiceInteger(0,3));
+
+  game.setRats(game.rollDiceInteger(5,30));
+  game.getCurrentUser().setHarvest(game.getCurrentUser().getSupply() * 1.2 * game.getMeteoPercent());
+  game.getCurrentUser().addSupply( (-1 * (game.getCurrentUser().getSupply() * game.getRats() / 100)) + game.getCurrentUser().getHarvest())
 
   refreshWithTemplates([tpl_start1b]);
   pause(step1);

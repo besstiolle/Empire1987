@@ -11,7 +11,8 @@ class Game {
                           [7,new User(7, "sept")]]);
     this.market = new Market();
     this.year = 1;
-    this.rats = this.rollDiceInteger(5,30);
+    this.rats = 0;
+    this.meteo = null;
     this.currentPlayer = 1;
     this.landPrice = 2;
     this.errors = [];
@@ -35,6 +36,33 @@ class Game {
 
   getMarket(){
     return this.market;
+  }
+
+  setMeteo(meteo){
+    this.meteo = meteo;
+  }
+  getMeteo(){
+    return this.meteo;
+  }
+
+  getMeteoPercent(){
+    switch (this.meteo) {
+      case 0:
+        return 0.25
+      case 1:
+        return 0.75
+      case 2:
+        return 1.25
+      case 3:
+        return 2
+    }
+  }
+
+  setRats(rats){
+    this.rats = rats
+  }
+  getRats(){
+    return this.rats;
   }
 
   nextPayer(){
