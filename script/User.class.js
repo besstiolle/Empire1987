@@ -32,6 +32,35 @@ class User {
     this.palais = 0;
   }
 
+  /**
+   * Return the value of satisfaction 0 -> 200%
+   */
+  getSatisfactionPeople(){
+    if(this.needPeople == 0){
+      return 0;
+    }
+    let satisfaction = 100 * this.supplyPeople / this.needPeople;
+    if(satisfaction > 200){
+      satisfaction = 200;
+    }
+    return Math.floor(satisfaction);
+  }
+
+  /**
+   * Return the value of satisfaction 0 -> 200%
+   */
+  getSatisfactionOst(){
+    if(this.needOst == 0){
+      return 0;
+    }
+    let satisfaction = 100 * this.supplyOst / this.needOst;
+    if(satisfaction > 200){
+      satisfaction = 200;
+    }
+    return Math.floor(satisfaction);
+  }
+
+   /*************************/
   getId(){return this.id;}
   getLand(){return this.land;}
   getMoney(){return this.money;}
@@ -41,10 +70,9 @@ class User {
   getSupply(){return this.supply;}
   getOst(){return this.ost;}
   getCountry(){return this.country;}
+  getPeople(){return this.people;}
   getNeedPeople(){return this.needPeople;}
 
-  setLand(land){this.land = land;}
-  setMoney(money){this.money = money;}
   setTaxeA(taxeA){this.taxeA = taxeA;}
   setTaxeB(taxeB){this.taxeB = taxeB;}
   setTaxeC(taxeC){this.taxeC = taxeC;}
@@ -54,5 +82,8 @@ class User {
 
   addMoney(money){this.money += money;}
   addSupply(supply){this.supply += supply;}
+  addOst(ost){this.ost += ost;}
+  addPeople(people){this.people += people;}
+  addLand(land){this.land += land;}
 
 }

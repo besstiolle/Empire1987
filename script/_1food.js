@@ -172,8 +172,8 @@ function step1DoSellLand(){
       game.addError(Errors.notEnoughtLand())
       return step1SellLand();
     } else {
-      user.setLand(user.getLand() - keyboard);
-      user.setMoney(user.getMoney() + game.getLandPrice() * keyboard);
+      user.addLand(-keyboard);
+      user.addMoney(game.getLandPrice() * keyboard);
     }
   }
   step1();

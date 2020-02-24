@@ -92,19 +92,6 @@ function startGame(){
   step1Meteo();
 }
 
-//Démographie
-function step2(){
-  //console.info("step2")
-
-  //TODO Démographie;
-
-  KBlisten({
-    step3 : KEYBOARD_RETURN, //↩
-  });
-
-  refreshWithTemplates([tpl_step2]);
-}
-
 function step5(){
   console.info("step5")
   KBstop();
@@ -114,17 +101,19 @@ function pause(nextCall){
   setTimeout(function(){ nextCall(); }, 300);
 }
 
-function refreshWithTemplates(templates){
+function refreshWithTemplates(templates, vars = {}){
   //console.info("template" + template);
   let datas = "";
+  vars = Object.assign({
+    "user": game.getCurrentUser(),
+    "users": game.getUsers(),
+    "game": game,
+    "sales": [...game.getSalesInArray()],
+    "KB_BUFFER": KB_BUFFER
+    }, vars)
+    
   for (const template of templates) {
-    datas += template.run({
-      "user": game.getCurrentUser(),
-      "users": game.getUsers(),
-      "game": game,
-      "sales": [...game.getSalesInArray()],
-      "KB_BUFFER": KB_BUFFER
-    });
+    datas += template.run(vars);
   }
 
   document.getElementById("game").innerHTML = datas;

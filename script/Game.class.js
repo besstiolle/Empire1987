@@ -11,7 +11,7 @@ class Game {
                           [7,new User(7, "sept")]]);
     this.market = new Market();
     this.year = 1;
-    this.rats = this.rollDice(5,30);
+    this.rats = this.rollDiceInteger(5,30);
     this.currentPlayer = 1;
     this.landPrice = 2;
     this.errors = [];
@@ -46,8 +46,12 @@ class Game {
     this.rats = this.rollDice(5,30);
   }
 
-  rollDice(start = 0, end = 100){
+  rollDiceInteger(start = 0, end = 100){
     return Math.floor(Math.random() * (end - start)) + start;
+  }
+
+  rollDiceFloat(start = 0, end = 100){
+    return (Math.random() * (end - start)) + start;
   }
 
   getLandPrice(){
