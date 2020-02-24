@@ -37,21 +37,17 @@ function step1BuyMarketFrom(from){
 
   //if empty
   if( marketId === "") {
-    //console.info("marketId empty");
     return step1();
   }
 
   //if vendor doesn't exist
   if(!market.getSales().has(marketId)) {
-    //console.info("marketId " + marketId + " doest exist");
     return step1BuyMarket();
   }
 
   //If Myself
   if(market.getSales().get(marketId)["idUser"] === game.getCurrentUser().getId()){
     game.addError(Errors.cantBuyMyself());
-    //console.info("myself");
-
     return step1BuyMarket();
   }
 
@@ -91,9 +87,7 @@ function step1BuyMarketFromAndHowMuch(){
 
   step1();
 }
-/*
-static notEnoughtStock(){return NOT_ENOUGHT_STOCK}
-static priceTooHight(){return PRICE_TOO_HIGH}*/
+
 
 function step1SellMarket(){
   //console.info("sell market");
@@ -105,10 +99,28 @@ function step1SellMarket(){
   refreshWithTemplates([tpl_step1_base, tpl_step1_2]);
 }
 
-function step1SellMarketWithPrice(){
+function step1SellMarketWithPrice(quantityParam){
   //console.info("step1SellMarketWithPrice");
+  let market=game.getMarket();
+  let quantity=parseInt(KBreturn());
+  if(Number.isInteger(quantityParam)){
+    console.info(quantityParam)
+    quantity = quantityParam;
+  }
+
+  if(isNaN(quantity)){
+    return step1();
+  }
+
+  if(quantity > game.getCurrentUser().getSupply()){
+      game.addError(Errors.notEnoughtStock());
+      return step1SellMarket();
+  }
+
+  market.createPromise(game.getCurrentUser().getId(), quantity);
+
   KBlisten({
-    KBstartTyping : KEYBOARD_INT_TYPING, // 0-9 + backspace
+    KBstartTyping : KEYBOARD_PRICE_TYPING, // 0-9 + backspace + dot key
     step1DoSellMarketWithPrice : KEYBOARD_RETURN, //↩
     "options" : {"typing":true, "templates":[tpl_step1_base, tpl_step1_2b]}
   });
@@ -117,7 +129,23 @@ function step1SellMarketWithPrice(){
 
 function step1DoSellMarketWithPrice(){
   //console.info("step1DoSellMarketWithPrice");
+  let market=game.getMarket();
+  let quantity = market.getPromise().quantity;
+  let price=Number.parseFloat(KBreturn()).toFixed(2);
 
+  if(isNaN(price)){
+    return step1()
+  }
+
+  if(price > 15){
+    game.addError(Errors.priceTooHigh());
+    return step1SellMarketWithPrice(quantity);
+  }
+
+  //console.info("quantity : " + quantity)
+  //console.info("price : " + price)
+  market.addSales(game.getCurrentUser().getId(), game.getCurrentUser().getCountry(), quantity, price);
+  game.getCurrentUser().addSupply(-1 * quantity);
   step1();
 }
 

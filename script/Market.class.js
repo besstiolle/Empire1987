@@ -8,10 +8,9 @@ class Market {
   reset(){
     this.sales = new Map();
     this.addSales(3,"Inde", 100, 50);
-    this.addSales(1,"France", 10, 1);
     this.addSales(2,"Suisse", 100, 0.01);
-    this.addSales(1,"France", 20, 0.5);
-    this.offer = null
+    this.offer = null;
+    this.promise = null;
     //console.info(this.sales);
   }
 
@@ -58,6 +57,14 @@ class Market {
 
   getOffer(){
     return this.offer;
+  }
+
+  createPromise(sellerId, quantity){
+    this.promise = {"sellerId" : sellerId, "quantity": quantity};
+  }
+
+  getPromise(){
+    return this.promise;
   }
 
   removeSale(marketId){

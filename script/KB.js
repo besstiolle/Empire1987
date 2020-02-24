@@ -8,6 +8,7 @@ const KEYBOARD_INT = [96,97,98,99,100,101,102,103,104,105,47,48,49,50,51,52,53,5
 const KEYBOARD_ALPHA = [65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90]; // a-z
 const KEYBOARD_SYMB = [32,110,188,59,58,161,170]; // space dot , ; : ! *
 const KEYBOARD_INT_TYPING = KEYBOARD_INT.concat([8]); // 0-9 + backspace for typing
+const KEYBOARD_PRICE_TYPING = KEYBOARD_INT.concat([8,110]); // 0-9 + backspace + dot key for typing
 const KEYBOARD_NAME_TYPING = KEYBOARD_INT.concat(KEYBOARD_ALPHA).concat(KEYBOARD_SYMB).concat([8]) // 0-9 + alpha + some symbol + backspace for typing
 
 const KEYBOARD_RETURN = [13]; // ENTER/RETURN ↩
@@ -93,4 +94,7 @@ function KBkeyboardBinder(vars, event){
   vars["default"](eventKeyToJScode(event.keyCode));
 }
 
-function eventKeyToJScode(key){ return String.fromCharCode((96 <= key && key <= 105)? key-48 : key);}
+function eventKeyToJScode(key){
+  if(key == 110) {return ".";} // dot
+  return String.fromCharCode((96 <= key && key <= 105)? key-48 : key);
+}

@@ -31,7 +31,7 @@ class Errors {
   static fightMyself(){return FIGHT_MYSELF}
   static notEnoughtOst(){return NOT_ENOUGHT_OST}
   static notEnoughtStock(){return NOT_ENOUGHT_STOCK}
-  static priceTooHight(){return PRICE_TOO_HIGH}
+  static priceTooHigh(){return PRICE_TOO_HIGH}
   static cantBuyMyself(){return CANT_BUY_MYSELF}
   static notEnoughtMoney(){return NOT_ENOUGHT_MONEY}
   static notEnoughtStockOnMarket(){return NOT_ENOUGHT_STOCK_ON_MARKET}

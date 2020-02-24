@@ -28,7 +28,6 @@ class User {
     this.fonderies = 0;
     this.chantiers = 0;
     this.palais = 0;
-//    this.position = 2;
   }
 
   getId(){return this.id;}
@@ -37,8 +36,9 @@ class User {
   getTaxeA(){return this.taxeA;}
   getTaxeB(){return this.taxeB;}
   getTaxeC(){return this.taxeC;}
-//  getPosition(){return this.position;}
+  getSupply(){return this.supply;}
   getOst(){return this.ost;}
+  getCountry(){return this.country;}
 
   setLand(land){this.land = land;}
   setMoney(money){this.money = money;}
@@ -49,6 +49,5 @@ class User {
 
   addMoney(money){this.money += money;}
   addSupply(supply){this.supply += supply;}
-//  setPosition(position){this.position = position;}
 
 }
