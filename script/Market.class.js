@@ -100,11 +100,4 @@ class Market {
     this.sales = newMap;
 
   }
-/*
-  log(liste){
-    for( var pos in liste){
-      console.info("item #" + pos + " > ")
-      console.info(liste[pos])
-    }
-  }*/
 }

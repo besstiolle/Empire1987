@@ -104,7 +104,6 @@ function step1SellMarketWithPrice(quantityParam){
   let market=game.getMarket();
   let quantity=parseInt(KBreturn());
   if(Number.isInteger(quantityParam)){
-    console.info(quantityParam)
     quantity = quantityParam;
   }
 

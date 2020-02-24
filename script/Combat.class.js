@@ -13,7 +13,7 @@ class Combat {
   }
 
   execute(ost){
-    console.info("execute(" + ost + ")");
+    //console.info("execute(" + ost + ")");
     let defenderOst= this.defender.getOst();
     let attackerOst = this.attacker.getOst() - ost;
 
