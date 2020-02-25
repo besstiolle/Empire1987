@@ -84,8 +84,7 @@ function savePlayer(){
     name = "Hugues";
   }
 
-  let user = new User(1,name)
-  game.updateUser(user);
+  let user = game.getCurrentUser().setName(name);
   startGame();
 }
 
