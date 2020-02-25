@@ -94,7 +94,7 @@ function step3DoSetTaxeC(){
 }
 
 function step3Invest(){
-  console.info("step3invest")
+  //console.info("step3invest")
   KBlisten({
       step3InvestHowMuch : KEYBOARD_INT, // 0-9
       step4 : KEYBOARD_RETURN, //↩
