@@ -7,7 +7,7 @@ function step3(){
     step3setTaxeA : KEYBOARD_ONE, // 1
     step3setTaxeB : KEYBOARD_TWO, // 2
     step3setTaxeC : KEYBOARD_THREE, // 3
-    step4 : KEYBOARD_RETURN, //↩
+    step3Invest : KEYBOARD_RETURN, //↩
   });
 
   refreshWithTemplates([tpl_step3_base, tpl_step3]);
@@ -81,7 +81,6 @@ function step3setTaxeC(){
 // Do set Taxe C
 function step3DoSetTaxeC(){
   //console.info("do set taxe C")
-  //KBstop();
   let keyboard = KBreturn();
   if(keyboard !== ""){
     if(keyboard > 50){
@@ -92,4 +91,91 @@ function step3DoSetTaxeC(){
     }
   }
   step3();
+}
+
+function step3Invest(){
+  console.info("step3invest")
+  KBlisten({
+      step3InvestHowMuch : KEYBOARD_INT, // 0-9
+      step4 : KEYBOARD_RETURN, //↩
+  });
+
+  refreshWithTemplates([tpl_step3_base, tpl_step3_d]);
+}
+
+function step3InvestHowMuch(invest){
+  //console.info("step3investHowMuch()" + invest)
+
+  if(invest < 1 || invest > 6){
+    console.info("retour step3Invest()")
+    return step3Invest();
+  }
+
+  KBlisten({
+      KBstartTyping : KEYBOARD_INT_TYPING, // 0-9 + backspace
+      step3DoInvest : KEYBOARD_RETURN, //↩
+      "options" : {"typing":true, "templates":[tpl_step3_base, tpl_step3_e], "params" : [invest]}
+  });
+  refreshWithTemplates([tpl_step3_base, tpl_step3_e]);
+}
+
+function step3DoInvest(keyCode, additionnalParameters){
+  //console.info("step3investHowMuch() -" + keyCode + "- -" +  additionnalParameters + "-")
+  let quantity = parseInt(KBreturn());
+  console.info("quoi : ");
+  console.info(additionnalParameters);
+  console.info("quoi : " + additionnalParameters[0]);
+  console.info("quantity : " + quantity);
+  let what = parseInt(additionnalParameters[0]);
+  let price = 0;
+  switch (what) {
+    case 1:
+      price = Const.foirePrice;break;
+    case 2:
+      price = Const.moulinPrice;break;
+    case 3:
+      price = Const.fonderiePrice;break;
+    case 4:
+      price = Const.chantierPrice;break;
+    case 5:
+      price = Const.ostPrice;break;
+    case 6:
+      price = Const.palaisPrice;break;
+    default:
+  }
+
+  if(price * quantity > game.getCurrentUser().getMoney()){
+    game.addError(Errors.notEnoughtMoney())
+    return step3InvestHowMuch(what);
+  }
+
+  switch (what) {
+    case 1:
+      game.getCurrentUser().addMoney(-1 * price * quantity);
+      game.getCurrentUser().addFoires(quantity);
+      break;
+    case 2:
+      game.getCurrentUser().addMoney(-1 * price * quantity);
+      game.getCurrentUser().addMoulins(quantity);
+      break;
+    case 3:
+      game.getCurrentUser().addMoney(-1 * price * quantity);
+      game.getCurrentUser().addFonderies(quantity);
+      break;
+    case 4:
+      game.getCurrentUser().addMoney(-1 * price * quantity);
+      game.getCurrentUser().addChantiers(quantity);
+      break;
+    case 5:
+      game.getCurrentUser().addMoney(-1 * price * quantity);
+      game.getCurrentUser().addOst(quantity);
+      break;
+    case 6:
+      game.getCurrentUser().addMoney(-1 * price * quantity);
+      game.getCurrentUser().addPalais(quantity);
+      break;
+    default:
+  }
+
+  return step3Invest();
 }

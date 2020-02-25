@@ -14,7 +14,6 @@ class Game {
     this.rats = 0;
     this.meteo = null;
     this.currentPlayer = 1;
-    this.landPrice = 2;
     this.errors = [];
   }
 
@@ -82,9 +81,7 @@ class Game {
     return (Math.random() * (end - start)) + start;
   }
 
-  getLandPrice(){
-    return this.landPrice;
-  }
+
 
   purgeErrors(){
     this.errors = [];

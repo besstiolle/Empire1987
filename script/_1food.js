@@ -179,7 +179,7 @@ function step1DoSellLand(){
       return step1SellLand();
     } else {
       user.addLand(-keyboard);
-      user.addMoney(game.getLandPrice() * keyboard);
+      user.addMoney(Const.landPrice * keyboard);
     }
   }
   step1();
@@ -231,21 +231,19 @@ function step1DoGiveToPeople(){
 
 
   if(quantity > game.getCurrentUser().getSupply()){
-    console.info(Errors.notEnoughtStock());
+    //console.info(Errors.notEnoughtStock());
     game.addError(Errors.notEnoughtStock())
     return step1GiveToPeople();
   }
 
   if(quantity < game.getCurrentUser().getNeedPeople() && quantity < (0.1 * game.getCurrentUser().getSupply())){
-    console.info(Errors.atLast10Percent());
+    //console.info(Errors.atLast10Percent());
     game.addError(Errors.atLast10Percent())
     return step1GiveToPeople();
   }
 
   game.getCurrentUser().addSupply(-1 * quantity);
   game.getCurrentUser().setSupplyPeople(quantity);
-
-console.info(">" + game.getCurrentUser().getSupply());
 
   return step2();
 }

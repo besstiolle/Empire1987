@@ -73,6 +73,11 @@ class User {
   getPeople(){return this.people;}
   getNeedPeople(){return this.needPeople;}
   getHarvest(){return this.harvest;}
+  getFoires(){return this.foires;}
+  getMoulins(){return this.moulins;}
+  getFonderies(){return this.fonderies;}
+  getChantiers(){return this.chantiers;}
+  getPalais(){return this.palais;}
 
   setTaxeA(taxeA){this.taxeA = taxeA;}
   setTaxeB(taxeB){this.taxeB = taxeB;}
@@ -87,5 +92,12 @@ class User {
   addOst(ost){this.ost += ost;}
   addPeople(people){this.people += people;}
   addLand(land){this.land += land;}
+
+  addFoires(foires){this.foires += foires}
+  addMoulins(moulins){this.moulins += moulins}
+  addFonderies(fonderies){this.fonderies += fonderies}
+  addChantiers(chantiers){this.chantiers += chantiers}
+  addPalais(palais){this.palais += palais}
+
 
 }

@@ -56,16 +56,23 @@ function KBkeyboardBinder(vars, event){
   if(event.keyCode !== 116){
     event.preventDefault();
   }
+
+  let options = [];
+  if("options" in vars){
+    options = vars["options"];
+  }
+
   //Cumulative typing mode
   let typing=false;
   let templates=null;
-
-  if("options" in vars &&
-       "typing" in vars["options"] &&
-       "templates" in vars["options"] &&
-       vars["options"]["typing"] === true) {
+  if("typing" in options && "templates" in options && options["typing"]) {
       typing = true;
       templates = vars["options"]["templates"];
+  }
+
+  let additionnalParameters = [];
+  if("params" in options){
+    additionnalParameters = options["params"];
   }
 
   for (let [key,value] of Object.entries(vars)) {
@@ -78,7 +85,7 @@ function KBkeyboardBinder(vars, event){
       if(key !== "KBstartTyping"){
         jsCode = eventKeyToJScode(jsCode);
       }
-      eval(key+"(jsCode)");
+      eval(key+"(jsCode, additionnalParameters)");
       if(templates !== null && event.keyCode !== 13){
           refreshWithTemplates(templates);
       }
@@ -91,7 +98,7 @@ function KBkeyboardBinder(vars, event){
   if(!typing){
     KBstop();
   }
-  vars["default"](eventKeyToJScode(event.keyCode));
+  vars["default"](eventKeyToJScode(event.keyCode), additionnalParameters);
 }
 
 function eventKeyToJScode(key){
