@@ -25,7 +25,7 @@ function step2(){
   let randomPeople = randomBirth - randomDeath + randomMigrant - randomStarvingPeople;
 
   game.getCurrentUser().addPeople(randomPeople);
-  game.getCurrentUser().addOst(randomStarvingOst);
+  game.getCurrentUser().addOst(-1 * randomStarvingOst);
 
   let templateVars = {"randomDeath" : randomDeath, "randomBirth" : randomBirth,
                     "randomMigrant" : randomMigrant, "randomStarvingPeople" : randomStarvingPeople,
