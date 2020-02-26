@@ -6,9 +6,14 @@ class Game {
   }
 
   reset(){
-    this.users = new Map([[1,new User(1, "kevin")],[2,new User(2, "second")],[3,new User(3, "troisieme")],
-                            [4,new User(4, "quatre")],[5,new User(5, "cinq")],[6,new User(6, "sixième")],
-                          [7,new User(7, "sept")]]);
+    this.users = new Map();
+    this.users.set(1,new User(1, "Hugues", "France"));
+    this.users.set(2,new User(2, "Arthur", "Bretagne"));
+    this.users.set(3,new User(3, "Othon", "Germanie"));
+    this.users.set(4,new User(4, "Rodrigue", "Castille"));
+    this.users.set(5,new User(5, "Ivan", "Moscovie"));
+    this.users.set(6,new User(6, "Kubéni", "Perse"));
+    this.barbares = new User(0, "Barbares", "Barbares", 6000);
     this.market = new Market();
     this.year = 1;
     this.rats = 0;
@@ -21,12 +26,41 @@ class Game {
     return this.users;
   }
 
+  getUserById(userId){
+    let users = [ ... this.getUsers().values() ];
+    for (var pos in users) {
+      if(users[pos].getId() == userId){
+        return users[pos];
+      }
+    }
+    return null;
+  }
+
   getCurrentUser(){
     return this.users.get(this.currentPlayer);
   }
 
   updateUser(user){
     this.users.set(user.getId(), user);
+  }
+
+  getOpponents(){
+    let i = 1;
+    let opponents = new Map();
+    if(this.barbares != null){
+      opponents.set(i, this.barbares);
+      i++;
+    }
+    let users = [ ... this.getUsers().values() ];
+    for (var pos in users) {
+      opponents.set(i, users[pos]);
+      i++;
+    }
+    return opponents;
+  }
+
+  getOpponentsAsArray(){
+    return [... this.getOpponents().values()];
   }
 
   getSalesInArray(){
@@ -42,6 +76,10 @@ class Game {
   }
   getMeteo(){
     return this.meteo;
+  }
+
+  getBarbares(){
+    return this.barbares;
   }
 
   getMeteoPercent(){
@@ -70,7 +108,7 @@ class Game {
 
   nextYear(){
     this.year++;
-    this.rats = this.rollDice(5,30);
+    //TODO purge vars in users & game & co
   }
 
   rollDiceInteger(start = 0, end = 100){
@@ -81,8 +119,6 @@ class Game {
     return (Math.random() * (end - start)) + start;
   }
 
-
-
   purgeErrors(){
     this.errors = [];
   }
@@ -90,7 +126,6 @@ class Game {
   addError(error){
     this.errors.push(error);
   }
-
 
   resolveMarketOffer(quantity){
     //console.info("resolveMarketOffer() " + quantity);

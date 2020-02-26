@@ -1,7 +1,6 @@
 "use strict";
 
 let game = null;
-let combat = null;
 let tpl_start = null;
 let tpl_start1 = null;
 let tpl_start1a = null;
@@ -43,7 +42,6 @@ async function init(dot){
 
   //Initiate the game
   game = new Game();
-  combat = new Combat();
 
   KBlisten({
     startTuto : KEYBOARD_OY, // o y

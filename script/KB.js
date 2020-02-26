@@ -81,10 +81,11 @@ function KBkeyboardBinder(vars, event){
         KBstop();
       }
       let jsCode = event.keyCode;
-      //console.info("eval("+key+"("+jsCode+"))")
       if(key !== "KBstartTyping"){
         jsCode = eventKeyToJScode(jsCode);
       }
+      //console.info("eval(" + key + "(" + jsCode + ",additionnalParameters)");
+      //console.info(additionnalParameters);
       eval(key+"(jsCode, additionnalParameters)");
       if(templates !== null && event.keyCode !== 13){
           refreshWithTemplates(templates);

@@ -1,9 +1,12 @@
 "use strict";
 
 class User {
-  constructor(id, name){
+
+  constructor(id, name, country, land = 10000){
     this.id = id;
     this.name = name;
+    this.country = country;
+    this.land = land;
     this.reset();
   }
 
@@ -13,7 +16,6 @@ class User {
     this.taxeC = 35;
     this.isDead = false;
     this.rank = "Baron";
-    this.country = "France";
     this.harvest = 17524;
     this.supply = 12842;
     this.people = 2026;
@@ -23,7 +25,6 @@ class User {
     this.needOst = 160;
     this.supplyOst = 0;
     this.money = 1000;
-    this.land = 5000;
 
     this.foires = 0;
     this.moulins = 0;
@@ -62,6 +63,7 @@ class User {
 
    /*************************/
   getId(){return this.id;}
+  getName(){return this.name;}
   getLand(){return this.land;}
   getMoney(){return this.money;}
   getTaxeA(){return this.taxeA;}
@@ -80,6 +82,7 @@ class User {
   getPalais(){return this.palais;}
 
   setTaxeA(taxeA){this.taxeA = taxeA;}
+  setName(name){this.name = name;}
   setTaxeB(taxeB){this.taxeB = taxeB;}
   setTaxeC(taxeC){this.taxeC = taxeC;}
   setOst(ost){this.ost = ost;}

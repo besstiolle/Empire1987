@@ -4,13 +4,13 @@
 <l>          <invert> Terres vassales </invert></l>
 <l></l>
 <l></l>
-<l>          1) Barbares                     6000</l>
-<l>          2) France                      10000</l>
-<l>          3) Bretagne                    10000</l>
-<l>          4) Germanie                    10000</l>
-<l>          5) Castille                    10000</l>
-<l>          6) Moscovie                    10000</l>
-<l>          7) Perse                       10000</l>
+{{~ it.game.getOpponentsAsArray() :opponent:index }}
+<l>          {{=index+1}}) {{=opponent.getCountry().padEnd(20," ")}}      {{=opponent.getLand().toString().padStart(7," ")}}</l>
+{{~}}
+
+
+
+
 <l></l>
 <l></l>
 <l></l>
