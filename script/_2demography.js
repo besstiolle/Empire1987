@@ -35,5 +35,5 @@ function step2(){
     step3 : KEYBOARD_RETURN, //↩
   });
 
-  refreshWithTemplates([tpl_step2], templateVars);
+  refreshWithTemplates(["step2"], templateVars);
 }

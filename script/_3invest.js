@@ -10,7 +10,7 @@ function step3(){
     step3Invest : KEYBOARD_RETURN, //↩
   });
 
-  refreshWithTemplates([tpl_step3_base, tpl_step3]);
+  refreshWithTemplates(["step3_base", "step3"]);
 }
 
 //Propose setting taxe A
@@ -19,10 +19,10 @@ function step3setTaxeA(){
   KBlisten({
     KBstartTyping : KEYBOARD_INT_TYPING, // 0-9 + backspace
     step3DoSetTaxeA : KEYBOARD_RETURN, //↩
-    "options" : {"typing":true, "templates":[tpl_step3_base, tpl_step3_a]}
+    "options" : {"typing":true, "templates":["step3_base", "step3_a"]}
   });
 
-  refreshWithTemplates([tpl_step3_base, tpl_step3_a]);
+  refreshWithTemplates(["step3_base", "step3_a"]);
 }
 
 // Do set Taxe A
@@ -46,10 +46,10 @@ function step3setTaxeB(){
   KBlisten({
       KBstartTyping : KEYBOARD_INT_TYPING, // 0-9 + backspace
       step3DoSetTaxeB : KEYBOARD_RETURN, //↩
-      "options" : {"typing":true, "templates":[tpl_step3_base, tpl_step3_b]}
+      "options" : {"typing":true, "templates":["step3_base", "step3_b"]}
   });
 
-  refreshWithTemplates([tpl_step3_base, tpl_step3_b]);
+  refreshWithTemplates(["step3_base", "step3_b"]);
 }
 
 // Do set Taxe B
@@ -72,10 +72,10 @@ function step3setTaxeC(){
   KBlisten({
       KBstartTyping : KEYBOARD_INT_TYPING, // 0-9 + backspace
       step3DoSetTaxeC : KEYBOARD_RETURN, //↩
-      "options" : {"typing":true, "templates":[tpl_step3_base, tpl_step3_c]}
+      "options" : {"typing":true, "templates":["step3_base", "step3_c"]}
   });
 
-  refreshWithTemplates([tpl_step3_base, tpl_step3_c]);
+  refreshWithTemplates(["step3_base", "step3_c"]);
 }
 
 // Do set Taxe C
@@ -100,7 +100,7 @@ function step3Invest(){
       step4 : KEYBOARD_RETURN, //↩
   });
 
-  refreshWithTemplates([tpl_step3_base, tpl_step3_d]);
+  refreshWithTemplates(["step3_base", "step3_d"]);
 }
 
 function step3InvestHowMuch(invest){
@@ -114,9 +114,9 @@ function step3InvestHowMuch(invest){
   KBlisten({
       KBstartTyping : KEYBOARD_INT_TYPING, // 0-9 + backspace
       step3DoInvest : KEYBOARD_RETURN, //↩
-      "options" : {"typing":true, "templates":[tpl_step3_base, tpl_step3_e], "params" : [invest]}
+      "options" : {"typing":true, "templates":["step3_base", "step3_e"], "params" : [invest]}
   });
-  refreshWithTemplates([tpl_step3_base, tpl_step3_e]);
+  refreshWithTemplates(["step3_base", "step3_e"]);
 }
 
 function step3DoInvest(keyCode, additionnalParameters){

@@ -8,7 +8,7 @@ function step1MeteoAndRats(){
   game.getCurrentUser().setHarvest(game.getCurrentUser().getSupply() * 1.2 * game.getMeteoPercent());
   game.getCurrentUser().addSupply( (-1 * (game.getCurrentUser().getSupply() * game.getRats() / 100)) + game.getCurrentUser().getHarvest())
 
-  refreshWithTemplates([tpl_start1b]);
+  refreshWithTemplates(["start1b"]);
   //Explicitly remove event listening
   KBstop();
   pause(step1);
@@ -24,7 +24,7 @@ function step1(){
     step1GiveToOst : KEYBOARD_RETURN, // ↩
   });
 
-  refreshWithTemplates([tpl_step1_base, tpl_step1]);
+  refreshWithTemplates(["step1_base", "step1"]);
 }
 
 function step1BuyMarket(){
@@ -33,7 +33,7 @@ function step1BuyMarket(){
     step1BuyMarketFrom : KEYBOARD_INT, // 0-9
     step1 : KEYBOARD_RETURN, //↩
   });
-  refreshWithTemplates([tpl_step1_base, tpl_step1_1]);
+  refreshWithTemplates(["step1_base", "step1_1"]);
 }
 
 function step1BuyMarketFrom(from){
@@ -62,9 +62,9 @@ function step1BuyMarketFrom(from){
   KBlisten({
     KBstartTyping : KEYBOARD_INT_TYPING, // 0-9 + backspace
     step1BuyMarketFromAndHowMuch : KEYBOARD_RETURN, //↩
-    "options" : {"typing":true, "templates":[tpl_step1_base, tpl_step1_1b]}
+    "options" : {"typing":true, "templates":["step1_base", "step1_1b"]}
   });
-  refreshWithTemplates([tpl_step1_base, tpl_step1_1b]);
+  refreshWithTemplates(["step1_base", "step1_1b"]);
 }
 
 function step1BuyMarketFromAndHowMuch(){
@@ -100,9 +100,9 @@ function step1SellMarket(){
   KBlisten({
     KBstartTyping : KEYBOARD_INT_TYPING, // 0-9 + backspace
     step1SellMarketWithPrice : KEYBOARD_RETURN, //↩
-    "options" : {"typing":true, "templates":[tpl_step1_base, tpl_step1_2]}
+    "options" : {"typing":true, "templates":["step1_base", "step1_2"]}
   });
-  refreshWithTemplates([tpl_step1_base, tpl_step1_2]);
+  refreshWithTemplates(["step1_base", "step1_2"]);
 }
 
 function step1SellMarketWithPrice(quantityParam){
@@ -127,9 +127,9 @@ function step1SellMarketWithPrice(quantityParam){
   KBlisten({
     KBstartTyping : KEYBOARD_PRICE_TYPING, // 0-9 + backspace + dot key
     step1DoSellMarketWithPrice : KEYBOARD_RETURN, //↩
-    "options" : {"typing":true, "templates":[tpl_step1_base, tpl_step1_2b]}
+    "options" : {"typing":true, "templates":["step1_base", "step1_2b"]}
   });
-  refreshWithTemplates([tpl_step1_base, tpl_step1_2b]);
+  refreshWithTemplates(["step1_base", "step1_2b"]);
 }
 
 function step1DoSellMarketWithPrice(){
@@ -163,9 +163,9 @@ function step1SellLand(){
   KBlisten({
     KBstartTyping : KEYBOARD_INT_TYPING, // 0-9 + backspace
     step1DoSellLand : KEYBOARD_RETURN, //↩
-    "options" : {"typing":true, "templates":[tpl_step1_base, tpl_step1_3]}
+    "options" : {"typing":true, "templates":["step1_base", "step1_3"]}
   });
-  refreshWithTemplates([tpl_step1_base, tpl_step1_3]);
+  refreshWithTemplates(["step1_base", "step1_3"]);
 }
 
 // Do selling land
@@ -189,9 +189,9 @@ function step1GiveToOst(){
   KBlisten({
     KBstartTyping : KEYBOARD_INT_TYPING, // 0-9 + backspace
     step1DoGiveToOst : KEYBOARD_RETURN, //↩
-    "options" : {"typing":true, "templates":[tpl_step1_base, tpl_step1_4]}
+    "options" : {"typing":true, "templates":["step1_base", "step1_4"]}
   });
-  refreshWithTemplates([tpl_step1_base, tpl_step1_4]);
+  refreshWithTemplates(["step1_base", "step1_4"]);
 }
 
 function step1DoGiveToOst(){
@@ -217,9 +217,9 @@ function step1GiveToPeople(){
   KBlisten({
     KBstartTyping : KEYBOARD_INT_TYPING, // 0-9 + backspace
     step1DoGiveToPeople : KEYBOARD_RETURN, //↩
-    "options" : {"typing":true, "templates":[tpl_step1_base, tpl_step1_5]}
+    "options" : {"typing":true, "templates":["step1_base", "step1_5"]}
   });
-  refreshWithTemplates([tpl_step1_base, tpl_step1_5]);
+  refreshWithTemplates(["step1_base", "step1_5"]);
 }
 
 function step1DoGiveToPeople(){
