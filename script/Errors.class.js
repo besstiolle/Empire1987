@@ -24,7 +24,7 @@ const FIGHT_MYSELF = "FIGHT_MYSELF"
 const NOT_ENOUGHT_OST = "NOT_ENOUGHT_OST"
 
 
-class Errors {
+export class Errors {
   constructor(){}
 
   static notEnoughtLand(){return NOT_ENOUGHT_LAND}

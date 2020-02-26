@@ -1,6 +1,6 @@
 "use strict";
 
-class Const {
+export class Const {
 
     static get landPrice(){ return 2;}
     static get foirePrice(){ return 1000;}

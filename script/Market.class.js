@@ -1,6 +1,6 @@
 "use strict";
 
-class Market {
+export class Market {
   constructor(){
     this.reset();
   }

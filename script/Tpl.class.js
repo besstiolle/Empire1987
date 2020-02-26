@@ -1,7 +1,7 @@
-"use strict";
+import * as doT from './doT'
 
 //Thank you https://olado.github.io/doT/index.html
-class Tpl {
+export class Tpl {
 
   constructor(templates){
       this.templatesNames = ["tuto1", "tuto2", "tuto3", "tuto4", "tuto5", "tuto6", "tuto7",
@@ -13,27 +13,27 @@ class Tpl {
       this.templates = new Map();
   }
 
-  async init(){
+  init(){
     let promises = [];
     for(let pos in this.templatesNames){
       promises.push(this.loadTpl(this.templatesNames[pos]));
     }
-    await Promise.all(promises).then((dualTemplates) => {
+    return Promise.all(promises).then((dualTemplates) => {
       for(let pos in dualTemplates){
         this.templates.set(dualTemplates[pos][0], doT.template(dualTemplates[pos][1]) );
       }
     });
   }
 
-  async loadTpl(template){
-    let res = await fetch('templates/' + template + ".tpl")
+  loadTpl(template){
+    return fetch(`templates/${template}.tpl`).then((res) => {
+      if (res.status == 200) {
+        return res.text().then((text)=>[template, text])
+      }
 
-    if (res.status == 200) {
-      return [template, await res.text()];
-    }
-
-    console.error("template not found : " + 'templates/' + template + ".tpl")
-    throw new Error(res.status);
+      console.error("template not found : " + 'templates/' + template + ".tpl")
+      throw new Error(res.status);
+    })
   }
 
 

@@ -1,6 +1,7 @@
-"use strict";
+import { User } from './User.class'
+import { Market } from './Market.class'
 
-class Game {
+export class Game {
   constructor(){
     this.reset();
   }

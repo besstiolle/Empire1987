@@ -1,30 +1,39 @@
-"use strict";
+import { Game } from './Game.class'
+import { User } from './User.class'
+import { Tpl } from './Tpl.class'
+import { Const } from './Const.class'
+import { KBlisten, KB_BUFFER, KEYBOARD_OY, KEYBOARD_N } from './KB'
+import tuto from './_0tuto'
 
 let game = null;
 let tpl = null;
 
-async function init(dot){
-
+(function () {
   //Initiate the game
   game = new Game();
   tpl = new Tpl();
   //const start = Date.now();
-  await tpl.init();
-  //console.info("load all tpl > " + (Date.now() - start) + "ms");
+  tpl.init().then(() => {
+    console.log(KBlisten)
+    KBlisten({
+      startTuto : KEYBOARD_OY, // o y
+      askNumberOfPlayer : KEYBOARD_N, // n
+    });
 
-  KBlisten({
-    startTuto : KEYBOARD_OY, // o y
-    askNumberOfPlayer : KEYBOARD_N, // n
+    refreshWithTemplates(["start"]);
   });
 
-  refreshWithTemplates(["start"]);
-}
+  //console.info("load all tpl > " + (Date.now() - start) + "ms");
+
+})()
 
 function askNumberOfPlayer(){
   //console.info("askNumberOfPlayer")
-  KBlisten({
-    askNameOfPlayer : KEYBOARD_ONE, //↩
-  });
+  KBlisten([{
+    key: KEYBOARD_ONE,
+    callback: tuto.tuto1
+    //askNameOfPlayer : KEYBOARD_ONE, //↩
+  }]);
 
   refreshWithTemplates(["start1"]);
 }
