@@ -122,10 +122,10 @@ function step3InvestHowMuch(invest){
 function step3DoInvest(keyCode, additionnalParameters){
   //console.info("step3investHowMuch() -" + keyCode + "- -" +  additionnalParameters + "-")
   let quantity = parseInt(KBreturn());
-  console.info("quoi : ");
-  console.info(additionnalParameters);
-  console.info("quoi : " + additionnalParameters[0]);
-  console.info("quantity : " + quantity);
+//  console.info("quoi : ");
+//  console.info(additionnalParameters);
+//  console.info("quoi : " + additionnalParameters[0]);
+//  console.info("quantity : " + quantity);
   let what = parseInt(additionnalParameters[0]);
   let price = 0;
   switch (what) {
@@ -148,30 +148,25 @@ function step3DoInvest(keyCode, additionnalParameters){
     game.addError(Errors.notEnoughtMoney())
     return step3InvestHowMuch(what);
   }
+  game.getCurrentUser().addMoney(-1 * price * quantity);
 
   switch (what) {
     case 1:
-      game.getCurrentUser().addMoney(-1 * price * quantity);
       game.getCurrentUser().addFoires(quantity);
       break;
     case 2:
-      game.getCurrentUser().addMoney(-1 * price * quantity);
       game.getCurrentUser().addMoulins(quantity);
       break;
     case 3:
-      game.getCurrentUser().addMoney(-1 * price * quantity);
       game.getCurrentUser().addFonderies(quantity);
       break;
     case 4:
-      game.getCurrentUser().addMoney(-1 * price * quantity);
       game.getCurrentUser().addChantiers(quantity);
       break;
     case 5:
-      game.getCurrentUser().addMoney(-1 * price * quantity);
       game.getCurrentUser().addOst(quantity);
       break;
     case 6:
-      game.getCurrentUser().addMoney(-1 * price * quantity);
       game.getCurrentUser().addPalais(quantity);
       break;
     default:
