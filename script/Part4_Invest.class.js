@@ -124,10 +124,13 @@ export class Invest extends Party {
   static doInvest(keyCode, additionnalParameters){
     //console.info("doInvest() -" + keyCode + "- -" +  additionnalParameters + "-")
     let quantity = parseInt(KB.buffer);
-  //  console.info("quoi : ");
-  //  console.info(additionnalParameters);
-  //  console.info("quoi : " + additionnalParameters[0]);
-  //  console.info("quantity : " + quantity);
+    if(isNaN(quantity)){
+      return Invest.choiceInvest();
+    }
+    //console.info("quoi : ");
+    //console.info(additionnalParameters);
+    //console.info("quoi : " + additionnalParameters[0]);
+    //console.info("quantity : " + quantity);
     let what = parseInt(additionnalParameters[0]);
     let price = 0;
     switch (what) {
