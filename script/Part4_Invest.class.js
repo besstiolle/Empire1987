@@ -169,7 +169,7 @@ export class Invest extends Party {
         game.getCurrentUser().addOst(quantity);
         break;
       case 6:
-        game.getCurrentUser().addPalais(quantity);
+        game.getCurrentUser().addPalais(quantity * 10);
         break;
       default:
     }
