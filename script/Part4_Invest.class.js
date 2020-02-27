@@ -7,122 +7,122 @@ import { Errors } from './Errors.class'
 export class Invest extends Party {
 
   //Investissement
-  static step3(){
-    //console.info("step3")
+  static choiceTaxes(){
+    //console.info("step4")
     KB.listen([
-      {key: Const.KEYBOARD_ONE, callback: Invest.step3setTaxeA}, // 1
-      {key: Const.KEYBOARD_TWO, callback: Invest.step3setTaxeB}, // 2
-      {key: Const.KEYBOARD_THREE, callback: Invest.step3setTaxeC}, // 3
-      {key: Const.KEYBOARD_RETURN, callback: Invest.step3Invest}, // ↩
+      {key: Const.KEYBOARD_ONE, callback: Invest.setTaxeA}, // 1
+      {key: Const.KEYBOARD_TWO, callback: Invest.setTaxeB}, // 2
+      {key: Const.KEYBOARD_THREE, callback: Invest.setTaxeC}, // 3
+      {key: Const.KEYBOARD_RETURN, callback: Invest.choiceInvest}, // ↩
     ]);
 
-    Party.refreshWithTemplates(["step3_base", "step3"]);
+    Party.refreshWithTemplates(["4_base", "4"]);
   }
 
   //Propose setting taxe A
-  static step3setTaxeA(){
+  static setTaxeA(){
     //console.info("set Taxe A")
     KB.listenTyping([
       {key: Const.KEYBOARD_INT_TYPING, callback: KB.startTyping}, // 0-9 + backspace
-      {key: Const.KEYBOARD_RETURN, callback: Invest.step3DoSetTaxeA}, // ↩
-    ], ["step3_base", "step3_a"]);
+      {key: Const.KEYBOARD_RETURN, callback: Invest.doSetTaxeA}, // ↩
+    ], ["4_base", "4_a"]);
 
-    Party.refreshWithTemplates(["step3_base", "step3_a"]);
+    Party.refreshWithTemplates(["4_base", "4_a"]);
   }
 
   // Do set Taxe A
-  static step3DoSetTaxeA(){
+  static doSetTaxeA(){
     //console.info("do set taxe A")
     let keyboard = KB.buffer;
     if(keyboard !== ""){
       if(keyboard > 50){
         game.addError(Errors.taxeATooHigh())
-        return Invest.step3setTaxeA();
+        return Invest.setTaxeA();
       } else {
         game.getCurrentUser().setTaxeA(keyboard);
       }
     }
-    Invest.step3();
+    Invest.choiceTaxes();
   }
 
   //Propose setting taxe B
-  static step3setTaxeB(){
+  static setTaxeB(){
     //console.info("set Taxe B")
     KB.listenTyping([
       {key: Const.KEYBOARD_INT_TYPING, callback: KB.startTyping}, // 0-9 + backspace
-      {key: Const.KEYBOARD_RETURN, callback: Invest.step3DoSetTaxeB}, // ↩
-    ], ["step3_base", "step3_b"]);
+      {key: Const.KEYBOARD_RETURN, callback: Invest.doSetTaxeB}, // ↩
+    ], ["4_base", "4_b"]);
 
-    Party.refreshWithTemplates(["step3_base", "step3_b"]);
+    Party.refreshWithTemplates(["4_base", "4_b"]);
   }
 
   // Do set Taxe B
-  static step3DoSetTaxeB(){
+  static doSetTaxeB(){
     //console.info("do set taxe B")
     let keyboard = KB.buffer;
     if(keyboard !== ""){
       if(keyboard > 50){
         game.addError(Errors.taxeBTooHigh())
-        return Invest.step3setTaxeB();
+        return Invest.setTaxeB();
       } else {
         game.getCurrentUser().setTaxeB(keyboard);
       }
     }
-    Invest.step3();
+    Invest.choiceTaxes();
   }
 
   //Propose setting taxe C
-  static step3setTaxeC(){
+  static setTaxeC(){
     KB.listenTyping([
       {key: Const.KEYBOARD_INT_TYPING, callback: KB.startTyping}, // 0-9 + backspace
-      {key: Const.KEYBOARD_RETURN, callback: Invest.step3DoSetTaxeC}, // ↩
-    ], ["step3_base", "step3_c"]);
+      {key: Const.KEYBOARD_RETURN, callback: Invest.doSetTaxeC}, // ↩
+    ], ["4_base", "4_c"]);
 
-    Party.refreshWithTemplates(["step3_base", "step3_c"]);
+    Party.refreshWithTemplates(["4_base", "4_c"]);
   }
 
   // Do set Taxe C
-  static step3DoSetTaxeC(){
+  static doSetTaxeC(){
     //console.info("do set taxe C")
     let keyboard = KB.buffer;
     if(keyboard !== ""){
       if(keyboard > 50){
         game.addError(Errors.taxeCTooHigh())
-        return Invest.step3setTaxeC();
+        return Invest.setTaxeC();
       } else {
         game.getCurrentUser().setTaxeC(keyboard);
       }
     }
-    Invest.step3();
+    Invest.choiceTaxes();
   }
 
-  static step3Invest(){
-    //console.info("step3invest")
+  static choiceInvest(){
+    //console.info("choiceInvest")
 
     KB.listen([
-      {key: Const.KEYBOARD_INT, callback: Invest.step3InvestHowMuch}, // 0-9
-      {key: Const.KEYBOARD_RETURN, callback: Lands.step4}, // ↩
+      {key: Const.KEYBOARD_INT, callback: Invest.choiceInvestHowMuch}, // 0-9
+      {key: Const.KEYBOARD_RETURN, callback: Lands.choosingOpponent}, // ↩
     ]);
 
-    Party.refreshWithTemplates(["step3_base", "step3_d"]);
+    Party.refreshWithTemplates(["4_base", "4_d"]);
   }
 
-  static step3InvestHowMuch(invest){
-    //console.info("step3investHowMuch()" + invest)
+  static choiceInvestHowMuch(invest){
+    //console.info("choiceInvestHowMuch()" + invest)
     if(invest < 1 || invest > 6){
-      return Invest.step3Invest();
+      return Invest.choiceInvest();
     }
 
     KB.listenTyping([
       {key: Const.KEYBOARD_INT_TYPING, callback: KB.startTyping}, // 0-9 + backspace
-      {key: Const.KEYBOARD_RETURN, callback: Invest.step3DoInvest}, // ↩
-    ], ["step3_base", "step3_e"], [invest]);
+      {key: Const.KEYBOARD_RETURN, callback: Invest.doInvest}, // ↩
+    ], ["4_base", "4_e"], [invest]);
 
-    Party.refreshWithTemplates(["step3_base", "step3_e"]);
+    Party.refreshWithTemplates(["4_base", "4_e"]);
   }
 
-  static step3DoInvest(keyCode, additionnalParameters){
-    //console.info("step3investHowMuch() -" + keyCode + "- -" +  additionnalParameters + "-")
+  static doInvest(keyCode, additionnalParameters){
+    //console.info("doInvest() -" + keyCode + "- -" +  additionnalParameters + "-")
     let quantity = parseInt(KB.buffer);
   //  console.info("quoi : ");
   //  console.info(additionnalParameters);
@@ -148,7 +148,7 @@ export class Invest extends Party {
 
     if(price * quantity > game.getCurrentUser().getMoney()){
       game.addError(Errors.notEnoughtMoney())
-      return Invest.step3InvestHowMuch(what);
+      return Invest.choiceInvestHowMuch(what);
     }
     game.getCurrentUser().addMoney(-1 * price * quantity);
 
@@ -174,6 +174,6 @@ export class Invest extends Party {
       default:
     }
 
-    return Invest.step3Invest();
+    return Invest.choiceInvest();
   }
 }

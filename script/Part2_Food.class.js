@@ -6,75 +6,75 @@ import { Demography } from './Part3_Demography.class'
 
 export class Food extends Party{
 
-  static step1MeteoAndRats(){
-    //console.info("step1Meteo")
+  static meteoAndRats(){
+    //console.info("step2Meteo")
     game.setMeteo(game.rollDiceInteger(0,3));
 
     game.setRats(game.rollDiceInteger(5,30));
     game.getCurrentUser().setHarvest(game.getCurrentUser().getSupply() * 1.2 * game.getMeteoPercent());
     game.getCurrentUser().addSupply( (-1 * (game.getCurrentUser().getSupply() * game.getRats() / 100)) + game.getCurrentUser().getHarvest())
 
-    Party.refreshWithTemplates(["start1b"]);
+    Party.refreshWithTemplates(["0_1b"]);
     //Explicitly remove event listening
     KB.stop();
-    Party.pause(Food.step1);
+    Party.pause(Food.choiceMarket);
   }
 
   // Manage Market & food
-  static step1(){
-    //console.info("step1")
+  static choiceMarket(){
+    //console.info("step2")
     KB.listen([
-      {key: Const.KEYBOARD_ONE, callback: Food.step1BuyMarket}, // 1
-      {key: Const.KEYBOARD_TWO, callback: Food.step1SellMarket}, // 2
-      {key: Const.KEYBOARD_THREE, callback: Food.step1SellLand}, // 3
-      {key: Const.KEYBOARD_RETURN, callback: Food.step1GiveToOst}, // ↩
+      {key: Const.KEYBOARD_ONE, callback: Food.buyOnMarket}, // 1
+      {key: Const.KEYBOARD_TWO, callback: Food.sellOnMarket}, // 2
+      {key: Const.KEYBOARD_THREE, callback: Food.sellLand}, // 3
+      {key: Const.KEYBOARD_RETURN, callback: Food.giveToOst}, // ↩
     ]);
 
-    Party.refreshWithTemplates(["step1_base", "step1"]);
+    Party.refreshWithTemplates(["2_base", "2"]);
   }
 
-  static step1BuyMarket(){
+  static buyOnMarket(){
     //console.info("buy market");
     KB.listen([
-      {key: Const.KEYBOARD_INT, callback: Food.step1BuyMarketFrom}, // 0-9
-      {key: Const.KEYBOARD_RETURN, callback: Food.step1}, // ↩
+      {key: Const.KEYBOARD_INT, callback: Food.buyOnMarketFrom}, // 0-9
+      {key: Const.KEYBOARD_RETURN, callback: Food.choiceMarket}, // ↩
     ]);
-    Party.refreshWithTemplates(["step1_base", "step1_1"]);
+    Party.refreshWithTemplates(["2_base", "2_1"]);
   }
 
-  static step1BuyMarketFrom(from){
-    //console.info("step1BuyMarketFrom " + from);
+  static buyOnMarketFrom(from){
+    //console.info("buyOnMarketFrom " + from);
     let marketId=parseInt(from);
     let market=game.getMarket();
 
     //if empty
     if( marketId === "") {
-      return Food.step1();
+      return Food.choiceMarket();
     }
 
     //if vendor doesn't exist
     if(!market.getSales().has(marketId)) {
-      return Food.step1BuyMarket();
+      return Food.buyOnMarket();
     }
 
     //If Myself
     if(market.getSales().get(marketId)["idUser"] === game.getCurrentUser().getId()){
       game.addError(Errors.cantBuyMyself());
-      return Food.step1BuyMarket();
+      return Food.buyOnMarket();
     }
 
     market.createOffer(game.getCurrentUser().getId(), marketId);
 
     KB.listenTyping([
       {key: Const.KEYBOARD_INT_TYPING, callback: KB.startTyping}, // 0-9 + backspace
-      {key: Const.KEYBOARD_RETURN, callback: Food.step1BuyMarketFromAndHowMuch}, // ↩
-    ], ["step1_base", "step1_1b"]);
+      {key: Const.KEYBOARD_RETURN, callback: Food.buyOnMarketFromAndHowMuch}, // ↩
+    ], ["2_base", "2_1b"]);
 
-    Party.refreshWithTemplates(["step1_base", "step1_1b"]);
+    Party.refreshWithTemplates(["2_base", "2_1b"]);
   }
 
-  static step1BuyMarketFromAndHowMuch(){
-    //console.info("step1BuyMarketFromAndHowMuch");
+  static buyOnMarketFromAndHowMuch(){
+    //console.info("buyOnMarketFromAndHowMuch");
     let quantity=parseInt(KB.buffer);
     let market=game.getMarket();
 
@@ -82,37 +82,37 @@ export class Food extends Party{
     let sale = market.getSales().get(offer["marketId"]);
 
     if(isNaN(quantity)){
-      return Food.step1();
+      return Food.choiceMarket();
     }
 
     if(sale["boisseaux"] < quantity) {
       game.addError(Errors.notEnoughtStockOnMarket());
-      return Food.step1BuyMarketFrom(offer["marketId"]);
+      return Food.buyOnMarketFrom(offer["marketId"]);
     }
 
     if(sale["price"] * quantity > game.getCurrentUser().getMoney()) {
       game.addError(Errors.notEnoughtMoney());
-      return Food.step1BuyMarketFrom(offer["marketId"]);
+      return Food.buyOnMarketFrom(offer["marketId"]);
     }
 
     game.resolveMarketOffer(quantity);
 
-    Food.step1();
+    Food.choiceMarket();
   }
 
 
-  static step1SellMarket(){
+  static sellOnMarket(){
     //console.info("sell market");
     KB.listenTyping([
       {key: Const.KEYBOARD_INT_TYPING, callback: KB.startTyping}, // 0-9 + backspace
-      {key: Const.KEYBOARD_RETURN, callback: Food.step1SellMarketWithPrice}, // ↩
-    ], ["step1_base", "step1_2"]);
+      {key: Const.KEYBOARD_RETURN, callback: Food.sellOnMarketWithPrice}, // ↩
+    ], ["2_base", "2_2"]);
 
-    Party.refreshWithTemplates(["step1_base", "step1_2"]);
+    Party.refreshWithTemplates(["2_base", "2_2"]);
   }
 
-  static step1SellMarketWithPrice(quantityParam){
-    //console.info("step1SellMarketWithPrice");
+  static sellOnMarketWithPrice(quantityParam){
+    //console.info("sellOnMarketWithPrice");
     let market=game.getMarket();
     let quantity=parseInt(KB.buffer);
     if(Number.isInteger(quantityParam)){
@@ -120,85 +120,85 @@ export class Food extends Party{
     }
 
     if(isNaN(quantity)){
-      return Food.step1();
+      return Food.choiceMarket();
     }
 
     if(quantity > game.getCurrentUser().getSupply()){
         game.addError(Errors.notEnoughtStock());
-        return Food.step1SellMarket();
+        return Food.sellOnMarket();
     }
 
     market.createPromise(game.getCurrentUser().getId(), quantity);
     KB.listenTyping([
       {key: Const.KEYBOARD_INT_TYPING, callback: KB.startTyping}, // 0-9 + backspace
-      {key: Const.KEYBOARD_RETURN, callback: Food.step1DoSellMarketWithPrice}, // ↩
-    ], ["step1_base", "step1_2b"]);
+      {key: Const.KEYBOARD_RETURN, callback: Food.doSellMarketWithPrice}, // ↩
+    ], ["2_base", "2_2b"]);
 
-    Party.refreshWithTemplates(["step1_base", "step1_2b"]);
+    Party.refreshWithTemplates(["2_base", "2_2b"]);
   }
 
-  static step1DoSellMarketWithPrice(){
-    //console.info("step1DoSellMarketWithPrice");
+  static doSellMarketWithPrice(){
+    //console.info("doSellMarketWithPrice");
     let market=game.getMarket();
     let quantity = market.getPromise().quantity;
     let price=Number.parseFloat(KB.buffer).toFixed(2);
 
     if(isNaN(price)){
-      return Food.step1()
+      return Food.choiceMarket()
     }
 
     if(price > 15){
       game.addError(Errors.priceTooHigh());
-      return Food.step1SellMarketWithPrice(quantity);
+      return Food.sellOnMarketWithPrice(quantity);
     }
 
     //console.info("quantity : " + quantity)
     //console.info("price : " + price)
     market.addSales(game.getCurrentUser().getId(), game.getCurrentUser().getCountry(), quantity, price);
     game.getCurrentUser().addSupply(-1 * quantity);
-    Food.step1();
+    Food.choiceMarket();
   }
 
 
 
 
   //Propose selling Land
-  static step1SellLand(){
+  static sellLand(){
     //console.info("sell land")
     KB.listenTyping([
       {key: Const.KEYBOARD_INT_TYPING, callback: KB.startTyping}, // 0-9 + backspace
-      {key: Const.KEYBOARD_RETURN, callback: Food.step1DoSellLand}, // ↩
-    ], ["step1_base", "step1_3"]);
+      {key: Const.KEYBOARD_RETURN, callback: Food.doSellLand}, // ↩
+    ], ["2_base", "2_3"]);
 
-    Party.refreshWithTemplates(["step1_base", "step1_3"]);
+    Party.refreshWithTemplates(["2_base", "2_3"]);
   }
 
   // Do selling land
-  static step1DoSellLand(){
+  static doSellLand(){
     //console.info("go sell market")
     let keyboard = KB.buffer;
     if(keyboard !== ""){
       let user = game.getCurrentUser();
       if(user.getLand() < keyboard){
         game.addError(Errors.notEnoughtLand())
-        return Food.step1SellLand();
+        return Food.sellLand();
       } else {
         user.addLand(-keyboard);
         user.addMoney(Const.landPrice * keyboard);
       }
     }
-    Food.step1();
+    Food.choiceMarket();
   }
 
-  static step1GiveToOst(){
+  static giveToOst(){
     KB.listenTyping([
       {key: Const.KEYBOARD_INT_TYPING, callback: KB.startTyping}, // 0-9 + backspace
-      {key: Const.KEYBOARD_RETURN, callback: Food.step1DoGiveToOst}, // ↩
-    ], ["step1_base", "step1_4"]);
-    Party.refreshWithTemplates(["step1_base", "step1_4"]);
+      {key: Const.KEYBOARD_RETURN, callback: Food.doGiveToOst}, // ↩
+    ], ["2_base", "2_4"]);
+    Party.refreshWithTemplates(["2_base", "2_4"]);
   }
 
-  static step1DoGiveToOst(){
+  static doGiveToOst(){
 
     let quantity=parseInt(KB.buffer);
     if(isNaN(quantity)){
@@ -207,24 +207,24 @@ export class Food extends Party{
 
     if(quantity > game.getCurrentUser().getSupply()){
         game.addError(Errors.notEnoughtStock())
-        return Food.step1GiveToOst();
+        return Food.giveToOst();
     }
 
     game.getCurrentUser().addSupply(-1 * quantity);
     game.getCurrentUser().setSupplyOst(quantity);
 
-    return Food.step1GiveToPeople();
+    return Food.giveToPeople();
   }
 
-  static step1GiveToPeople(){
+  static giveToPeople(){
     KB.listenTyping([
       {key: Const.KEYBOARD_INT_TYPING, callback: KB.startTyping}, // 0-9 + backspace
-      {key: Const.KEYBOARD_RETURN, callback: Food.step1DoGiveToPeople}, // ↩
-    ], ["step1_base", "step1_5"]);
-    Party.refreshWithTemplates(["step1_base", "step1_5"]);
+      {key: Const.KEYBOARD_RETURN, callback: Food.doGiveToPeople}, // ↩
+    ], ["2_base", "2_5"]);
+    Party.refreshWithTemplates(["2_base", "2_5"]);
   }
 
-  static step1DoGiveToPeople(){
+  static doGiveToPeople(){
 
     let quantity=parseInt(KB.buffer);
     if(isNaN(quantity)){
@@ -235,18 +235,18 @@ export class Food extends Party{
     if(quantity > game.getCurrentUser().getSupply()){
       //console.info(Errors.notEnoughtStock());
       game.addError(Errors.notEnoughtStock())
-      return Food.step1GiveToPeople();
+      return Food.giveToPeople();
     }
 
     if(quantity < game.getCurrentUser().getNeedPeople() && quantity < (0.1 * game.getCurrentUser().getSupply())){
       //console.info(Errors.atLast10Percent());
       game.addError(Errors.atLast10Percent())
-      return Food.step1GiveToPeople();
+      return Food.giveToPeople();
     }
 
     game.getCurrentUser().addSupply(-1 * quantity);
     game.getCurrentUser().setSupplyPeople(quantity);
 
-    return Demography.step2();
+    return Demography.demography();
   }
 }

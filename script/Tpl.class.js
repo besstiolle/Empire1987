@@ -4,12 +4,13 @@ import * as doT from './doT'
 export class Tpl {
 
   constructor(templates){
-      this.templatesNames = ["tuto1", "tuto2", "tuto3", "tuto4", "tuto5", "tuto6", "tuto7",
-                            "start","start1", "start1a", "start1b",
-                            "step1_base", "step1", "step1_1", "step1_1b", "step1_2", "step1_2b", "step1_3", "step1_4", "step1_5",
-                            "step2",
-                            "step3_base", "step3", "step3_a", "step3_b", "step3_c", "step3_d", "step3_e",
-                            "step4_base", "step4", "step4_a", "step4_b"];
+      this.templatesNames = ["0","0_1", "0_1a", "0_1b",
+                            "1_tuto1", "1_tuto2", "1_tuto3", "1_tuto4", "1_tuto5", "1_tuto6", "1_tuto7",
+                            "2_base", "2", "2_1", "2_1b", "2_2", "2_2b", "2_3", "2_4", "2_5",
+                            "3",
+                            "4_base", "4", "4_a", "4_b", "4_c", "4_d", "4_e",
+                            "5_base", "5", "5_a", "5_b",
+                            "6_base"];
       this.templates = new Map();
   }
 

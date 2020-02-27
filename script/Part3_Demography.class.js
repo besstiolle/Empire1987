@@ -6,8 +6,8 @@ import { Invest } from './Part4_Invest.class'
 export class Demography extends Party {
 
   //Démographie
-  static step2(){
-    //console.info("step2")
+  static demography(){
+    //console.info("demography")
 
     let satisfactionPeople = game.getCurrentUser().getSatisfactionPeople();
     let satisfactionOst = game.getCurrentUser().getSatisfactionOst();
@@ -36,9 +36,9 @@ export class Demography extends Party {
                       "randomMigrant" : randomMigrant, "randomStarvingPeople" : randomStarvingPeople,
                       "randomStarvingOst" : randomStarvingOst, "randomPeople" : randomPeople };
     KB.listen([
-      {key: Const.KEYBOARD_RETURN, callback: Invest.step3}, // ↩
+      {key: Const.KEYBOARD_RETURN, callback: Invest.choiceTaxes}, // ↩
     ]);
 
-    Party.refreshWithTemplates(["step2"], templateVars);
+    Party.refreshWithTemplates(["3"], templateVars);
   }
 }

@@ -11,7 +11,7 @@ export class Start extends Party {
       {key: Const.KEYBOARD_OY, callback: Tuto.startTuto}, // O/Y
       {key: Const.KEYBOARD_N, callback: Start.askNumberOfPlayer} // N
     ]);
-    Party.refreshWithTemplates(["start"]);
+    Party.refreshWithTemplates(["0"]);
   }
 
   static askNumberOfPlayer(){
@@ -19,7 +19,7 @@ export class Start extends Party {
     KB.listen([
       {key: Const.KEYBOARD_ONE, callback: Start.askNameOfPlayer} // 1
     ]);
-    Party.refreshWithTemplates(["start1"]);
+    Party.refreshWithTemplates(["0_1"]);
   }
 
   static askNameOfPlayer(){
@@ -27,8 +27,8 @@ export class Start extends Party {
     KB.listenTyping([
       {key: Const.KEYBOARD_NAME_TYPING, callback: KB.startTyping}, // 1
       {key: Const.KEYBOARD_RETURN, callback: Start.savePlayer}, // 1
-    ], ["start1a"]);
-    Party.refreshWithTemplates(["start1a"]);
+    ], ["0_1a"]);
+    Party.refreshWithTemplates(["0_1a"]);
   }
 
   static savePlayer(){
@@ -43,6 +43,6 @@ export class Start extends Party {
 
     let user = game.getCurrentUser().setName(name);
 
-    Food.step1MeteoAndRats();
+    Food.meteoAndRats();
   }
 }
