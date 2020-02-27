@@ -1,0 +1,30 @@
+{
+  "name": "empire1987",
+  "version": "0.0.1",
+  "description": "Rewrite the Dos Game 'Empire 1987'",
+  "main": "dist",
+  "scripts": {
+    "build": "webpack",
+    "watch": "webpack --watch",
+    "start": "webpack-dev-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/besstiolle/Empire1987.git"
+  },
+  "author": "Kevin Danezis",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/besstiolle/Empire1987/issues"
+  },
+  "homepage": "https://github.com/besstiolle/Empire1987#readme",
+  "devDependencies": {
+    "@babel/core": "^7.8.4",
+    "@babel/preset-env": "^7.8.4",
+    "babel-loader": "^8.0.6",
+    "babel-preset-latest": "^6.24.1",
+    "webpack": "^4.41.6",
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.10.1"
+  }
+}

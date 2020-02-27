@@ -1,9 +1,7 @@
-"use strict";
+import { User } from './User.class'
+import { Market } from './Market.class'
 
-class Game {
-  constructor(){
-    this.reset();
-  }
+export class Game {
 
   reset(){
     this.users = new Map();

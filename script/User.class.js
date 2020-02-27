@@ -1,6 +1,4 @@
-"use strict";
-
-class User {
+export class User {
 
   constructor(id, name, country, land = 10000){
     this.id = id;

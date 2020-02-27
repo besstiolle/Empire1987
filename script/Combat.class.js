@@ -1,6 +1,4 @@
-"use strict";
-
-class Combat {
+export class Combat {
 
   static execute(userDefender, userAttaker, ostAttaker){
     //console.info("execute(" + userDefender + ", " + userAttaker + ", " + ostAttaker + ")");
