@@ -4,7 +4,7 @@ import { Const } from './Const.class'
 export class Party {
 
   static pause(nextCall){
-    setTimeout(function(){ nextCall(); }, 300);
+    setTimeout(function(){ nextCall(); }, 2000);
   }
 
   static refreshWithTemplates(templates, vars = {}){

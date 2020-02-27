@@ -11,8 +11,8 @@ export class Food extends Party{
     game.setMeteo(game.rollDiceInteger(0,3));
 
     game.setRats(game.rollDiceInteger(5,30));
-    game.getCurrentUser().setHarvest(game.getCurrentUser().getSupply() * 1.2 * game.getMeteoPercent());
-    game.getCurrentUser().addSupply( (-1 * (game.getCurrentUser().getSupply() * game.getRats() / 100)) + game.getCurrentUser().getHarvest())
+    game.getCurrentUser().setHarvest(Math.floor(game.getCurrentUser().getSupply() * 1.2 * game.getMeteoPercent()));
+    game.getCurrentUser().addSupply( Math.floor(-1 * (game.getCurrentUser().getSupply() * game.getRats() / 100)) + game.getCurrentUser().getHarvest())
 
     Party.refreshWithTemplates(["0_1b"]);
     //Explicitly remove event listening
