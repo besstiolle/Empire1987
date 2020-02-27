@@ -62,6 +62,7 @@ export class User {
    /*************************/
   getId(){return this.id;}
   getName(){return this.name;}
+  getRank(){return this.rank;}
   getLand(){return this.land;}
   getMoney(){return this.money;}
   getTaxeA(){return this.taxeA;}

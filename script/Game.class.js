@@ -24,6 +24,10 @@ export class Game {
     return this.users;
   }
 
+  getUsersAsArray(){
+    return [... this.getUsers().values()];
+  }
+
   getUserById(userId){
     let users = [ ... this.getUsers().values() ];
     for (var pos in users) {
