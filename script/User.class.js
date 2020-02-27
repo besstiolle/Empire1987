@@ -1,4 +1,3 @@
-
 export class User {
 
   constructor(id, name, country, land = 10000){

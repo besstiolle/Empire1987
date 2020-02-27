@@ -36,13 +36,10 @@ export class Tpl {
     })
   }
 
-
   run(templateName, vars = {}){
     if(!this.templates.has(templateName)){
       return "<c>Template " + templateName + " not found</c>"
     }
     return this.templates.get(templateName)(vars);
   }
-
-
 }

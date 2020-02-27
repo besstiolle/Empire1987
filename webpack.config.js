@@ -4,17 +4,9 @@ const path = require('path');
 
 module.exports = {
     watch: true,
-    entry: ['./script/doT.js','./script/_0tuto.js','./script/_1food.js','./script/_2demography.js',
-          './script/_3invest.js','./script/_4lands.js','./script/Tpl.class.js','./script/Game.class.js','./script/User.class.js',
-          './script/Market.class.js','./script/Combat.class.js','./script/KB.js','./script/Errors.class.js','./script/Const.class.js',
-          './script/empire.js'],
+    entry: ['./script/empire.js'],
     module: {
         rules: [
-          /*  {
-                test: /\.tsx?$/,
-                use: 'ts-loader',
-                exclude: /node_modules/
-            }*/
             {
                 test: /\.m?js$/,
                 exclude: /(node_modules|bower_components)/,
@@ -27,7 +19,6 @@ module.exports = {
               }
         ]
     },
-    /*plugins: [transform_async_to_generator()],*/
     resolve: {
         extensions: [/* '.ts', '.tsx',*/ '.js' ]
     },

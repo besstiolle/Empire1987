@@ -20,7 +20,6 @@
   "homepage": "https://github.com/besstiolle/Empire1987#readme",
   "devDependencies": {
     "@babel/core": "^7.8.4",
-    "@babel/plugin-transform-async-to-generator": "^7.8.3",
     "@babel/preset-env": "^7.8.4",
     "babel-loader": "^8.0.6",
     "babel-preset-latest": "^6.24.1",

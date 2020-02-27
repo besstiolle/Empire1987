@@ -2,9 +2,6 @@ import { User } from './User.class'
 import { Market } from './Market.class'
 
 export class Game {
-  constructor(){
-    this.reset();
-  }
 
   reset(){
     this.users = new Map();

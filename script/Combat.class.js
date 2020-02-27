@@ -1,5 +1,3 @@
-"use strict";
-
 export class Combat {
 
   static execute(userDefender, userAttaker, ostAttaker){
