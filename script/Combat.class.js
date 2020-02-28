@@ -6,7 +6,12 @@ export class Combat {
     //console.info(userAttaker);
     //console.info("execute(" + userDefender.getName() + ", " + userAttaker.getName() + ", " + ostAttaker + ")");
     let ostDefender = userDefender.getOst();
+    let ostEfficiencyDefender = userDefender.getSatisfactionOst() / 100;
     let ostAttakerRemaining = userAttaker.getOst() - ostAttaker;
+    let ostEfficiencyAttaker = userAttaker.getSatisfactionOst() / 100;
+
+    let balance = ostAttaker * ostEfficiencyAttaker * 100 / (ostAttaker * ostEfficiencyAttaker  + ostDefender * ostEfficiencyDefender);
+    console.info("avantage attacker vs defender = " + balance + "%")
 
     if(ostDefender == ostAttaker) {
       ostDefender = 0;

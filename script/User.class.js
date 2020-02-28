@@ -28,6 +28,9 @@ export class User {
     this.nobles = 1;
     this.marchands = 1;
 
+    this.satisfactionPeople = 100;
+    this.satisfactionOst = 100;
+
     this.resetNewYear();
   }
 
@@ -43,30 +46,6 @@ export class User {
   /**
    * Return the value of satisfaction 0 -> 200%
    */
-  getSatisfactionPeople(){
-    if(this.needPeople == 0){
-      return 0;
-    }
-    let satisfaction = 100 * this.supplyPeople / this.needPeople;
-    if(satisfaction > 200){
-      satisfaction = 200;
-    }
-    return Math.floor(satisfaction);
-  }
-
-  /**
-   * Return the value of satisfaction 0 -> 200%
-   */
-  getSatisfactionOst(){
-    if(this.needOst == 0){
-      return 0;
-    }
-    let satisfaction = 100 * this.supplyOst / this.needOst;
-    if(satisfaction > 200){
-      satisfaction = 200;
-    }
-    return Math.floor(satisfaction);
-  }
 
    /*************************/
   getId(){return this.id;}
@@ -82,6 +61,11 @@ export class User {
   getCountry(){return this.country;}
   getPeople(){return this.people;}
   getNeedPeople(){return this.needPeople;}
+  getSupplyPeople(){return this.supplyPeople;}
+  getSupplyOst(){return this.supplyOst;}
+  getSatisfactionPeople(){ return this.satisfactionPeople; }
+  getSatisfactionOst(){ return this.satisfactionOst; }
+  getNeedOst(){ return this.needOst; }
   getHarvest(){return this.harvest;}
   getFoires(){return this.foires;}
   getMoulins(){return this.moulins;}
@@ -100,6 +84,8 @@ export class User {
   setOst(ost){this.ost = ost;}
   setSupplyPeople(supplyPeople){this.supplyPeople = supplyPeople;}
   setSupplyOst(supplyOst){this.supplyOst = supplyOst;}
+  setSatisfactionPeople(satisfactionOst){this.satisfactionOst = satisfactionOst;}
+  setSatisfactionOst(satisfactionOst){this.satisfactionOst = satisfactionOst;}
   setHarvest(harvest){this.harvest = harvest;}
   setMigrants(migrants){this.migrants = migrants;}
   setNobles(nobles){this.nobles = nobles;}
