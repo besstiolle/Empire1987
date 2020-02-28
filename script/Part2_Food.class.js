@@ -130,7 +130,7 @@ export class Food extends Party{
 
     market.createPromise(game.getCurrentUser().getId(), quantity);
     KB.listenTyping([
-      {key: Const.KEYBOARD_INT_TYPING, callback: KB.startTyping}, // 0-9 + backspace
+      {key: Const.KEYBOARD_PRICE_TYPING, callback: KB.startTyping}, // 0-9 + backspace + dot
       {key: Const.KEYBOARD_RETURN, callback: Food.doSellMarketWithPrice}, // ↩
     ], ["2_base", "2_2b"]);
 
