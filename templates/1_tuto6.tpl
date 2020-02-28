@@ -16,7 +16,7 @@
   prospère et parfois même les nobles et les marchands peuvent s'y
   établir.</l>
 <l></l>
-<l>  On peut jouer à 6 au plus. Les joeuurs absents sont remplacés par
+<l>  On peut jouer à 6 au plus. Les joueurs absents sont remplacés par
   l'ordinateur, dont l'habilité est fonction de la moyenne des joueurs
   réels.</l>
 <l></l>
