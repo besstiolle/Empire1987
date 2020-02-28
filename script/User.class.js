@@ -12,16 +12,11 @@ export class User {
     this.taxeA = 20;
     this.taxeB = 5;
     this.taxeC = 35;
-    this.isDead = false;
     this.rank = "Baron";
     this.harvest = 17524;
     this.supply = 12842;
     this.people = 2026;
-    this.needPeople = 10140;
-    this.supplyPeople = 0;
     this.ost=20;
-    this.needOst = 160;
-    this.supplyOst = 0;
     this.money = 1000;
 
     this.foires = 0;
@@ -29,6 +24,20 @@ export class User {
     this.fonderies = 0;
     this.chantiers = 0;
     this.palais = 0;
+
+    this.nobles = 1;
+    this.marchands = 1;
+
+    this.resetNewYear();
+  }
+
+  resetNewYear(){
+    this.needPeople = 5 * this.people;
+    this.supplyPeople = 0;
+    this.needOst = 8 * this.ost;
+    this.supplyOst = 0;
+    this.migrants = 0;
+    this.gains = null;
   }
 
   /**
@@ -79,6 +88,10 @@ export class User {
   getFonderies(){return this.fonderies;}
   getChantiers(){return this.chantiers;}
   getPalais(){return this.palais;}
+  getMigrants(){return this.migrants;}
+  getNobles(){return this.nobles;}
+  getMarchands(){return this.marchands;}
+  getGains(){return this.gains;}
 
   setTaxeA(taxeA){this.taxeA = taxeA;}
   setName(name){this.name = name;}
@@ -88,6 +101,10 @@ export class User {
   setSupplyPeople(supplyPeople){this.supplyPeople = supplyPeople;}
   setSupplyOst(supplyOst){this.supplyOst = supplyOst;}
   setHarvest(harvest){this.harvest = harvest;}
+  setMigrants(migrants){this.migrants = migrants;}
+  setNobles(nobles){this.nobles = nobles;}
+  setMarchands(marchands){this.marchands = marchands;}
+  setGains(gains){this.gains = gains;}
 
   addMoney(money){this.money += money;}
   addSupply(supply){this.supply += supply;}

@@ -110,7 +110,10 @@ export class Game {
 
   nextYear(){
     this.year++;
-    //TODO purge vars in users & game & co
+    const i = this.users.keys();
+    for (let u of i) {
+        this.users.get(u).resetNewYear();
+    }
   }
 
   rollDiceInteger(start = 0, end = 100){
