@@ -46,7 +46,7 @@ export class Lands extends Party {
     //Selection du nombre de soldat
     static doFight(key, defenderUserId){
       let ost = parseInt(KB.buffer);
-      if(ost === ""){
+      if(isNaN(ost) || ost === 0){
         return Lands.choosingOpponent();
       }
 
@@ -58,18 +58,35 @@ export class Lands extends Party {
         return Lands.choosingOpponent();
       }
 
-      let remains = 0;
 
-      //Barbarians
+      let result = null;
       if(defenderUserId == 0){
-        remains = Combat.execute(game.getBarbares(), game.getCurrentUser(), ost);
-        game.getBarbares().setOst(remains[0]);
-      } else {
-        remains = Combat.execute(game.getUserById(defenderUserId), game.getCurrentUser(), ost);
-        game.getUserById(defenderUserId).setOst(remains[0]);
-      }
-      game.getCurrentUser().setOst(remains[1]);
+        Combat.execute(game.getBarbares(), game.getCurrentUser(), ost).then((r)=>{
+          result = r;
+          console.info(result);
 
-      return Lands.choosingOpponent();
+          KB.listen([
+            {key: Const.KEYBOARD_RETURN, callback: Lands.choosingOpponent}, // ↩
+          ], ["5_combat_result"], result);
+
+          //else choose number of soldier
+          Party.refreshWithTemplates(["5_combat_result"]);
+        });
+      } else {
+        Combat.execute(game.getUserById(defenderUserId), game.getCurrentUser(), ost).then((r)=>{
+          result = r;
+          console.info(result);
+
+          KB.listen([
+            {key: Const.KEYBOARD_RETURN, callback: Lands.choosingOpponent}, // ↩
+          ]);
+
+          //else choose number of soldier
+          Party.refreshWithTemplates(["5_combat_result"], result);
+        });
+      }
+
+
+
     }
 }

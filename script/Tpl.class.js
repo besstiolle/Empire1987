@@ -9,7 +9,7 @@ export class Tpl {
                             "2_base", "2", "2_1", "2_1b", "2_2", "2_2b", "2_3", "2_4", "2_5",
                             "3",
                             "4_base", "4", "4_a", "4_b", "4_c", "4_d", "4_e",
-                            "5_base", "5", "5_a", "5_b",
+                            "5_base", "5", "5_a", "5_b", "5_combat_show", "5_combat_result",
                             "6_base"];
       this.templates = new Map();
   }
