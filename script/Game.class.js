@@ -52,7 +52,7 @@ export class Game {
   getOpponents(){
     let i = 1;
     let opponents = new Map();
-    if(this.barbares != null){
+    if(this.barbares.getLand() > 0){
       opponents.set(i, this.barbares);
       i++;
     }
@@ -153,6 +153,11 @@ export class Game {
 
   kill(user){
     console.info("kill() " + user.getId());
+
+    if(user.getId() == 0){
+      user.setLand(0);
+    }
+
     this.users.delete(user.getId());
     this.market.removeSaleOfUser(user);
   }

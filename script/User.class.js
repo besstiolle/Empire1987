@@ -94,6 +94,7 @@ export class User {
   setNobles(nobles){this.nobles = nobles;}
   setMarchands(marchands){this.marchands = marchands;}
   setGains(gains){this.gains = gains;}
+  setLand(land){this.land = land;}
 
   addMoney(money){this.money += money;}
   addSupply(supply){this.supply += supply;}

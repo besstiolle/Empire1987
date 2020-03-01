@@ -60,29 +60,23 @@ export class Lands extends Party {
 
 
       let result = null;
+      let promiseCombat = null;
       if(defenderUserId == 0){
-        Combat.execute(game.getBarbares(), game.getCurrentUser(), ost).then((r)=>{
-          result = r;
-          console.info(result);
-
-          KB.listen([
-            {key: Const.KEYBOARD_RETURN, callback: Lands.choosingOpponent}, // ↩
-          ], ["5_combat_result"], result);
-
-          //else choose number of soldier
-          Party.refreshWithTemplates(["5_combat_result"]);
-        });
+        promiseCombat = Combat.execute(game.getBarbares(), game.getCurrentUser(), ost);
       } else {
-        Combat.execute(game.getUserById(defenderUserId), game.getCurrentUser(), ost).then((result)=>{
-
-          KB.listen([
-            {key: Const.KEYBOARD_RETURN, callback: Lands.choosingOpponent}, // ↩
-          ]);
-
-          //else choose number of soldier
-          Party.refreshWithTemplates(["5_combat_result"], result);
-        });
+        promiseCombat = Combat.execute(game.getUserById(defenderUserId), game.getCurrentUser(), ost);
       }
+
+      //Resolve promise
+      promiseCombat.then((result)=>{
+
+        KB.listen([
+          {key: Const.KEYBOARD_RETURN, callback: Lands.choosingOpponent}, // ↩
+        ]);
+
+        //else choose number of soldier
+        Party.refreshWithTemplates(["5_combat_result"], result);
+      });
 
 
 
