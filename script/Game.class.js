@@ -152,7 +152,7 @@ export class Game {
   }
 
   kill(user){
-    console.info("kill() " + user.getId());
+    //console.info("kill() " + user.getId());
 
     if(user.getId() == 0){
       user.setLand(0);

@@ -50,7 +50,7 @@ export class Market {
   }
 
   removeSaleOfUser(idUser){
-    console.info("removeSaleOfUser() " + idUser);
+    //console.info("removeSaleOfUser() " + idUser);
     let liste = this.getSalesInArray();
     for( var pos in liste){
       if(liste[pos]['idUser'] === idUser){
@@ -76,7 +76,7 @@ export class Market {
   }
 
   removeSale(marketId){
-    console.info("removeSale()" + marketId)
+    //console.info("removeSale()" + marketId)
     this.sales.delete(marketId);
     this.orderSales();
   }

@@ -19,7 +19,7 @@ export class Combat extends Party {
         if(land < 0){
           land = game.rollDiceInteger(0,10)
         }
-        console.info("potential land : " + land)
+        //console.info("potential land : " + land)
       }
 
       let balance = ostAttaker * ostEfficiencyAttaker * 100 / (ostAttaker * ostEfficiencyAttaker  + ostDefender * ostEfficiencyDefender);
@@ -75,7 +75,7 @@ export class Combat extends Party {
     }
 
     if(land > userDefender.getLand()){
-      console.info("rectif land to " + userDefender.getLand())
+      //console.info("rectif land to " + userDefender.getLand())
       land = userDefender.getLand();
     }
 

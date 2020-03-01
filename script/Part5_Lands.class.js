@@ -23,13 +23,13 @@ export class Lands extends Party {
 
       let opponents = game.getOpponentsAsArray();
       if(opponent < 1 || opponent > opponents.length){
-        console.info("opposant pas dans la liste");
+        //console.info("opposant pas dans la liste");
         return Lands.choosingOpponent();
       }
 
       //opponent = myself
       if(game.getCurrentUser().getId() == opponents[opponent - 1].getId()){
-        console.info("pas soi même");
+        //console.info("pas soi même");
         game.addError(Errors.fightMyself());
         return Lands.choosingOpponent();
       }
@@ -50,7 +50,7 @@ export class Lands extends Party {
         return Lands.choosingOpponent();
       }
 
-      console.info("doFight(" + ost + ", " + defenderUserId + ")");
+      //console.info("doFight(" + ost + ", " + defenderUserId + ")");
 
       //Test if we have enought ost men
       if(game.getCurrentUser().getOst() < ost){

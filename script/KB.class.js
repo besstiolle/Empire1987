@@ -28,7 +28,7 @@ export class KB {
     } else {
       KB.buffer += KB.eventKeyToJScode(key);
     }
-  //  console.info("Buffer après = " + KB.buffer);
+    //console.info("Buffer après = " + KB.buffer);
   }
 
   static keyboardBinder(vars, event){
