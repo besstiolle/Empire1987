@@ -23,6 +23,10 @@ export class IA extends Party {
         //player
         return;
       }
+  /*    if(!user.isAlive()){
+        //IA dead
+        return;
+      }*/
 
       console.info("doAction() " + user.getName())
     }

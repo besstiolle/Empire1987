@@ -49,6 +49,16 @@ export class Market {
     return null;
   }
 
+  removeSaleOfUser(idUser){
+    console.info("removeSaleOfUser() " + idUser);
+    let liste = [... this.getSalesInArray()];
+    for( var pos in liste){
+      if(liste[pos]['idUser'] === idUser){
+        this.removeSale(pos);
+      }
+    }
+  }
+
   createOffer(buyerId, marketId){
     this.offer = {"buyerId" : buyerId, "marketId": marketId};
   }

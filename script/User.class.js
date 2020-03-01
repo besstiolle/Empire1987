@@ -31,6 +31,8 @@ export class User {
     this.satisfactionPeople = 100;
     this.satisfactionOst = 100;
 
+  //  this.alive = true;
+
     this.resetNewYear();
   }
 
@@ -76,6 +78,7 @@ export class User {
   getNobles(){return this.nobles;}
   getMarchands(){return this.marchands;}
   getGains(){return this.gains;}
+//  isAlive(){return this.alive;}
 
   setTaxeA(taxeA){this.taxeA = taxeA;}
   setName(name){this.name = name;}
@@ -103,6 +106,10 @@ export class User {
   addFonderies(fonderies){this.fonderies += fonderies}
   addChantiers(chantiers){this.chantiers += chantiers}
   addPalais(palais){this.palais += palais}
+
+//  kill(){
+//    this.alive=false;
+//  }
 
 
 }

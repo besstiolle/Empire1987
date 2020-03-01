@@ -19,7 +19,7 @@ export class Combat extends Party {
         if(land < 0){
           land = game.rollDiceInteger(0,10)
         }
-        //console.info("potential land : " + land)
+        console.info("potential land : " + land)
       }
 
       let balance = ostAttaker * ostEfficiencyAttaker * 100 / (ostAttaker * ostEfficiencyAttaker  + ostDefender * ostEfficiencyDefender);
@@ -73,11 +73,28 @@ export class Combat extends Party {
     if(win){
       land = land * 3;
     }
+
+    if(land > userDefender.getLand()){
+      console.info("rectif land to " + userDefender.getLand())
+      land = userDefender.getLand();
+    }
+
     //console.info("captured land : " + land);
-    userDefender.addLand(-1 * land);
     userAttaker.addLand(land);
 
-    return {"win" : win, "land" : land, "userAttaker": userAttaker};
+    //If death of defender
+    // 1 chance on 2 if attaker took +25% of land
+    // or if there is no more land
+    let death = false;
+    if((userDefender.getLand() / 4 < land && game.rollDiceInteger(0,1)) || userDefender.getLand() <= land){
+      death = true;
+      game.kill(userDefender);
+    } else {
+      userDefender.addLand(-1 * land);
+    }
+
+
+    return {"win" : win, "land" : land, "userAttaker": userAttaker, "death" : death};
   }
 
   static sleep(ms) {

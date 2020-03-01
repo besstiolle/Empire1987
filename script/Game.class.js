@@ -20,6 +20,9 @@ export class Game {
     this.errors = [];
   }
 
+  /**
+   * dead or alive user
+   */
   getUsers(){
     return this.users;
   }
@@ -29,7 +32,7 @@ export class Game {
   }
 
   getUserById(userId){
-    let users = [ ... this.getUsers().values() ];
+    let users = [ ... this.users.values() ];
     for (var pos in users) {
       if(users[pos].getId() == userId){
         return users[pos];
@@ -104,10 +107,6 @@ export class Game {
     return this.rats;
   }
 
-  nextPayer(){
-    this.currentPlayer = ((this.currentPlayer+1) % this.users.size);
-  }
-
   nextYear(){
     this.year++;
     const i = this.users.keys();
@@ -150,6 +149,12 @@ export class Game {
     }
     this.users.set(seller.getId(), seller);
     this.users.set(buyer.getId(), buyer);
+  }
+
+  kill(user){
+    console.info("kill() " + user.getId());
+    this.users.delete(user.getId());
+    this.market.removeSaleOfUser(user);
   }
 
 

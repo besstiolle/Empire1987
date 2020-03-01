@@ -73,9 +73,7 @@ export class Lands extends Party {
           Party.refreshWithTemplates(["5_combat_result"]);
         });
       } else {
-        Combat.execute(game.getUserById(defenderUserId), game.getCurrentUser(), ost).then((r)=>{
-          result = r;
-          console.info(result);
+        Combat.execute(game.getUserById(defenderUserId), game.getCurrentUser(), ost).then((result)=>{
 
           KB.listen([
             {key: Const.KEYBOARD_RETURN, callback: Lands.choosingOpponent}, // ↩
