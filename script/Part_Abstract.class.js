@@ -14,7 +14,7 @@ export class Party {
       "user": window.game.getCurrentUser(),
       "users": window.game.getUsers(),
       "game": window.game,
-      "sales": [...window.game.getSalesInArray()],
+      "sales": window.game.getSalesInArray(),
       "Const": Const,
       "KB_BUFFER": KB.buffer
       }, vars)

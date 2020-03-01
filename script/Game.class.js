@@ -159,7 +159,7 @@ export class Game {
     }
 
     this.users.delete(user.getId());
-    this.market.removeSaleOfUser(user);
+    this.market.removeSaleOfUser(user.getId());
   }
 
 

@@ -35,12 +35,12 @@ export class Market {
 
   getSalesInArray(){
     //console.info("getSalesInArray()")
-    return this.sales.values();
+    return [... this.sales.values()];
   }
 
   getSaleOfUser(idUser){
     //console.info("getSaleOfUser() " + idUser);
-    let liste = [... this.getSalesInArray()];
+    let liste = this.getSalesInArray();
     for( var pos in liste){
       if(liste[pos]['idUser'] === idUser){
         return [parseInt(pos)+1, liste[pos]];
@@ -51,10 +51,10 @@ export class Market {
 
   removeSaleOfUser(idUser){
     console.info("removeSaleOfUser() " + idUser);
-    let liste = [... this.getSalesInArray()];
+    let liste = this.getSalesInArray();
     for( var pos in liste){
       if(liste[pos]['idUser'] === idUser){
-        this.removeSale(pos);
+        this.removeSale(parseInt(pos)+1);
       }
     }
   }
@@ -76,14 +76,14 @@ export class Market {
   }
 
   removeSale(marketId){
-    //console.info("removeSale()" + marketId)
+    console.info("removeSale()" + marketId)
     this.sales.delete(marketId);
     this.orderSales();
   }
 
   orderSales(){
     //console.info("orderSales()")
-    let liste = [... this.getSalesInArray()];
+    let liste = this.getSalesInArray();
     let minusIdUser=0;
     let minusSale;
     let position;
