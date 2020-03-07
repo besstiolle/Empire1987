@@ -106,7 +106,7 @@ export class Invest extends Party {
 
     KB.listen([
       {key: Const.KEYBOARD_INT, callback: Invest.choiceInvestHowMuch}, // 0-9
-      {key: Const.KEYBOARD_RETURN, callback: Lands.choosingOpponent}, // ↩
+      {key: Const.KEYBOARD_RETURN, callback: Lands.entryPoint}, // ↩
     ]);
 
     Party.refreshWithTemplates(["4_base", "4_d"]);
@@ -154,6 +154,11 @@ export class Invest extends Party {
       default:
     }
 
+    if(what == 5 && UserUtils.getMaxOstPossible(game.getCurrentUser()) < quantity + game.getCurrentUser().getOst()){
+      game.addError(Errors.notEnoughtNobles())
+      return Invest.choiceInvestHowMuch(what);
+    }
+
     if(price * quantity > game.getCurrentUser().getMoney()){
       game.addError(Errors.notEnoughtMoney())
       return Invest.choiceInvestHowMuch(what);
@@ -180,6 +185,10 @@ export class Invest extends Party {
         game.getCurrentUser().addPalais(quantity * 10);
         break;
       default:
+    }
+
+    if(what == 6){
+      game.getCurrentUser().addNobles(quantity);
     }
 
     return Invest.choiceInvest();

@@ -4,8 +4,15 @@ import { Combat } from './Combat.class'
 import { Party } from './Part_Abstract.class'
 import { IA } from './Part6_IA.class'
 import { Errors } from './Errors.class'
+import { UserUtils } from './User.utils.class'
 
 export class Lands extends Party {
+
+    static entryPoint(){
+      Lands.nbAttacks = 1;
+      return Lands.choosingOpponent();
+    }
+
     // Terres vassales, choix de l'adversaire
     static choosingOpponent(){
       //console.info("step5")
@@ -20,6 +27,10 @@ export class Lands extends Party {
     //Selection du nombre de soldat
     static choiceQttOst(opponent){
       //console.info("choiceQttOst(" + opponent + ")");
+      if(Lands.nbAttacks > UserUtils.getNbAttacksMax(game.getCurrentUser())){
+        game.addError(Errors.notEnoughtNobles());
+        return Lands.choosingOpponent();
+      }
 
       let opponents = game.getOpponentsAsArray();
       if(opponent < 1 || opponent > opponents.length){
@@ -70,6 +81,9 @@ export class Lands extends Party {
       //Resolve promise
       promiseCombat.then((result)=>{
 
+        //add 1 to counter of current attacks
+        Lands.nbAttacks++;
+
         KB.listen([
           {key: Const.KEYBOARD_RETURN, callback: Lands.choosingOpponent}, // ↩
         ]);
@@ -77,8 +91,14 @@ export class Lands extends Party {
         //else choose number of soldier
         Party.refreshWithTemplates(["5_combat_result"], result);
       });
+    }
 
 
+    get nbAttacks() {
+      return this._nbAttacks || 0;
+    }
 
+    set nbAttacks(v) {
+      this._nbAttacks = v;
     }
 }

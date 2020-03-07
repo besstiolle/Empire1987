@@ -6,7 +6,7 @@
 <l></l>
 {{~ it.game.getUsersAsArray() :user:index }}
 <invert><l> {{=user.getRank()}} {{=user.getName()}} de {{=user.getCountry()}}</l></invert>
-<l>             todo     {{=user.getOst().toString().padStart(8," ")}}       todo {{=user.getPeople().toString().padStart(10," ")}} {{=user.getLand().toString().padStart(8," ")}}    {{=user.getPalais().toString().padStart(4," ")}}%</l>
+<l>             {{=user.getNobles().toString().padStart(4," ")}}     {{=user.getOst().toString().padStart(8," ")}}       {{=user.getMarchands().toString().padStart(4," ")}} {{=user.getPeople().toString().padStart(10," ")}} {{=user.getLand().toString().padStart(8," ")}}    {{=user.getPalais().toString().padStart(4," ")}}%</l>
 {{~}}
 <l></l>
 <l>               &#8617;</l>

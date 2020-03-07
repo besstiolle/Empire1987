@@ -1,5 +1,16 @@
 export class UserUtils {
 
+
+    /**
+     * Return value representing the max amount of ost availablefor a player
+     **/
+    static getMaxOstPossible(user){
+      return user.getNobles() * 20;
+    }
+
+    /**
+     * Return value representing the name of a player depending of its country
+     **/
     static getName(user, n = ""){
       let name = ""
       if( n !== ""){
@@ -142,5 +153,15 @@ export class UserUtils {
     static calculGainsOfTaxesC(user){
       return Math.floor((user.getTaxeC() / 100 * user.getPeople() * 2) * game.getMeteoPercent());
     }
+
+
+    /**
+     * Return value representing count of attaks possible for a user
+     **/
+    static getNbAttacksMax(user){
+      return user.getNobles();
+    }
+
+
 
 }

@@ -90,9 +90,8 @@ export class User {
   setSatisfactionPeople(satisfactionOst){this.satisfactionOst = satisfactionOst;}
   setSatisfactionOst(satisfactionOst){this.satisfactionOst = satisfactionOst;}
   setHarvest(harvest){this.harvest = harvest;}
-  setMigrants(migrants){this.migrants = migrants;}
-  setNobles(nobles){this.nobles = nobles;}
   setMarchands(marchands){this.marchands = marchands;}
+  setMigrants(migrants){this.migrants = migrants;}
   setGains(gains){this.gains = gains;}
   setLand(land){this.land = land;}
 
@@ -102,11 +101,12 @@ export class User {
   addPeople(people){this.people += people;}
   addLand(land){this.land += land;}
 
-  addFoires(foires){this.foires += foires}
-  addMoulins(moulins){this.moulins += moulins}
-  addFonderies(fonderies){this.fonderies += fonderies}
-  addChantiers(chantiers){this.chantiers += chantiers}
-  addPalais(palais){this.palais += palais}
+  addFoires(foires){this.foires += foires;}
+  addMoulins(moulins){this.moulins += moulins;}
+  addFonderies(fonderies){this.fonderies += fonderies;}
+  addChantiers(chantiers){this.chantiers += chantiers;}
+  addPalais(palais){this.palais += palais;}
+  addNobles(nobles){this.nobles += nobles;}
 
 //  kill(){
 //    this.alive=false;
