@@ -3,6 +3,7 @@ import { Const } from './Const.class'
 import { Party } from './Part_Abstract.class'
 import { Errors } from './Errors.class'
 import { Demography } from './Part3_Demography.class'
+import { UserUtils } from './User.utils.class'
 
 export class Food extends Party{
 
@@ -11,8 +12,8 @@ export class Food extends Party{
     game.setMeteo(game.rollDiceInteger(0,3));
 
     game.setRats(game.rollDiceInteger(5,30));
-    game.getCurrentUser().setHarvest(Math.floor(game.getCurrentUser().getSupply() * 1.2 * game.getMeteoPercent()));
-    game.getCurrentUser().addSupply( Math.floor(-1 * (game.getCurrentUser().getSupply() * game.getRats() / 100)) + game.getCurrentUser().getHarvest())
+    game.getCurrentUser().setHarvest(UserUtils.calculNewHarvest(game.getCurrentUser()));
+    game.getCurrentUser().addSupply(UserUtils.calculNewSupply(game.getCurrentUser()));
 
     Party.refreshWithTemplates(["0_1b"]);
     //Explicitly remove event listening

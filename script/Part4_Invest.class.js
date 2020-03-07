@@ -3,6 +3,7 @@ import { Const } from './Const.class'
 import { Party } from './Part_Abstract.class'
 import { Lands } from './Part5_Lands.class'
 import { Errors } from './Errors.class'
+import { UserUtils } from './User.utils.class'
 
 export class Invest extends Party {
 
@@ -190,15 +191,15 @@ export class Invest extends Party {
     let gains = {gainFoires: 0,gainMoulins: 0,gainFonderies: 0,gainChantiers: 0,gainOst: 0,
                 taxeA: 0,taxeB: 0,taxeC: 0};
 
-    gains.gainFoires = Math.floor((user.getFoires() * 1500) * game.getMeteoPercent());
-    gains.gainMoulins = Math.floor((user.getMoulins() * 2500) * game.getMeteoPercent());
-    gains.gainFonderies = Math.floor(((user.getFonderies() * 500) + 300) * game.getMeteoPercent());
-    gains.gainChantiers = Math.floor((user.getChantiers() * 3500) * game.getMeteoPercent());
-    gains.gainOst = user.getOst() * -1 * 8;
+    gains.gainFoires = UserUtils.calculGainsOfFoires(user);
+    gains.gainMoulins = UserUtils.calculGainsOfMoulins(user);
+    gains.gainFonderies = UserUtils.calculGainsOfFonderies(user);
+    gains.gainChantiers = UserUtils.calculGainsOfChantiers(user);
+    gains.gainOst = UserUtils.calculGainsOfOst(user);
 
-    gains.taxeA = Math.floor(user.getTaxeA() / 100 * user.getMigrants());
-    gains.taxeB = Math.floor((user.getTaxeB() / 100 * user.getMarchands() * 300 + user.getTaxeB() / 100 * user.getFoires() * 75) * game.getMeteoPercent());
-    gains.taxeC = Math.floor((user.getTaxeC() / 100 * user.getPeople() * 2) * game.getMeteoPercent());
+    gains.taxeA = UserUtils.calculGainsOfTaxesA(user);
+    gains.taxeB = UserUtils.calculGainsOfTaxesB(user);
+    gains.taxeC = UserUtils.calculGainsOfTaxesC(user);
 
     let gain = gains.gainFoires + gains.gainMoulins + gains.gainFonderies + gains.gainChantiers + gains.gainOst + gains.taxeA + gains.taxeB + gains.taxeC;
 

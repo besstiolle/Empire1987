@@ -3,6 +3,7 @@ import { Const } from './Const.class'
 import { Party } from './Part_Abstract.class'
 import { Tuto } from './Part1_Tuto.class'
 import { Food } from './Part2_Food.class'
+import { UserUtils } from './User.utils.class'
 
 export class Start extends Party {
 
@@ -32,16 +33,7 @@ export class Start extends Party {
   }
 
   static savePlayer(){
-    let name = KB.buffer;
-    if( name !== ""){
-      if(name === "J") {
-        name = "Jeanne d'Arc"
-      }
-    } else {
-      name = "Hugues";
-    }
-
-    let user = game.getCurrentUser().setName(name);
+    game.getCurrentUser().setName(UserUtils.getName(KB.buffer));
 
     Food.meteoAndRats();
   }
