@@ -33,7 +33,12 @@ export class Start extends Party {
   }
 
   static savePlayer(){
-    game.getCurrentUser().setName(UserUtils.getName(game.getCurrentUser(),KB.buffer));
+    let input = KB.buffer;
+    if(input != "" && input =="J"){
+      game.getCurrentUser().setSexe(1);
+    }
+
+    game.getCurrentUser().setName(UserUtils.getName(game.getCurrentUser(), input));
 
     Food.meteoAndRats();
   }

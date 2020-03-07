@@ -9,6 +9,7 @@ export class User {
   }
 
   reset(){
+    this.sexe = 0; // 0=male 1=female
     this.taxeA = 20;
     this.taxeB = 5;
     this.taxeC = 35;
@@ -52,6 +53,7 @@ export class User {
    /*************************/
   getId(){return this.id;}
   getName(){return this.name;}
+  getSexe(){return this.sexe;}
   getRank(){return this.rank;}
   getLand(){return this.land;}
   getMoney(){return this.money;}
@@ -80,6 +82,7 @@ export class User {
   getGains(){return this.gains;}
 //  isAlive(){return this.alive;}
 
+  setSexe(sexe){this.sexe = sexe;}
   setTaxeA(taxeA){this.taxeA = taxeA;}
   setName(name){this.name = name;}
   setTaxeB(taxeB){this.taxeB = taxeB;}
