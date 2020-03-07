@@ -33,7 +33,7 @@ export class Start extends Party {
   }
 
   static savePlayer(){
-    game.getCurrentUser().setName(UserUtils.getName(KB.buffer));
+    game.getCurrentUser().setName(UserUtils.getName(game.getCurrentUser(),KB.buffer));
 
     Food.meteoAndRats();
   }
