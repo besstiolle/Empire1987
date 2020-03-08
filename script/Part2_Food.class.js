@@ -9,7 +9,7 @@ export class Food extends Party{
 
   static meteoAndRats(){
     //console.info("step2Meteo")
-    game.setMeteo(game.rollDiceInteger(0,3));
+    game.setMeteo(game.rollDiceInteger(1,6));
 
     game.setRats(game.rollDiceInteger(5,30));
     game.getCurrentUser().setHarvest(UserUtils.calculNewHarvest(game.getCurrentUser()));
