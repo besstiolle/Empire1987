@@ -7,6 +7,10 @@ export class Party {
     setTimeout(function(){ nextCall(); }, 2000);
   }
 
+  static refreshWithTemplate(template, vars = {}){
+    return Party.refreshWithTemplates([template], vars)
+  }
+
   static refreshWithTemplates(templates, vars = {}){
     //console.info("template" + template);
     let datas = "";
@@ -19,8 +23,12 @@ export class Party {
       "KB_BUFFER": KB.buffer
       }, vars)
 
-    for (const template of templates) {
-      datas += tpl.run(template, vars);
+    for (const tpl of templates) {
+     // if( typeof(tpl) == Object){
+        datas += tpl(vars);
+     // } else {
+     //   throw "tpl wasn't an object " + tpl
+     // }
     }
 
     document.getElementById("game").innerHTML = datas;

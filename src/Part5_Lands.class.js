@@ -6,6 +6,11 @@ import { IA } from './Part6_IA.class'
 import { Errors } from './Errors.class'
 import { UserUtils } from './User.utils.class'
 
+import tpl_5_base from './templates/5_base.tpl'
+import tpl_5 from './templates/5.tpl'
+import tpl_5_b from './templates/5_b.tpl'
+import tpl_5_combat_result from './templates/5_combat_result.tpl'
+
 export class Lands extends Party {
 
     static entryPoint(){
@@ -21,7 +26,7 @@ export class Lands extends Party {
         {key: Const.KEYBOARD_RETURN, callback: IA.do}, // ↩
       ]);
 
-      Party.refreshWithTemplates(["5_base", "5"]);
+      Party.refreshWithTemplates([tpl_5_base, tpl_5]);
     }
 
     //Selection du nombre de soldat
@@ -47,10 +52,10 @@ export class Lands extends Party {
       KB.listenTyping([
         {key: Const.KEYBOARD_INT_TYPING, callback: KB.startTyping}, // 0-9 + backspace
         {key: Const.KEYBOARD_RETURN, callback: Lands.doFight}, // ↩
-      ], ["5_base", "5_b"], [opponents[opponent - 1].getId()]);
+      ], [tpl_5_base, tpl_5_b], [opponents[opponent - 1].getId()]);
 
       //else choose number of soldier
-      Party.refreshWithTemplates(["5_base", "5_b"]);
+      Party.refreshWithTemplates([tpl_5_base, tpl_5_b]);
     }
 
 
@@ -89,7 +94,7 @@ export class Lands extends Party {
         ]);
 
         //else choose number of soldier
-        Party.refreshWithTemplates(["5_combat_result"], result);
+        Party.refreshWithTemplate(tpl_5_combat_result, result);
       });
     }
 

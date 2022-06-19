@@ -1,35 +1,62 @@
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 //const transform_async_to_generator = require('@babel/plugin-transform-async-to-generator');
 
 module.exports = {
-    watch: true,
-    entry: ['./script/empire.js'],
+    entry: {
+        index: './src/index.js',    
+    },
     module: {
         rules: [
-            {
-                test: /\.m?js$/,
-                exclude: /(node_modules|bower_components)/,
-                use: {
-                  loader: 'babel-loader',
-                  options: {
-                    presets: ['@babel/preset-env']
-                  }
-                }
+          {
+            test: /\.css$/i,
+            use: ['style-loader', 'css-loader'],
+          },
+          {
+            test: /\.(png|svg|jpg|jpeg|gif)$/i,
+            type: 'asset/resource',    
+          },  
+          { 
+            test: /\.(tpl|dot)$/, 
+            loader: 'dotjs-loader', 
+            options: {
+                // your custom dot options
               }
-        ]
-    },
-    resolve: {
-        extensions: [/* '.ts', '.tsx',*/ '.js' ]
-    },
+          }
+        ],    
+      },
+      plugins: [
+        new HtmlWebpackPlugin({    
+          title: 'Empire 1987',    
+          favicon: './favicon.png',
+          template: 'index.html'
+        }),    
+      ],
     output: {
-        publicPath: '/',
-        filename: 'main.js',
+        clean: true,
+        filename: '[name].[contenthash].js',
         path: path.resolve(__dirname, 'dist')
     },
     mode: 'development',
+    devtool: 'inline-source-map',
     devServer: {
-        contentBase: path.join(__dirname, 'script'),
+        static: {
+            directory: './dist',
+        },
         port: 9000
-    }
+    },  
+    optimization: {
+      moduleIds: 'deterministic',
+      runtimeChunk: 'single',
+      splitChunks: {
+        cacheGroups: {
+          vendor: {
+            test: /[\\/]node_modules[\\/]/,
+            name: 'vendors',
+            chunks: 'all',
+          },
+        },
+      },
+    },
 };

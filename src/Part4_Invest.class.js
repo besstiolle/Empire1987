@@ -5,6 +5,15 @@ import { Lands } from './Part5_Lands.class'
 import { Errors } from './Errors.class'
 import { UserUtils } from './User.utils.class'
 
+
+import tpl_4_base from './templates/4_base.tpl'
+import tpl_4 from './templates/4.tpl'
+import tpl_4_a from './templates/4_a.tpl'
+import tpl_4_b from './templates/4_b.tpl'
+import tpl_4_c from './templates/4_c.tpl'
+import tpl_4_d from './templates/4_d.tpl'
+import tpl_4_e from './templates/4_e.tpl'
+
 export class Invest extends Party {
 
   //Investissement
@@ -21,7 +30,7 @@ export class Invest extends Party {
       {key: Const.KEYBOARD_RETURN, callback: Invest.choiceInvest}, // ↩
     ]);
 
-    Party.refreshWithTemplates(["4_base", "4"]);
+    Party.refreshWithTemplates([tpl_4_base, tpl_4]);
   }
 
   //Propose setting taxe A
@@ -30,9 +39,9 @@ export class Invest extends Party {
     KB.listenTyping([
       {key: Const.KEYBOARD_INT_TYPING, callback: KB.startTyping}, // 0-9 + backspace
       {key: Const.KEYBOARD_RETURN, callback: Invest.doSetTaxeA}, // ↩
-    ], ["4_base", "4_a"]);
+    ], [tpl_4_base, tpl_4_a]);
 
-    Party.refreshWithTemplates(["4_base", "4_a"]);
+    Party.refreshWithTemplates([tpl_4_base, tpl_4_a]);
   }
 
   // Do set Taxe A
@@ -56,9 +65,9 @@ export class Invest extends Party {
     KB.listenTyping([
       {key: Const.KEYBOARD_INT_TYPING, callback: KB.startTyping}, // 0-9 + backspace
       {key: Const.KEYBOARD_RETURN, callback: Invest.doSetTaxeB}, // ↩
-    ], ["4_base", "4_b"]);
+    ], [tpl_4_base, tpl_4_b]);
 
-    Party.refreshWithTemplates(["4_base", "4_b"]);
+    Party.refreshWithTemplates([tpl_4_base, tpl_4_b]);
   }
 
   // Do set Taxe B
@@ -81,9 +90,9 @@ export class Invest extends Party {
     KB.listenTyping([
       {key: Const.KEYBOARD_INT_TYPING, callback: KB.startTyping}, // 0-9 + backspace
       {key: Const.KEYBOARD_RETURN, callback: Invest.doSetTaxeC}, // ↩
-    ], ["4_base", "4_c"]);
+    ], [tpl_4_base, tpl_4_c]);
 
-    Party.refreshWithTemplates(["4_base", "4_c"]);
+    Party.refreshWithTemplates([tpl_4_base, tpl_4_c]);
   }
 
   // Do set Taxe C
@@ -109,7 +118,7 @@ export class Invest extends Party {
       {key: Const.KEYBOARD_RETURN, callback: Lands.entryPoint}, // ↩
     ]);
 
-    Party.refreshWithTemplates(["4_base", "4_d"]);
+    Party.refreshWithTemplates([tpl_4_base, tpl_4_d]);
   }
 
   static choiceInvestHowMuch(invest){
@@ -121,9 +130,9 @@ export class Invest extends Party {
     KB.listenTyping([
       {key: Const.KEYBOARD_INT_TYPING, callback: KB.startTyping}, // 0-9 + backspace
       {key: Const.KEYBOARD_RETURN, callback: Invest.doInvest}, // ↩
-    ], ["4_base", "4_e"], [invest]);
+    ], [tpl_4_base, tpl_4_e], [invest]);
 
-    Party.refreshWithTemplates(["4_base", "4_e"]);
+    Party.refreshWithTemplates([tpl_4_base, tpl_4_e]);
   }
 
   static doInvest(keyCode, additionnalParameters){
@@ -205,6 +214,8 @@ export class Invest extends Party {
     gains.gainFonderies = UserUtils.calculGainsOfFonderies(user);
     gains.gainChantiers = UserUtils.calculGainsOfChantiers(user);
     gains.gainOst = UserUtils.calculGainsOfOst(user);
+
+    game.getCurrentUser().setGains(gains);
 
     gains.taxeA = UserUtils.calculGainsOfTaxesA(user);
     gains.taxeB = UserUtils.calculGainsOfTaxesB(user);

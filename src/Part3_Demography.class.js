@@ -4,6 +4,8 @@ import { Party } from './Part_Abstract.class'
 import { UserUtils } from './User.utils.class'
 import { Invest } from './Part4_Invest.class'
 
+import tpl_3 from './templates/3.tpl'
+
 export class Demography extends Party {
 
   //Démographie
@@ -34,7 +36,7 @@ export class Demography extends Party {
       {key: Const.KEYBOARD_RETURN, callback: Invest.choiceTaxes}, // ↩
     ]);
 
-    Party.refreshWithTemplates(["3"], templateVars);
+    Party.refreshWithTemplate(tpl_3, templateVars);
   }
 
 }
