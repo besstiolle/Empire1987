@@ -3,18 +3,30 @@ import { Const } from './Const.class'
 import { Party } from './Part_Abstract.class'
 import { Errors } from './Errors.class'
 import { Demography } from './Part3_Demography.class'
+import { UserUtils } from './User.utils.class'
+
+import tpl_0_1b from './templates/0_1b.tpl'
+import tpl_2_base from './templates/2_base.tpl'
+import tpl_2 from './templates/2.tpl'
+import tpl_2_1 from './templates/2_1.tpl'
+import tpl_2_1b from './templates/2_1b.tpl'
+import tpl_2_2 from './templates/2_2.tpl'
+import tpl_2_2b from './templates/2_2b.tpl'
+import tpl_2_3 from './templates/2_3.tpl'
+import tpl_2_4 from './templates/2_4.tpl'
+import tpl_2_5 from './templates/2_5.tpl'
 
 export class Food extends Party{
 
   static meteoAndRats(){
     //console.info("step2Meteo")
-    game.setMeteo(game.rollDiceInteger(0,3));
+    game.setMeteo(game.rollDiceInteger(1,6));
 
     game.setRats(game.rollDiceInteger(5,30));
-    game.getCurrentUser().setHarvest(Math.floor(game.getCurrentUser().getSupply() * 1.2 * game.getMeteoPercent()));
-    game.getCurrentUser().addSupply( Math.floor(-1 * (game.getCurrentUser().getSupply() * game.getRats() / 100)) + game.getCurrentUser().getHarvest())
+    game.getCurrentUser().setHarvest(UserUtils.calculNewHarvest(game.getCurrentUser()));
+    game.getCurrentUser().addSupply(UserUtils.calculNewSupply(game.getCurrentUser()));
 
-    Party.refreshWithTemplates(["0_1b"]);
+    Party.refreshWithTemplate(tpl_0_1b);
     //Explicitly remove event listening
     KB.stop();
     Party.pause(Food.choiceMarket);
@@ -30,7 +42,7 @@ export class Food extends Party{
       {key: Const.KEYBOARD_RETURN, callback: Food.giveToOst}, // ↩
     ]);
 
-    Party.refreshWithTemplates(["2_base", "2"]);
+    Party.refreshWithTemplates([tpl_2_base, tpl_2]);
   }
 
   static buyOnMarket(){
@@ -39,7 +51,7 @@ export class Food extends Party{
       {key: Const.KEYBOARD_INT, callback: Food.buyOnMarketFrom}, // 0-9
       {key: Const.KEYBOARD_RETURN, callback: Food.choiceMarket}, // ↩
     ]);
-    Party.refreshWithTemplates(["2_base", "2_1"]);
+    Party.refreshWithTemplates([tpl_2_base, tpl_2_1]);
   }
 
   static buyOnMarketFrom(from){
@@ -68,9 +80,9 @@ export class Food extends Party{
     KB.listenTyping([
       {key: Const.KEYBOARD_INT_TYPING, callback: KB.startTyping}, // 0-9 + backspace
       {key: Const.KEYBOARD_RETURN, callback: Food.buyOnMarketFromAndHowMuch}, // ↩
-    ], ["2_base", "2_1b"]);
+    ], [tpl_2_base, tpl_2_1b]);
 
-    Party.refreshWithTemplates(["2_base", "2_1b"]);
+    Party.refreshWithTemplates([tpl_2_base, tpl_2_1b]);
   }
 
   static buyOnMarketFromAndHowMuch(){
@@ -106,9 +118,9 @@ export class Food extends Party{
     KB.listenTyping([
       {key: Const.KEYBOARD_INT_TYPING, callback: KB.startTyping}, // 0-9 + backspace
       {key: Const.KEYBOARD_RETURN, callback: Food.sellOnMarketWithPrice}, // ↩
-    ], ["2_base", "2_2"]);
+    ], [tpl_2_base, tpl_2_2]);
 
-    Party.refreshWithTemplates(["2_base", "2_2"]);
+    Party.refreshWithTemplates([tpl_2_base, tpl_2_2]);
   }
 
   static sellOnMarketWithPrice(quantityParam){
@@ -132,9 +144,9 @@ export class Food extends Party{
     KB.listenTyping([
       {key: Const.KEYBOARD_PRICE_TYPING, callback: KB.startTyping}, // 0-9 + backspace + dot
       {key: Const.KEYBOARD_RETURN, callback: Food.doSellMarketWithPrice}, // ↩
-    ], ["2_base", "2_2b"]);
+    ], [tpl_2_base, tpl_2_2b]);
 
-    Party.refreshWithTemplates(["2_base", "2_2b"]);
+    Party.refreshWithTemplates([tpl_2_base, tpl_2_2b]);
   }
 
   static doSellMarketWithPrice(){
@@ -168,9 +180,9 @@ export class Food extends Party{
     KB.listenTyping([
       {key: Const.KEYBOARD_INT_TYPING, callback: KB.startTyping}, // 0-9 + backspace
       {key: Const.KEYBOARD_RETURN, callback: Food.doSellLand}, // ↩
-    ], ["2_base", "2_3"]);
+    ], [tpl_2_base, tpl_2_3]);
 
-    Party.refreshWithTemplates(["2_base", "2_3"]);
+    Party.refreshWithTemplates([tpl_2_base, tpl_2_3]);
   }
 
   // Do selling land
@@ -194,8 +206,8 @@ export class Food extends Party{
     KB.listenTyping([
       {key: Const.KEYBOARD_INT_TYPING, callback: KB.startTyping}, // 0-9 + backspace
       {key: Const.KEYBOARD_RETURN, callback: Food.doGiveToOst}, // ↩
-    ], ["2_base", "2_4"]);
-    Party.refreshWithTemplates(["2_base", "2_4"]);
+    ], [tpl_2_base, tpl_2_4]);
+    Party.refreshWithTemplates([tpl_2_base, tpl_2_4]);
   }
 
   static doGiveToOst(){
@@ -220,8 +232,8 @@ export class Food extends Party{
     KB.listenTyping([
       {key: Const.KEYBOARD_INT_TYPING, callback: KB.startTyping}, // 0-9 + backspace
       {key: Const.KEYBOARD_RETURN, callback: Food.doGiveToPeople}, // ↩
-    ], ["2_base", "2_5"]);
-    Party.refreshWithTemplates(["2_base", "2_5"]);
+    ], [tpl_2_base, tpl_2_5]);
+    Party.refreshWithTemplates([tpl_2_base, tpl_2_5]);
   }
 
   static doGiveToPeople(){

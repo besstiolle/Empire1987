@@ -87,19 +87,6 @@ export class Game {
     return this.barbares;
   }
 
-  getMeteoPercent(){
-    switch (this.meteo) {
-      case 0:
-        return 0.25
-      case 1:
-        return 0.75
-      case 2:
-        return 1.25
-      case 3:
-        return 2
-    }
-  }
-
   setRats(rats){
     this.rats = rats
   }

@@ -4,6 +4,9 @@ import { Errors } from './Errors.class'
 import { KB } from './KB.class'
 import { Const } from './Const.class'
 
+
+import tpl_6_base from './templates/6_base.tpl'
+
 export class IA extends Party {
     // Terres vassales, choix de l'adversaire
     static do(){
@@ -15,7 +18,7 @@ export class IA extends Party {
       KB.listen([
         {key: Const.KEYBOARD_RETURN, callback: IA.turnYear} // ↩
       ]);
-      Party.refreshWithTemplates(["6_base"]);
+      Party.refreshWithTemplate(tpl_6_base);
     }
 
     static doAction(user, key){

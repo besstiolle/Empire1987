@@ -3,6 +3,16 @@ import { Const } from './Const.class'
 import { Party } from './Part_Abstract.class'
 import { Lands } from './Part5_Lands.class'
 import { Errors } from './Errors.class'
+import { UserUtils } from './User.utils.class'
+
+
+import tpl_4_base from './templates/4_base.tpl'
+import tpl_4 from './templates/4.tpl'
+import tpl_4_a from './templates/4_a.tpl'
+import tpl_4_b from './templates/4_b.tpl'
+import tpl_4_c from './templates/4_c.tpl'
+import tpl_4_d from './templates/4_d.tpl'
+import tpl_4_e from './templates/4_e.tpl'
 
 export class Invest extends Party {
 
@@ -20,7 +30,7 @@ export class Invest extends Party {
       {key: Const.KEYBOARD_RETURN, callback: Invest.choiceInvest}, // ↩
     ]);
 
-    Party.refreshWithTemplates(["4_base", "4"]);
+    Party.refreshWithTemplates([tpl_4_base, tpl_4]);
   }
 
   //Propose setting taxe A
@@ -29,9 +39,9 @@ export class Invest extends Party {
     KB.listenTyping([
       {key: Const.KEYBOARD_INT_TYPING, callback: KB.startTyping}, // 0-9 + backspace
       {key: Const.KEYBOARD_RETURN, callback: Invest.doSetTaxeA}, // ↩
-    ], ["4_base", "4_a"]);
+    ], [tpl_4_base, tpl_4_a]);
 
-    Party.refreshWithTemplates(["4_base", "4_a"]);
+    Party.refreshWithTemplates([tpl_4_base, tpl_4_a]);
   }
 
   // Do set Taxe A
@@ -55,9 +65,9 @@ export class Invest extends Party {
     KB.listenTyping([
       {key: Const.KEYBOARD_INT_TYPING, callback: KB.startTyping}, // 0-9 + backspace
       {key: Const.KEYBOARD_RETURN, callback: Invest.doSetTaxeB}, // ↩
-    ], ["4_base", "4_b"]);
+    ], [tpl_4_base, tpl_4_b]);
 
-    Party.refreshWithTemplates(["4_base", "4_b"]);
+    Party.refreshWithTemplates([tpl_4_base, tpl_4_b]);
   }
 
   // Do set Taxe B
@@ -80,9 +90,9 @@ export class Invest extends Party {
     KB.listenTyping([
       {key: Const.KEYBOARD_INT_TYPING, callback: KB.startTyping}, // 0-9 + backspace
       {key: Const.KEYBOARD_RETURN, callback: Invest.doSetTaxeC}, // ↩
-    ], ["4_base", "4_c"]);
+    ], [tpl_4_base, tpl_4_c]);
 
-    Party.refreshWithTemplates(["4_base", "4_c"]);
+    Party.refreshWithTemplates([tpl_4_base, tpl_4_c]);
   }
 
   // Do set Taxe C
@@ -105,10 +115,10 @@ export class Invest extends Party {
 
     KB.listen([
       {key: Const.KEYBOARD_INT, callback: Invest.choiceInvestHowMuch}, // 0-9
-      {key: Const.KEYBOARD_RETURN, callback: Lands.choosingOpponent}, // ↩
+      {key: Const.KEYBOARD_RETURN, callback: Lands.entryPoint}, // ↩
     ]);
 
-    Party.refreshWithTemplates(["4_base", "4_d"]);
+    Party.refreshWithTemplates([tpl_4_base, tpl_4_d]);
   }
 
   static choiceInvestHowMuch(invest){
@@ -120,9 +130,9 @@ export class Invest extends Party {
     KB.listenTyping([
       {key: Const.KEYBOARD_INT_TYPING, callback: KB.startTyping}, // 0-9 + backspace
       {key: Const.KEYBOARD_RETURN, callback: Invest.doInvest}, // ↩
-    ], ["4_base", "4_e"], [invest]);
+    ], [tpl_4_base, tpl_4_e], [invest]);
 
-    Party.refreshWithTemplates(["4_base", "4_e"]);
+    Party.refreshWithTemplates([tpl_4_base, tpl_4_e]);
   }
 
   static doInvest(keyCode, additionnalParameters){
@@ -153,6 +163,11 @@ export class Invest extends Party {
       default:
     }
 
+    if(what == 5 && UserUtils.getMaxOstPossible(game.getCurrentUser()) < quantity + game.getCurrentUser().getOst()){
+      game.addError(Errors.notEnoughtNobles())
+      return Invest.choiceInvestHowMuch(what);
+    }
+
     if(price * quantity > game.getCurrentUser().getMoney()){
       game.addError(Errors.notEnoughtMoney())
       return Invest.choiceInvestHowMuch(what);
@@ -181,6 +196,10 @@ export class Invest extends Party {
       default:
     }
 
+    if(what == 6){
+      game.getCurrentUser().addNobles(quantity);
+    }
+
     return Invest.choiceInvest();
   }
 
@@ -190,15 +209,17 @@ export class Invest extends Party {
     let gains = {gainFoires: 0,gainMoulins: 0,gainFonderies: 0,gainChantiers: 0,gainOst: 0,
                 taxeA: 0,taxeB: 0,taxeC: 0};
 
-    gains.gainFoires = Math.floor((user.getFoires() * 1500) * game.getMeteoPercent());
-    gains.gainMoulins = Math.floor((user.getMoulins() * 2500) * game.getMeteoPercent());
-    gains.gainFonderies = Math.floor(((user.getFonderies() * 500) + 300) * game.getMeteoPercent());
-    gains.gainChantiers = Math.floor((user.getChantiers() * 3500) * game.getMeteoPercent());
-    gains.gainOst = user.getOst() * -1 * 8;
+    gains.gainFoires = UserUtils.calculGainsOfFoires(user);
+    gains.gainMoulins = UserUtils.calculGainsOfMoulins(user);
+    gains.gainFonderies = UserUtils.calculGainsOfFonderies(user);
+    gains.gainChantiers = UserUtils.calculGainsOfChantiers(user);
+    gains.gainOst = UserUtils.calculGainsOfOst(user);
 
-    gains.taxeA = Math.floor(user.getTaxeA() / 100 * user.getMigrants());
-    gains.taxeB = Math.floor((user.getTaxeB() / 100 * user.getMarchands() * 300 + user.getTaxeB() / 100 * user.getFoires() * 75) * game.getMeteoPercent());
-    gains.taxeC = Math.floor((user.getTaxeC() / 100 * user.getPeople() * 2) * game.getMeteoPercent());
+    game.getCurrentUser().setGains(gains);
+
+    gains.taxeA = UserUtils.calculGainsOfTaxesA(user);
+    gains.taxeB = UserUtils.calculGainsOfTaxesB(user);
+    gains.taxeC = UserUtils.calculGainsOfTaxesC(user);
 
     let gain = gains.gainFoires + gains.gainMoulins + gains.gainFonderies + gains.gainChantiers + gains.gainOst + gains.taxeA + gains.taxeB + gains.taxeC;
 
