@@ -6,6 +6,7 @@
 
  - npm install
  - npm run build
+ - npm run start (will start a webserver on port 9000)
 
 ## To play online :
 
