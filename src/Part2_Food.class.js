@@ -19,7 +19,10 @@ import tpl_2_5 from './templates/2_5.tpl'
 export class Food extends Party{
 
   static meteoAndRats(){
-    //console.info("step2Meteo")
+    
+    /**
+     * METEO=INT(RND*6)+1:
+     */
     game.setMeteo(game.rollDiceInteger(1,6));
 
     game.setRats(game.rollDiceInteger(5,30));

@@ -44,6 +44,7 @@ export class User {
     this.supplyOst = 0;
     this.migrants = 0;
     this.gains = null;
+    this.immigratedPeople = 0;
   }
 
   /**
@@ -81,6 +82,7 @@ export class User {
   getMarchands(){return this.marchands;}
   getGains(){return this.gains;}
 //  isAlive(){return this.alive;}
+  getImmigratedPeople(){return this.immigratedPeople;}
 
   setSexe(sexe){this.sexe = sexe;}
   setTaxeA(taxeA){this.taxeA = taxeA;}
@@ -97,6 +99,7 @@ export class User {
   setMigrants(migrants){this.migrants = migrants;}
   setGains(gains){this.gains = gains;}
   setLand(land){this.land = land;}
+  setImmigratedPeople(immigratedPeople){this.immigratedPeople = immigratedPeople}
 
   addMoney(money){this.money += money;}
   addSupply(supply){this.supply += supply;}
