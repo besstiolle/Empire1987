@@ -25,11 +25,12 @@ export class UserUtils {
 
     /**
      * Return value representing the new harvest
-     * LA=A(CUR_PLAY,1)-A(CUR_PLAY,3)-A(CUR_PLAY,18)*2-A(CUR_PLAY,16)-A(CUR_PLAY,7)-A(CUR_PLAY,15)*2
-     * IF A(CUR_PLAY,2)*3<LA THEN LA=A(CUR_PLAY,2)*3
-     * IF A(CUR_PLAY,3)*5<LA THEN LA=A(CUR_PLAY,3)*5
-     * A(CUR_PLAY,2)=A(CUR_PLAY,2)-LA/3
-     * HARVEST=LA*METEO*.72+INT(RND*500)+1-A(CUR_PLAY,13)*500
+     *    SURFACE_TO_BE_PLANTED=SURFACE_TERRAIN-SERFS_NUMBER-NOBLE_NOMBRE*2-PALAIS_POURCENT-MARCHANDS_NOMBRE-SOLDIERS_NB*2:
+     * 37 IF BUSHELS_IN_STOCKS*3<SURFACE_TO_BE_PLANTED THEN SURFACE_TO_BE_PLANTED=BUSHELS_IN_STOCKS*3
+     * 38 IF SERFS_NUMBER*5<SURFACE_TO_BE_PLANTED THEN SURFACE_TO_BE_PLANTED=SERFS_NUMBER*5
+     * 39 BUSHELS_IN_STOCKS=BUSHELS_IN_STOCKS-SURFACE_TO_BE_PLANTED/3:
+	   *    BUSHELS_HARVESTED=SURFACE_TO_BE_PLANTED*METEO*.72+INT(RND*500)+1-FONDERIE_NB*500:
+     *    IF BUSHELS_HARVESTED<0 THEN BUSHELS_HARVESTED=0
      **/
     static calculNewHarvest(user){
       let landAvailable = user.getLand() - user.getPeople() - user.getNobles() * 2 - user.getPalais() - user.getMarchands() - user.getOst() * 2;
@@ -42,14 +43,76 @@ export class UserUtils {
       //remove 1/3 stock to new plants
       user.addSupply(Math.floor(landAvailable / -3))
 
-      return Math.floor(landAvailable * game.getMeteo() * 0.72 + game.rollDiceInteger(1,500) - user.getFonderies() * 500);
+      let harvest = Math.floor(landAvailable * game.getMeteo() * 0.72 + game.rollDiceInteger(1,500) - user.getFonderies() * 500);
+      if(harvest < 0){
+        harvest = 0
+      }
+      return harvest
     }
 
     /**
      * Return value representing new new amount of boisseaux in stock
+     * 
+     *    BUSHELS_IN_STOCKS=BUSHELS_IN_STOCKS-BUSHELS_IN_STOCKS*BUSHELS_EATEN_BY_RATS/100:
+     * 40 BUSHELS_IN_STOCKS=BUSHELS_IN_STOCKS+BUSHELS_HARVESTED
      **/
     static calculNewSupply(user){
       return Math.floor(-1 * (user.getSupply() * game.getRats() / 100)) + user.getHarvest();
+    }
+
+    /**
+     * 
+     * 80 BABY_BORN=INT(RND*PEOPLE_NB/9.5+1):
+     * 	PEOPLE_DIED_OF_MALNUTRITION=0:
+     * 	PEOPLE_DIED_OF_DISEASE=INT(RND*PEOPLE_NB/22+1):
+     * 	PEOPLE_IMMIGRATED=0:
+     * 	IF BUSHELS_FOR_PEOPLE>PEOPLE_REQUIREMENT_FOOD*1.5 THEN D=SQR(BUSHELS_FOR_PEOPLE-PEOPLE_REQUIREMENT_FOOD)-INT(RND*TX_TAXE_DOUANE*1.5+1):
+     * 	IF D<0 THEN 81 ELSE PEOPLE_IMMIGRATED=INT(RND*(2*D+1))
+     * 81 SOLDIERS_STARVED_TO_DEATH=0:
+     * 	IF PEOPLE_REQUIREMENT_FOOD>BUSHELS_FOR_PEOPLE*2 THEN SOLDIERS_STARVED_TO_DEATH=INT(RND*PEOPLE_NB/16+1)+1:
+     * 	PEOPLE_DIED_OF_MALNUTRITION=INT(RND*(PEOPLE_NB/12+1)+1):
+     * 	GOTO 83
+     * 82 IF PEOPLE_REQUIREMENT_FOOD>BUSHELS_FOR_PEOPLE THEN PEOPLE_DIED_OF_MALNUTRITION=INT(RND*(PEOPLE_NB/15+1)+1)
+     * 83 NOBLE_IMMIGRATED=0:
+     * 	TOTAL_BALANCE_PEOPLE=BABY_BORN-SOLDIERS_STARVED_TO_DEATH-PEOPLE_DIED_OF_MALNUTRITION-PEOPLE_DIED_OF_DISEASE+PEOPLE_IMMIGRATED:
+     * 	SOLDIERS_SENDED=INT(RND*PEOPLE_IMMIGRATED/5+1):
+     * 	MARCHANDS_NOMBRE=MARCHANDS_NOMBRE+SOLDIERS_SENDED:
+     * 	SERFS_NUMBER=SERFS_NUMBER+TOTAL_BALANCE_PEOPLE-SOLDIERS_SENDED:
+     * 	IF PEOPLE_IMMIGRATED/25>.999 THEN NOBLE_IMMIGRATED=INT(RND*PEOPLE_IMMIGRATED/25)+1:
+     * 	NOBLE_NOMBRE=NOBLE_NOMBRE+NOBLE_IMMIGRATED:
+     * 	SERFS_NUMBER=SERFS_NUMBER-NOBLE_IMMIGRATED
+     * 84 SOLDIERS_STARVED_TO_DEATH=0:
+     * 	IF ARMY_REQUIREMENT_FOOD>BUSHELS_FOR_SOLDIERS*2 THEN SOLDIERS_STARVED_TO_DEATH=INT(RND*(SOLDIERS_NB/2+1)+1):
+     * 	SOLDIERS_NB=SOLDIERS_NB-SOLDIERS_STARVED_TO_DEATH
+     * 85 PA=0:
+     * 	IF BUSHELS_FOR_SOLDIERS*2<ARMY_REQUIREMENT_FOOD THEN PA=INT(RND*SOLDIERS_NB/5+1):
+     * 	SOLDIERS_NB=SOLDIERS_NB-PA
+     */
+    static calculDemography(user){
+      let newBaby = game.intRnd(user.getPeople() / 9.5) + 1
+      let people_died_of_malnutrition = 0
+      let people_died_of_disease = game.intRnd(user.getPeople() / 22) + 1
+      let people_immigrated = 0
+      if(user.getSupplyPeople() > user.getNeedPeople() * 1.5){
+        let d = Math.sqrt(user.getSupplyPeople() - user.getNeedPeople()) - game.intRnd(user.getTaxeA() * 1.5) + 1
+        if( d >= 0 ){
+          people_immigrated = game.intRnd(2 * d)
+        }
+      }
+      let soldiers_starved_to_death = 0
+      if(user.getNeedPeople() > user.getSupplyPeople() * 2 ){
+        soldiers_starved_to_death = game.intRnd(user.getPeople() / 16 + 1) + 1 
+        people_died_of_malnutrition = game.intRnd(user.getPeople() / 12 + 1) + 1 
+      } else if(user.getNeedPeople() > user.getSupplyPeople()) {
+        people_died_of_malnutrition = game.intRnd(user.getPeople() / 15 + 1) + 1 
+      }
+
+      let noble_immigrated = 0
+      let total_balance_people = newBaby - soldiers_starved_to_death - people_died_of_malnutrition - people_died_of_disease + people_immigrated
+      let marchands_immigrated =  game.intRnd(people_immigrated / 5) + 1
+
+
+      user.setImmigratedPeople(people_immigrated)
     }
 
     /**
@@ -115,7 +178,8 @@ export class UserUtils {
 
     /**
      * Return value representing money gained for Foires
-     * F1=(A(CUR_PLAY,11)*((A(CUR_PLAY,7)+INT(RND*35+1)+INT(RND*35+1))/(A(CUR_PLAY,9)+1)*12+5))^.9
+     * 
+     * 96 TAXE_MARKET =(MARKET*((MARCHANDS_NOMBRE+INT(RND*35+1)+INT(RND*35+1))/(TX_TAXE_COMMERCE+1)*12+5))^.9:
      **/
     static calculGainsOfFoires(user){
       return Math.ceil(
@@ -125,7 +189,8 @@ export class UserUtils {
 
     /**
      * Return value representing money gained for Moulins
-     * F2=(A(CUR_PLAY,12)*(5.8*(HARVEST+INT(RND*250+1))/(A(CUR_PLAY,10)*20+A(CUR_PLAY,9)*40+10)+150))^.9
+     * 
+     * TAXE_MOULINS=(MOULINS*(5.8*(BUSHELS_HARVESTED+INT(RND*250+1))/(TX_TAXE_PEUPLE*20+TX_TAXE_COMMERCE*40+10)+150))^.9:
      **/
     static calculGainsOfMoulins(user){
       return Math.ceil(
@@ -135,7 +200,8 @@ export class UserUtils {
 
     /**
      * Return value representing money gained for Fonderies
-     * F3=(A(CUR_PLAY,13)+(A(CUR_PLAY,15)+INT(RND*150+1)+400))^.9
+     * 
+     * TAXE_FONDERIE=(FONDERIE_NB+(SOLDIERS_NB+INT(RND*150+1)+400))^.9
      **/
     static calculGainsOfFonderies(user){
       return Math.ceil(
@@ -145,7 +211,8 @@ export class UserUtils {
 
     /**
      * Return value representing money gained for Chantiers
-     * F4=(A(CUR_PLAY,14)*(A(CUR_PLAY,7)*4+A(CUR_PLAY,11)*9+A(CUR_PLAY,13)*15)*METEO)^.9
+     * 
+     * 97 TAXE_CHANTIER_NAVAL=(CHANTIER_NAVAL*(MARCHANDS_NOMBRE*4+MARKET*9+FONDERIE_NB*15)*METEO)^.9:
      **/
     static calculGainsOfChantiers(user){
       return Math.ceil(
@@ -155,7 +222,8 @@ export class UserUtils {
 
     /**
      * Return value representing money gained for Ost
-     * F5=A(CUR_PLAY,15)*(-8)
+     * 
+     * COUT_SOLDIERS=SOLDIERS_NB*(-8):
      **/
     static calculGainsOfOst(user){
       return user.getOst() * -8;
@@ -163,7 +231,8 @@ export class UserUtils {
 
     /**
      * Return value representing money gained for taxeA
-     * FC=PPL_MIGR*(INT(RND*40+1)+INT(RND*40+1))/100*A(CUR_PLAY,8)
+     * 
+     * TAXE_DOUANE=PEOPLE_IMMIGRATED*(INT(RND*40+1)+INT(RND*40+1))/100*TX_TAXE_DOUANE:
      **/
     static calculGainsOfTaxesA(user){
       return Math.ceil(
@@ -173,7 +242,8 @@ export class UserUtils {
 
     /**
      * Return value representing money gained for taxeB
-     * FS=A(CUR_PLAY,9)/100*((A(CUR_PLAY,7)*1.8+F1*33+F2*17+F3*50+F4*70)^.85+A(CUR_PLAY,18)*5+A(CUR_PLAY,3))
+     * 
+     * TAXE_COMMERCE=TX_TAXE_COMMERCE/100*((MARCHANDS_NOMBRE*1.8+TAXE_MARKET*33+TAXE_MOULINS*17+TAXE_FONDERIE*50+TAXE_CHANTIER_NAVAL*70)^.85+NOBLE_NOMBRE*5+SERFS_NUMBER)
      **/
     static calculGainsOfTaxesB(user){
       return Math.ceil(
@@ -184,7 +254,8 @@ export class UserUtils {
 
     /**
      * Return value representing money gained for taxeC
-     * FI=(A(CUR_PLAY,10)/100*(A(CUR_PLAY,3)*1.3+A(CUR_PLAY,18)*145+A(CUR_PLAY,7)*39+A(CUR_PLAY,11)*99+A(CUR_PLAY,12)*99+A(CUR_PLAY,13)*425+A(CUR_PLAY,14)*965))^.97
+     * 
+     * 98 TAXE_PEUPLE=(TX_TAXE_PEUPLE/100*(SERFS_NUMBER*1.3+NOBLE_NOMBRE*145+MARCHANDS_NOMBRE*39+MARKET*99+MOULINS*99+FONDERIE_NB*425+CHANTIER_NAVAL*965))^.97
      **/
     static calculGainsOfTaxesC(user){
       return Math.ceil(
