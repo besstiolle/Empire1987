@@ -102,6 +102,10 @@ export class Game {
     }
   }
 
+  intRnd(val){
+    return Math.floor(Math.random() * val)
+  }
+
   rollDiceInteger(start = 0, end = 100){
     return Math.floor(Math.random() * (end - start)) + start;
   }
