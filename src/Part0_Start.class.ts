@@ -4,7 +4,9 @@ import { Party } from './Part_Abstract.class'
 import { Tuto } from './Part1_Tuto.class'
 import { Food } from './Part2_Food.class'
 import { UserUtils } from './User.utils.class'
-import tpl_0 from './templates/0.tpl'
+import { Game } from './Game.class'
+
+import tpl_0 from '/templates/0.tpl'
 import tpl_0_1 from './templates/0_1.tpl'
 import tpl_0_1a from './templates/0_1a.tpl'
 
@@ -36,12 +38,12 @@ export class Start extends Party {
   }
 
   static savePlayer(){
-    let input = KB.buffer;
+    let input = KB.buffer()
     if(input != "" && input =="J"){
-      game.getCurrentUser().setSexe(1);
+      Game.getInstance().getCurrentUser().sexe = 1;
     }
 
-    game.getCurrentUser().setName(UserUtils.getName(game.getCurrentUser(), input));
+    Game.getInstance().getCurrentUser().name = UserUtils.getName(Game.getInstance().getCurrentUser(), input);
 
     Food.meteoAndRats();
   }

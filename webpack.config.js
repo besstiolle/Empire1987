@@ -1,30 +1,39 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-//const transform_async_to_generator = require('@babel/plugin-transform-async-to-generator');
-
 module.exports = {
     entry: {
-        index: './src/index.js',    
+        index: './src/index.ts',    
     },
     module: {
         rules: [
           {
             test: /\.css$/i,
             use: ['style-loader', 'css-loader'],
+            exclude: /node_modules/,
           },
           {
             test: /\.(png|svg|jpg|jpeg|gif)$/i,
             type: 'asset/resource',    
+            exclude: /node_modules/,
           },  
-          { 
-            test: /\.(tpl|dot)$/, 
-            loader: 'dotjs-loader', 
+          //   // "dotjs-loader": "^0.1.0",
+       /*   { 
+            test: /\.tpl$/, 
+            loader: 'dotjs-loader',    
             options: {
                 // your custom dot options
               }
-          }
+          },*/
+          {
+            test: /\.(tsx?)$/,
+            use: 'ts-loader',
+            exclude: '/node_modules/',
+          },
         ],    
+      },
+      resolve: {
+        extensions: ['.tsx', '.ts', '.js'],
       },
       plugins: [
         new HtmlWebpackPlugin({    
@@ -58,5 +67,8 @@ module.exports = {
           },
         },
       },
+    },
+    stats:{
+      errorDetails:true
     },
 };

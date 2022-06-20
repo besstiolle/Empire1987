@@ -24,3 +24,14 @@ export class Const {
     static get KEYBOARD_OY() { return [79,80]; } // o/y
     static get KEYBOARD_N() { return [78]; } // n
 }
+
+/**
+ * 
+ FIXME : Préférer cette syntaxe.
+export const LIVE_PREFIX = {
+    TS:"taskStart_",
+    TE:"taskEnd_",
+    MD:"milestoneDate_",
+    PR:"progress_",
+}
+ */

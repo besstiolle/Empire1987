@@ -4,7 +4,7 @@
 <l>              Nobles     Hommes    Marchands   Serfs   Terres   Palais</l>
 <l>                         d'armes</l>
 <l></l>
-{{~ it.game.getUsersAsArray() :user:index }}
+{{~ it.game.getUsersAliveAsArray() :user:index }}
 <invert><l> {{=user.getRank()}} {{=user.getName()}} de {{=user.getCountry()}}</l></invert>
 <l>             {{=user.getNobles().toString().padStart(4," ")}}     {{=user.getOst().toString().padStart(8," ")}}       {{=user.getMarchands().toString().padStart(4," ")}} {{=user.getPeople().toString().padStart(10," ")}} {{=user.getLand().toString().padStart(8," ")}}    {{=user.getPalais().toString().padStart(4," ")}}%</l>
 {{~}}

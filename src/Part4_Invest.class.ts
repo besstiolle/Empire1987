@@ -4,6 +4,8 @@ import { Party } from './Part_Abstract.class'
 import { Lands } from './Part5_Lands.class'
 import { Errors } from './Errors.class'
 import { UserUtils } from './User.utils.class'
+import { Game } from './Game.class'
+import { User } from './User.class'
 
 
 import tpl_4_base from './templates/4_base.tpl'
@@ -16,12 +18,13 @@ import tpl_4_e from './templates/4_e.tpl'
 
 export class Invest extends Party {
 
+  static enterStep4(){
+    Invest.processMoney()
+    Invest.choiceTaxes()
+  }
+
   //Investissement
   static choiceTaxes(){
-    if(game.getCurrentUser().getGains() == null){
-      Invest.processMoney();
-    }
-
     //console.info("step4")
     KB.listen([
       {key: Const.KEYBOARD_ONE, callback: Invest.setTaxeA}, // 1
@@ -47,13 +50,13 @@ export class Invest extends Party {
   // Do set Taxe A
   static doSetTaxeA(){
     //console.info("do set taxe A")
-    let keyboard = KB.buffer;
-    if(keyboard !== ""){
+    let keyboard:number = parseInt(KB.buffer())
+    if(isNaN(keyboard)){
       if(keyboard > 50){
-        game.addError(Errors.taxeATooHigh())
+        Game.getInstance().addError(Errors.taxeATooHigh())
         return Invest.setTaxeA();
       } else {
-        game.getCurrentUser().setTaxeA(keyboard);
+        Game.getInstance().getCurrentUser().taxeA = keyboard;
       }
     }
     Invest.choiceTaxes();
@@ -73,13 +76,13 @@ export class Invest extends Party {
   // Do set Taxe B
   static doSetTaxeB(){
     //console.info("do set taxe B")
-    let keyboard = KB.buffer;
-    if(keyboard !== ""){
+    let keyboard:number = parseInt(KB.buffer())
+    if(isNaN(keyboard)){
       if(keyboard > 50){
-        game.addError(Errors.taxeBTooHigh())
+        Game.getInstance().addError(Errors.taxeBTooHigh())
         return Invest.setTaxeB();
       } else {
-        game.getCurrentUser().setTaxeB(keyboard);
+        Game.getInstance().getCurrentUser().taxeB = keyboard;
       }
     }
     Invest.choiceTaxes();
@@ -98,13 +101,13 @@ export class Invest extends Party {
   // Do set Taxe C
   static doSetTaxeC(){
     //console.info("do set taxe C")
-    let keyboard = KB.buffer;
-    if(keyboard !== ""){
+    let keyboard:number = parseInt(KB.buffer())
+    if(isNaN(keyboard)){
       if(keyboard > 50){
-        game.addError(Errors.taxeCTooHigh())
+        Game.getInstance().addError(Errors.taxeCTooHigh())
         return Invest.setTaxeC();
       } else {
-        game.getCurrentUser().setTaxeC(keyboard);
+        Game.getInstance().getCurrentUser().taxeC = keyboard
       }
     }
     Invest.choiceTaxes();
@@ -121,7 +124,7 @@ export class Invest extends Party {
     Party.refreshWithTemplates([tpl_4_base, tpl_4_d]);
   }
 
-  static choiceInvestHowMuch(invest){
+  static choiceInvestHowMuch(invest:number = 0){
     //console.info("choiceInvestHowMuch()" + invest)
     if(invest < 1 || invest > 6){
       return Invest.choiceInvest();
@@ -135,9 +138,9 @@ export class Invest extends Party {
     Party.refreshWithTemplates([tpl_4_base, tpl_4_e]);
   }
 
-  static doInvest(keyCode, additionnalParameters){
+  static doInvest(keyCode:number, additionnalParameters:string[]){
     //console.info("doInvest() -" + keyCode + "- -" +  additionnalParameters + "-")
-    let quantity = parseInt(KB.buffer);
+    let quantity:number = parseInt(KB.buffer())
     if(isNaN(quantity)){
       return Invest.choiceInvest();
     }
@@ -163,67 +166,68 @@ export class Invest extends Party {
       default:
     }
 
-    if(what == 5 && UserUtils.getMaxOstPossible(game.getCurrentUser()) < quantity + game.getCurrentUser().getOst()){
-      game.addError(Errors.notEnoughtNobles())
+    if(what == 5 && UserUtils.getMaxOstPossible(Game.getInstance().getCurrentUser()) < quantity + Game.getInstance().getCurrentUser().ost){
+      Game.getInstance().addError(Errors.notEnoughtNobles())
       return Invest.choiceInvestHowMuch(what);
     }
 
-    if(price * quantity > game.getCurrentUser().getMoney()){
-      game.addError(Errors.notEnoughtMoney())
+    if(price * quantity > Game.getInstance().getCurrentUser().money){
+      Game.getInstance().addError(Errors.notEnoughtMoney())
       return Invest.choiceInvestHowMuch(what);
     }
-    game.getCurrentUser().addMoney(-1 * price * quantity);
+    Game.getInstance().getCurrentUser().money -= price * quantity
 
     switch (what) {
       case 1:
-        game.getCurrentUser().addFoires(quantity);
+        Game.getInstance().getCurrentUser().foires += quantity
         break;
       case 2:
-        game.getCurrentUser().addMoulins(quantity);
+        Game.getInstance().getCurrentUser().moulins += quantity
         break;
       case 3:
-        game.getCurrentUser().addFonderies(quantity);
+        Game.getInstance().getCurrentUser().fonderies += quantity
         break;
       case 4:
-        game.getCurrentUser().addChantiers(quantity);
+        Game.getInstance().getCurrentUser().chantiers += quantity
         break;
       case 5:
-        game.getCurrentUser().addOst(quantity);
+        Game.getInstance().getCurrentUser().ost += quantity
         break;
       case 6:
-        game.getCurrentUser().addPalais(quantity * 10);
+        Game.getInstance().getCurrentUser().palais += quantity * 10
         break;
       default:
     }
 
     if(what == 6){
-      game.getCurrentUser().addNobles(quantity);
+      Game.getInstance().getCurrentUser().nobles += quantity
     }
 
     return Invest.choiceInvest();
   }
 
   static processMoney(){
-    let user = game.getCurrentUser();
+    let user:User = Game.getInstance().getCurrentUser();
 
-    let gains = {gainFoires: 0,gainMoulins: 0,gainFonderies: 0,gainChantiers: 0,gainOst: 0,
-                taxeA: 0,taxeB: 0,taxeC: 0};
+    Game.getInstance().getCurrentUser().gainFoires = UserUtils.calculGainsOfFoires(user);
+    Game.getInstance().getCurrentUser().gainMoulins = UserUtils.calculGainsOfMoulins(user);
+    Game.getInstance().getCurrentUser().gainFonderies = UserUtils.calculGainsOfFonderies(user);
+    Game.getInstance().getCurrentUser().gainChantiers = UserUtils.calculGainsOfChantiers(user);
+    Game.getInstance().getCurrentUser().costOst = UserUtils.calculGainsOfOst(user);
 
-    gains.gainFoires = UserUtils.calculGainsOfFoires(user);
-    gains.gainMoulins = UserUtils.calculGainsOfMoulins(user);
-    gains.gainFonderies = UserUtils.calculGainsOfFonderies(user);
-    gains.gainChantiers = UserUtils.calculGainsOfChantiers(user);
-    gains.gainOst = UserUtils.calculGainsOfOst(user);
+    Game.getInstance().getCurrentUser().gainTaxesA = UserUtils.calculGainsOfTaxesA(user);
+    Game.getInstance().getCurrentUser().gainTaxesB = UserUtils.calculGainsOfTaxesB(user);
+    Game.getInstance().getCurrentUser().gainTaxesC = UserUtils.calculGainsOfTaxesC(user);
 
-    game.getCurrentUser().setGains(gains);
+    let gain = Game.getInstance().getCurrentUser().gainFoires + 
+              Game.getInstance().getCurrentUser().gainMoulins + 
+              Game.getInstance().getCurrentUser().gainFonderies + 
+              Game.getInstance().getCurrentUser().gainChantiers + 
+              Game.getInstance().getCurrentUser().costOst * -1 + 
+              Game.getInstance().getCurrentUser().gainTaxesA + 
+              Game.getInstance().getCurrentUser().gainTaxesB + 
+              Game.getInstance().getCurrentUser().gainTaxesC
 
-    gains.taxeA = UserUtils.calculGainsOfTaxesA(user);
-    gains.taxeB = UserUtils.calculGainsOfTaxesB(user);
-    gains.taxeC = UserUtils.calculGainsOfTaxesC(user);
-
-    let gain = gains.gainFoires + gains.gainMoulins + gains.gainFonderies + gains.gainChantiers + gains.gainOst + gains.taxeA + gains.taxeB + gains.taxeC;
-
-    game.getCurrentUser().addMoney(gain);
-    game.getCurrentUser().setGains(gains);
+    Game.getInstance().getCurrentUser().money += gain
   }
 }

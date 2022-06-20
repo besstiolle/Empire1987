@@ -3,6 +3,8 @@ import { Food } from './Part2_Food.class'
 import { Errors } from './Errors.class'
 import { KB } from './KB.class'
 import { Const } from './Const.class'
+import { Game } from './Game.class'
+import { User } from './User.class'
 
 
 import tpl_6_base from './templates/6_base.tpl'
@@ -13,7 +15,7 @@ export class IA extends Party {
       console.info("do IA")
 
       //Exécution for each of IA player
-      game.getUsers().forEach(IA.doAction);
+      Game.getInstance().getUsers().forEach(IA.doAction);
 
       KB.listen([
         {key: Const.KEYBOARD_RETURN, callback: IA.turnYear} // ↩
@@ -21,7 +23,7 @@ export class IA extends Party {
       Party.refreshWithTemplate(tpl_6_base);
     }
 
-    static doAction(user, key){
+    static doAction(user:User, key:number){
       if(key == 1) {
         //player
         return;
@@ -31,12 +33,12 @@ export class IA extends Party {
         return;
       }*/
 
-      console.info("doAction() " + user.getName())
+      console.info("doAction() " + user.name)
     }
 
     //Turn one Year and go on for a new round
     static turnYear(){
-        game.nextYear();
+        Game.getInstance().nextYear();
 
         return Food.meteoAndRats();
     }

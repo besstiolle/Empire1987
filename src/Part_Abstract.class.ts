@@ -1,38 +1,35 @@
 import { KB } from './KB.class'
 import { Const } from './Const.class'
+import { Game } from './Game.class';
 
 export class Party {
 
-  static pause(nextCall){
+  static pause(nextCall:Function){
     setTimeout(function(){ nextCall(); }, 2000);
   }
 
-  static refreshWithTemplate(template, vars = {}){
+  static refreshWithTemplate(template:Function, vars = {}){
     return Party.refreshWithTemplates([template], vars)
   }
 
-  static refreshWithTemplates(templates, vars = {}){
+  static refreshWithTemplates(templates:Function[], vars = {}){
     //console.info("template" + template);
     let datas = "";
     vars = Object.assign({
-      "user": window.game.getCurrentUser(),
-      "users": window.game.getUsers(),
-      "game": window.game,
-      "sales": window.game.getSalesInArray(),
+      "user": Game.getInstance().getCurrentUser(),
+      "users": Game.getInstance().getUsers(),
+      "game": Game.getInstance(),
+      "sales": Game.getInstance().market.getSalesInArray(),
       "Const": Const,
-      "KB_BUFFER": KB.buffer
+      "KB_BUFFER": KB.buffer()
       }, vars)
 
     for (const tpl of templates) {
-     // if( typeof(tpl) == Object){
         datas += tpl(vars);
-     // } else {
-     //   throw "tpl wasn't an object " + tpl
-     // }
     }
 
     document.getElementById("game").innerHTML = datas;
-    game.purgeErrors();
+    Game.getInstance().purgeErrors();
   }
 
 }

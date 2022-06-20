@@ -1,26 +1,28 @@
+import { Game } from './Game.class';
 import { Party } from './Part_Abstract.class'
 
 
 import tpl_5_combat_show from './templates/5_combat_show.tpl'
+import { User } from './User.class';
 
 export class Combat extends Party {
 
-  static execute(userDefender, userAttaker, ostAttaker, start = true){
-    return new Promise((resolve)=>{
+  static execute(userDefender:User, userAttaker:User, ostAttaker:number, start:boolean = true){
+    return new Promise((resolve)=>{/*
       //console.info("execute(" + userDefender + ", " + userAttaker + ", " + ostAttaker + ")");
       //console.info(userDefender);
       //console.info(userAttaker);
       //console.info("execute(" + userDefender.getName() + ", " + userAttaker.getName() + ", " + ostAttaker + ")");
-      let ostDefender = userDefender.getOst();
+      let ostDefender = userDefender.ost;
       let ostEfficiencyDefender = userDefender.getSatisfactionOst() / 100;
-      let ostAttakerRemaining = userAttaker.getOst() - ostAttaker;
+      let ostAttakerRemaining = userAttaker.ost - ostAttaker;
       let ostEfficiencyAttaker = userAttaker.getSatisfactionOst() / 100;
       let land = 0;
       if(start){
-        land = (game.rollDiceFloat(0,10) * ostAttaker *  ostEfficiencyAttaker / 10) + (game.rollDiceFloat(0,10) * ((ostAttaker * ostEfficiencyAttaker) - ostDefender));
+        land = (Game.getInstance().rollDiceFloat(0,10) * ostAttaker *  ostEfficiencyAttaker / 10) + (Game.getInstance().rollDiceFloat(0,10) * ((ostAttaker * ostEfficiencyAttaker) - ostDefender));
         land = Math.floor(land);
         if(land < 0){
-          land = game.rollDiceInteger(0,10)
+          land = Game.getInstance().rollDiceInteger(0,10)
         }
         //console.info("potential land : " + land)
       }
@@ -33,12 +35,12 @@ export class Combat extends Party {
         balance = 80;
       }
 
-      let dice = game.rollDiceInteger();
+      let dice = Game.getInstance().rollDiceInteger();
       //console.info("avantage attacker vs defender = " + balance + "% , dice = " + dice)
 
       if(ostAttaker <= 0 || ostDefender <= 0){
         if(start){
-          return resolve(Combat.getResults(userDefender.getOst() == 0, land, userDefender, userAttaker));
+          return resolve(Combat.getResults(userDefender.ost == 0, land, userDefender, userAttaker));
         } else {
           return resolve();
         }
@@ -63,44 +65,45 @@ export class Combat extends Party {
       Combat.sleep(200).then(() => {
         Combat.execute(userDefender, userAttaker, ostAttaker, false).then(() => {
             if(start){
-              return resolve(Combat.getResults(userDefender.getOst() == 0, land, userDefender, userAttaker));
+              return resolve(Combat.getResults(userDefender.ost == 0, land, userDefender, userAttaker));
             } else {
               return resolve();
             }
         })
-      })
+      })*/
+      return resolve(null); //FIXME rewrite code
     })
   }
 
-  static getResults(win, land, userDefender, userAttaker){
+  static getResults(win:boolean, land:number, userDefender:User, userAttaker:User){
     if(win){
       land = land * 3;
     }
 
-    if(land > userDefender.getLand()){
-      //console.info("rectif land to " + userDefender.getLand())
-      land = userDefender.getLand();
+    if(land > userDefender.land){
+      //console.info("rectif land to " + userDefender.land)
+      land = userDefender.land;
     }
 
     //console.info("captured land : " + land);
-    userAttaker.addLand(land);
+    userAttaker.land += land
 
     //If death of defender
     // 1 chance on 2 if attaker took +25% of land
     // or if there is no more land
     let death = false;
-    if((userDefender.getLand() / 4 < land && game.rollDiceInteger(0,1)) || userDefender.getLand() <= land){
+    if((userDefender.land / 4 < land && Game.getInstance().rollDiceInteger(0,1)) || userDefender.land <= land){
       death = true;
-      game.kill(userDefender);
+      Game.getInstance().kill(userDefender);
     } else {
-      userDefender.addLand(-1 * land);
+      userDefender.land -= land
     }
 
 
     return {"win" : win, "land" : land, "userAttaker": userAttaker, "death" : death};
   }
 
-  static sleep(ms) {
+  static sleep(ms:number) {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 }

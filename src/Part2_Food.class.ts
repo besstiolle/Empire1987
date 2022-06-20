@@ -4,6 +4,7 @@ import { Party } from './Part_Abstract.class'
 import { Errors } from './Errors.class'
 import { Demography } from './Part3_Demography.class'
 import { UserUtils } from './User.utils.class'
+import { Game } from './Game.class'
 
 import tpl_0_1b from './templates/0_1b.tpl'
 import tpl_2_base from './templates/2_base.tpl'
@@ -16,18 +17,22 @@ import tpl_2_3 from './templates/2_3.tpl'
 import tpl_2_4 from './templates/2_4.tpl'
 import tpl_2_5 from './templates/2_5.tpl'
 
+
+
 export class Food extends Party{
+
+  protected static purchaseProposalSellerId:number
+  protected static salesProposalAmount:number
 
   static meteoAndRats(){
     
     /**
      * METEO=INT(RND*6)+1:
      */
-    game.setMeteo(game.rollDiceInteger(1,6));
-
-    game.setRats(game.rollDiceInteger(5,30));
-    game.getCurrentUser().setHarvest(UserUtils.calculNewHarvest(game.getCurrentUser()));
-    game.getCurrentUser().addSupply(UserUtils.calculNewSupply(game.getCurrentUser()));
+    Game.getInstance().meteo = Game.getInstance().rollDiceInteger(1,6)
+    Game.getInstance().rats = Game.getInstance().rollDiceInteger(5,30)
+    Game.getInstance().getCurrentUser().harvest = UserUtils.calculNewHarvest(Game.getInstance().getCurrentUser())
+    Game.getInstance().getCurrentUser().supply += UserUtils.calculNewSupply(Game.getInstance().getCurrentUser())
 
     Party.refreshWithTemplate(tpl_0_1b);
     //Explicitly remove event listening
@@ -50,6 +55,7 @@ export class Food extends Party{
 
   static buyOnMarket(){
     //console.info("buy market");
+    Food.purchaseProposalSellerId=null
     KB.listen([
       {key: Const.KEYBOARD_INT, callback: Food.buyOnMarketFrom}, // 0-9
       {key: Const.KEYBOARD_RETURN, callback: Food.choiceMarket}, // ↩
@@ -57,28 +63,29 @@ export class Food extends Party{
     Party.refreshWithTemplates([tpl_2_base, tpl_2_1]);
   }
 
-  static buyOnMarketFrom(from){
+  static buyOnMarketFrom(from:string){
     //console.info("buyOnMarketFrom " + from);
     let marketId=parseInt(from);
-    let market=game.getMarket();
+    let market=Game.getInstance().market;
 
     //if empty
-    if( marketId === "") {
+    if( isNaN(marketId)) {
       return Food.choiceMarket();
     }
 
     //if vendor doesn't exist
-    if(!market.getSales().has(marketId)) {
+    if(!market.sales.has(marketId)) {
       return Food.buyOnMarket();
     }
 
     //If Myself
-    if(market.getSales().get(marketId)["idUser"] === game.getCurrentUser().getId()){
-      game.addError(Errors.cantBuyMyself());
+    if(market.sales.get(marketId).idUser === Game.getInstance().getCurrentUser().id){
+      Game.getInstance().addError(Errors.cantBuyMyself());
       return Food.buyOnMarket();
     }
 
-    market.createOffer(game.getCurrentUser().getId(), marketId);
+    Food.purchaseProposalSellerId=marketId
+
 
     KB.listenTyping([
       {key: Const.KEYBOARD_INT_TYPING, callback: KB.startTyping}, // 0-9 + backspace
@@ -90,27 +97,42 @@ export class Food extends Party{
 
   static buyOnMarketFromAndHowMuch(){
     //console.info("buyOnMarketFromAndHowMuch");
-    let quantity=parseInt(KB.buffer);
-    let market=game.getMarket();
+    let quantity:number=parseInt(KB.buffer())
+    let market=Game.getInstance().market
 
-    let offer = market.getOffer();
-    let sale = market.getSales().get(offer["marketId"]);
+    let sale = market.sales.get(Food.purchaseProposalSellerId);
 
     if(isNaN(quantity)){
       return Food.choiceMarket();
     }
 
-    if(sale["boisseaux"] < quantity) {
-      game.addError(Errors.notEnoughtStockOnMarket());
-      return Food.buyOnMarketFrom(offer["marketId"]);
+    if(sale.boisseaux < quantity) {
+      Game.getInstance().addError(Errors.notEnoughtStockOnMarket());
+      return Food.buyOnMarketFrom(Food.purchaseProposalSellerId+"");
     }
 
-    if(sale["price"] * quantity > game.getCurrentUser().getMoney()) {
-      game.addError(Errors.notEnoughtMoney());
-      return Food.buyOnMarketFrom(offer["marketId"]);
+    if(sale.price * quantity > Game.getInstance().getCurrentUser().money) {
+      Game.getInstance().addError(Errors.notEnoughtMoney());
+      return Food.buyOnMarketFrom(Food.purchaseProposalSellerId+"");
     }
 
-    game.resolveMarketOffer(quantity);
+    //console.info("resolveMarketOffer() " + quantity);
+    let seller = Game.getInstance().users.get(sale['idUser']);
+    let buyer = Game.getInstance().getCurrentUser()
+
+    seller.money += sale.price * quantity
+    buyer.money -= sale.price * quantity
+    buyer.supply += quantity;
+    sale.boisseaux = sale.boisseaux - quantity;
+
+    if(sale.boisseaux == 0){
+      market.sales.delete(Food.purchaseProposalSellerId);
+    } else {
+      market.sales.set(Food.purchaseProposalSellerId, sale);
+    }
+    Game.getInstance().users.set(seller.id, seller);
+    Game.getInstance().users.set(buyer.id, buyer);
+
 
     Food.choiceMarket();
   }
@@ -118,6 +140,7 @@ export class Food extends Party{
 
   static sellOnMarket(){
     //console.info("sell market");
+    Food.salesProposalAmount=null
     KB.listenTyping([
       {key: Const.KEYBOARD_INT_TYPING, callback: KB.startTyping}, // 0-9 + backspace
       {key: Const.KEYBOARD_RETURN, callback: Food.sellOnMarketWithPrice}, // ↩
@@ -126,10 +149,10 @@ export class Food extends Party{
     Party.refreshWithTemplates([tpl_2_base, tpl_2_2]);
   }
 
-  static sellOnMarketWithPrice(quantityParam){
+  static sellOnMarketWithPrice(quantityParam:number){
     //console.info("sellOnMarketWithPrice");
-    let market=game.getMarket();
-    let quantity=parseInt(KB.buffer);
+    let market=Game.getInstance().market;
+    let quantity:number=parseInt(KB.buffer());
     if(Number.isInteger(quantityParam)){
       quantity = quantityParam;
     }
@@ -138,12 +161,13 @@ export class Food extends Party{
       return Food.choiceMarket();
     }
 
-    if(quantity > game.getCurrentUser().getSupply()){
-        game.addError(Errors.notEnoughtStock());
+    if(quantity > Game.getInstance().getCurrentUser().supply){
+        Game.getInstance().addError(Errors.notEnoughtStock());
         return Food.sellOnMarket();
     }
 
-    market.createPromise(game.getCurrentUser().getId(), quantity);
+    Food.salesProposalAmount=quantity
+
     KB.listenTyping([
       {key: Const.KEYBOARD_PRICE_TYPING, callback: KB.startTyping}, // 0-9 + backspace + dot
       {key: Const.KEYBOARD_RETURN, callback: Food.doSellMarketWithPrice}, // ↩
@@ -154,23 +178,23 @@ export class Food extends Party{
 
   static doSellMarketWithPrice(){
     //console.info("doSellMarketWithPrice");
-    let market=game.getMarket();
-    let quantity = market.getPromise().quantity;
-    let price=Number.parseFloat(KB.buffer).toFixed(2);
+    let market=Game.getInstance().market;
+    let quantity = Food.salesProposalAmount
+    let price=Number.parseFloat(KB.buffer());
 
     if(isNaN(price)){
       return Food.choiceMarket()
     }
 
     if(price > 15){
-      game.addError(Errors.priceTooHigh());
+      Game.getInstance().addError(Errors.priceTooHigh());
       return Food.sellOnMarketWithPrice(quantity);
     }
 
     //console.info("quantity : " + quantity)
     //console.info("price : " + price)
-    market.addSales(game.getCurrentUser().getId(), game.getCurrentUser().getCountry(), quantity, price);
-    game.getCurrentUser().addSupply(-1 * quantity);
+    market.addSales(Game.getInstance().getCurrentUser().id, Game.getInstance().getCurrentUser().country, quantity, Math.round((price + Number.EPSILON) * 100) / 100)
+    Game.getInstance().getCurrentUser().supply -= quantity
     Food.choiceMarket();
   }
 
@@ -191,15 +215,15 @@ export class Food extends Party{
   // Do selling land
   static doSellLand(){
     //console.info("go sell market")
-    let keyboard = KB.buffer;
-    if(keyboard !== ""){
-      let user = game.getCurrentUser();
-      if(user.getLand() < keyboard){
-        game.addError(Errors.notEnoughtLand())
+    let keyboard:number = parseInt(KB.buffer())
+    if(isNaN(keyboard)){
+      let user = Game.getInstance().getCurrentUser();
+      if(user.land < keyboard){
+        Game.getInstance().addError(Errors.notEnoughtLand())
         return Food.sellLand();
       } else {
-        user.addLand(-keyboard);
-        user.addMoney(Const.landPrice * keyboard);
+        user.land -= -keyboard
+        user.money += Const.landPrice * keyboard
       }
     }
     Food.choiceMarket();
@@ -215,18 +239,18 @@ export class Food extends Party{
 
   static doGiveToOst(){
 
-    let quantity=parseInt(KB.buffer);
+    let quantity:number=parseInt(KB.buffer())
     if(isNaN(quantity)){
       quantity = 0;
     }
 
-    if(quantity > game.getCurrentUser().getSupply()){
-        game.addError(Errors.notEnoughtStock())
+    if(quantity > Game.getInstance().getCurrentUser().supply){
+      Game.getInstance().addError(Errors.notEnoughtStock())
         return Food.giveToOst();
     }
 
-    game.getCurrentUser().addSupply(-1 * quantity);
-    game.getCurrentUser().setSupplyOst(quantity);
+    Game.getInstance().getCurrentUser().supply -=  quantity
+    Game.getInstance().getCurrentUser().supplyOst = quantity
 
     return Food.giveToPeople();
   }
@@ -241,26 +265,26 @@ export class Food extends Party{
 
   static doGiveToPeople(){
 
-    let quantity=parseInt(KB.buffer);
+    let quantity:number=parseInt(KB.buffer());
     if(isNaN(quantity)){
       quantity = 0;
     }
 
 
-    if(quantity > game.getCurrentUser().getSupply()){
+    if(quantity > Game.getInstance().getCurrentUser().supply){
       //console.info(Errors.notEnoughtStock());
-      game.addError(Errors.notEnoughtStock())
+      Game.getInstance().addError(Errors.notEnoughtStock())
       return Food.giveToPeople();
     }
 
-    if(quantity < game.getCurrentUser().getNeedPeople() && quantity < (0.1 * game.getCurrentUser().getSupply())){
+    if(quantity < Game.getInstance().getCurrentUser().needPeople && quantity < (0.1 * Game.getInstance().getCurrentUser().supply)){
       //console.info(Errors.atLast10Percent());
-      game.addError(Errors.atLast10Percent())
+      Game.getInstance().addError(Errors.atLast10Percent())
       return Food.giveToPeople();
     }
 
-    game.getCurrentUser().addSupply(-1 * quantity);
-    game.getCurrentUser().setSupplyPeople(quantity);
+    Game.getInstance().getCurrentUser().supply -= quantity
+    Game.getInstance().getCurrentUser().supplyPeople = quantity
 
     return Demography.demography();
   }
